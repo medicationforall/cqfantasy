@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cqfantasy"
+version = "0.1.0"
+authors = [
+  { name="James Adams", email="inklink28@gmail.com" }
+]
+description = "Python Library for building Fantasy terrain"
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent"
+]
+
+dependencies = [
+'cqterrain @ git+https://github.com/medicationforall/cqterrain@1.2.0'
+]
+
+
+[project.urls]
+"Homepage" = "https://github.com/medicationforall/cqfantasy"
+"Bug Tracker" = "https://github.com/medicationforall/cqfantasy/issues"
