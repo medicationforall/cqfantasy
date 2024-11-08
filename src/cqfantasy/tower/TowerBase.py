@@ -15,7 +15,7 @@
 import cadquery as cq
 from cadqueryhelper import Base
 from cqterrain.stairs.round import ramp as make_ramp, greebled_stairs as make_greebled_stairs
-from . import TowerWindow, cut_cylinder
+from . import TowerWindow, cut_cylinder, TileGenerator
 from .magnets import make_magnet, make_magnets
 import math
 
@@ -59,11 +59,15 @@ class TowerBase(Base):
         self.magnet_diameter:float = 3.4
         self.magnet_height:float = 2.2
         self.magnet_count:int = 4
-        
+
+        self.render_floor_tile:bool = True
+        self.tile_height = 2
+
         #blueprints
         self.bp_window:TowerWindow = TowerWindow()
         self.bp_door:TowerWindow = TowerWindow()
-        
+        self.bp_tile_gen:TileGenerator|None = TileGenerator()
+
         # shapes
         self.base:cq.Workplane|None = None
         self.stairs:cq.Workplane|None = None
@@ -104,7 +108,12 @@ class TowerBase(Base):
 
         if self.render_magnets:
             self.make_magnets()
-        
+
+        if self.render_floor_tile and self.bp_tile_gen:
+            self.bp_tile_gen.diameter = self.diameter - self.wall_width*4
+            self.bp_tile_gen.tile_height = self.tile_height
+            self.bp_tile_gen.make()
+
     def make_base(self):
         base = cq.Solid.makeCone(
             self.base_diameter/2, 
@@ -113,7 +122,8 @@ class TowerBase(Base):
         )
         
         base = cq.Workplane("XY").add(base)
-        base = cut_cylinder(base, self.diameter - self.wall_width*4, self.calculate_inner_height())
+        cut_cylinder_height = self.calculate_inner_height() + self.tile_height
+        base = cut_cylinder(base, self.diameter - self.wall_width*4, cut_cylinder_height)
         self.base = base
         
         if self.render_blocks:
@@ -308,7 +318,7 @@ class TowerBase(Base):
         super().build()
         
         cut_windows = self.build_cut_windows()
-        cut_doors = self.build_cut_door()
+        cut_doors = self.build_cut_door()  
         
         scene = cq.Workplane("XY")
 
@@ -326,5 +336,10 @@ class TowerBase(Base):
 
         if self.magnets:
             scene = scene.cut(self.magnets.translate((0,0,self.height)))
+
+        if self.bp_tile_gen:
+            tiles = self.bp_tile_gen.build()
+            offset_height = self.floor_height
+            scene = scene.union(tiles.translate((0,0,offset_height-self.tile_height/2)))
 
         return scene

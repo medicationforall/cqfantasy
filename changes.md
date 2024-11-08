@@ -2,6 +2,7 @@
 ## 0.1.2
 * Added magnets utility
 * TowerBase, TowerMid, ToerTop create magnet cutouts.
+* Added TileGenerator proof of concept.
 
 ## 0.1.1
 * TowerBase

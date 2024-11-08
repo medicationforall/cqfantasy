@@ -39,7 +39,9 @@ class TowerTopGreebled(UnevenBlocks, TowerTop):
     def make_top(self):
         if self.render_top:
             top = cq.Workplane("XY").cylinder(self.height,self.top_diameter/2)
-            top = cut_cylinder(top, self.diameter, self.height - self.floor_height)
+
+            cut_cylinder_height = self.calculate_inner_height() + self.tile_height
+            top = cut_cylinder(top, self.diameter, cut_cylinder_height)
         else:
             self.base = cq.Workplane("XY")
 

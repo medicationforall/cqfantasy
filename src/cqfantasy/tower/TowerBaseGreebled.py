@@ -115,22 +115,22 @@ class TowerBaseGreebled(UnevenBlocks,TowerBase):
 
             base_out = (
                 self.base
-                .add(blocks_combined_outside)
+                .add(blocks_combined_outside) #type:ignore
             )
 
             base_in = self.base_in = (
                 self.base
-                .add(blocks_combined_inside)
+                .add(blocks_combined_inside) #type:ignore
             )
 
             self.base = base_out.union(base_in)
         elif self.render_outside_blocks:
             blocks_combined = self.make_outside_blocks()
-            self.base = self.base.union(blocks_combined)
+            self.base = self.base.union(blocks_combined) #type:ignore
 
         elif self.render_inside_blocks:
             blocks_combined = self.make_inside_blocks()
-            self.base = self.base.union(blocks_combined)
+            self.base = self.base.union(blocks_combined) #type:ignore
 
         else:
             raise Exception('unable to create blocks')
@@ -144,7 +144,8 @@ class TowerBaseGreebled(UnevenBlocks,TowerBase):
             )
             
             base = cq.Workplane("XY").add(base)
-            base = cut_cylinder(base, self.diameter - self.wall_width*4, self.calculate_inner_height())
+            cut_cylinder_height = self.calculate_inner_height() + self.tile_height
+            base = cut_cylinder(base, self.diameter - self.wall_width*4, cut_cylinder_height)
             self.base = base
         else:
             self.base = cq.Workplane("XY")

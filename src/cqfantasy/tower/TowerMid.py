@@ -15,8 +15,7 @@
 import cadquery as cq
 from cadqueryhelper import Base
 from cqterrain.stairs.round import ramp as make_ramp, greebled_stairs as make_greebled_stairs, outline as make_outline
-from . import LatticeWindow, TowerWindow
-from . import cut_cylinder
+from . import LatticeWindow, TowerWindow, cut_cylinder, TileGenerator
 from .magnets import make_magnet, make_magnets
 import math
 
@@ -52,9 +51,13 @@ class TowerMid(Base):
         self.magnet_diameter:float = 3.4
         self.magnet_height:float = 2.2
         self.magnet_count:int = 4
+
+        self.render_floor_tile:bool = True
+        self.tile_height = 2
         
         # blueprints
         self.bp_window:TowerWindow = LatticeWindow()
+        self.bp_tile_gen:TileGenerator|None = TileGenerator()
         
         # shapes
         self.mid:cq.Workplane|None = None
@@ -89,10 +92,17 @@ class TowerMid(Base):
 
         if self.render_magnets:
             self.make_magnets()
+
+        if self.render_floor_tile and self.bp_tile_gen:
+            self.bp_tile_gen.diameter = self.diameter - self.wall_width*4
+            self.bp_tile_gen.tile_height = self.tile_height
+            self.bp_tile_gen.make()
         
     def make_mid(self):
         mid = cq.Workplane("XY").cylinder(self.height, self.diameter/2)
-        mid = cut_cylinder(mid, self.diameter - (self.wall_width*4), self.height - self.floor_height)
+
+        cut_cylinder_height = self.calculate_inner_height() + self.tile_height
+        mid = cut_cylinder(mid, self.diameter - (self.wall_width*4), cut_cylinder_height)
         self.mid = mid.translate((0,0,self.height/2))
         
         if self.render_blocks:
@@ -296,9 +306,6 @@ class TowerMid(Base):
             .union(windows)
         )
 
-        if self.floor_cut:
-            scene = scene.cut(self.floor_cut)
-
         if self.magnets:
             scene = (
                 scene
@@ -306,4 +313,12 @@ class TowerMid(Base):
                 .cut(self.magnets.translate((0,0,self.height)))                
             )
 
+        if self.bp_tile_gen:
+            tiles = self.bp_tile_gen.build()
+            offset_height = self.floor_height
+            scene = scene.union(tiles.translate((0,0,offset_height-self.tile_height/2)))
+            
+        if self.floor_cut:
+            scene = scene.cut(self.floor_cut)
+            
         return scene

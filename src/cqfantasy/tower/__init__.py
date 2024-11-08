@@ -4,6 +4,7 @@ from .magnets import make_magnet, make_magnets
 from .TowerWindow import TowerWindow
 from .FrameWindow import FrameWindow
 from .LatticeWindow import LatticeWindow
+from .TileGenerator import TileGenerator
 from .TowerBase import TowerBase
 from .UnevenBlocks import UnevenBlocks
 from .TowerBaseGreebled import TowerBaseGreebled
