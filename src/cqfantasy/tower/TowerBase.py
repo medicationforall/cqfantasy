@@ -84,6 +84,9 @@ class TowerBase(Base):
         self.make_base()
         self.make_window()
         self.make_door()
+
+        if self.render_stairs:
+            self.make_stairs()
         
     def make_base(self):
         base = cq.Solid.makeCone(
@@ -98,9 +101,6 @@ class TowerBase(Base):
         
         if self.render_blocks:
             self.make_blocks()
-            
-        if self.render_stairs:
-            self.make_stairs()
             
     def make_core_block(self,margin, top_height=None):
         if not top_height:
