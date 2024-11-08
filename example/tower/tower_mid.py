@@ -26,6 +26,11 @@ bp_tower_mid.window_height = 40
 bp_tower_mid.window_padding = 4
 bp_tower_mid.window_count = 4
 
+bp_tower_mid.render_magnets = True
+bp_tower_mid.magnet_diameter = 3.4
+bp_tower_mid.magnet_height = 2.2
+bp_tower_mid.magnet_count = 4
+
 # blueprints
 bp_tower_mid.bp_window = LatticeWindow()
 

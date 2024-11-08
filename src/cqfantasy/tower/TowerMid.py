@@ -14,10 +14,11 @@
 
 import cadquery as cq
 from cadqueryhelper import Base
+from cqterrain.stairs.round import ramp as make_ramp, greebled_stairs as make_greebled_stairs, outline as make_outline
 from . import LatticeWindow, TowerWindow
 from . import cut_cylinder
+from .magnets import make_magnet, make_magnets
 import math
-from cqterrain.stairs.round import ramp as make_ramp, greebled_stairs as make_greebled_stairs, outline as make_outline
 
 class TowerMid(Base):
     def __init__(self):
@@ -46,6 +47,11 @@ class TowerMid(Base):
         self.window_height:float = 40
         self.window_padding:float = 4
         self.window_count:int = 4
+
+        self.render_magnets:bool = True
+        self.magnet_diameter:float = 3.4
+        self.magnet_height:float = 2.2
+        self.magnet_count:int = 4
         
         # blueprints
         self.bp_window:TowerWindow = LatticeWindow()
@@ -54,6 +60,7 @@ class TowerMid(Base):
         self.mid:cq.Workplane|None = None
         self.stairs:cq.Workplane|None = None
         self.floor_cut:cq.Workplane|None = None
+        self.magnets:cq.Workplane|None = None
         
     def make_window(self):
         
@@ -66,13 +73,22 @@ class TowerMid(Base):
         self.bp_window.height = self.window_height
         self.bp_window.render_outline = self.render_window_outline
         self.bp_window.make()
-        
-        
+
+    def make_magnets(self):
+        magnet = make_magnet(self.magnet_diameter, self.magnet_height)
+        self.magnets = (
+            make_magnets(magnet, self.magnet_count, self.diameter - self.wall_width*2)
+            .translate((0,0,-self.magnet_height/2))
+        )
+         
     def make(self, parent=None):
         super().make(parent)
         
         self.make_mid()
         self.make_window()
+
+        if self.render_magnets:
+            self.make_magnets()
         
     def make_mid(self):
         mid = cq.Workplane("XY").cylinder(self.height, self.diameter/2)
@@ -282,4 +298,12 @@ class TowerMid(Base):
 
         if self.floor_cut:
             scene = scene.cut(self.floor_cut)
+
+        if self.magnets:
+            scene = (
+                scene
+                .cut(self.magnets.translate((0,0,self.magnet_height)))
+                .cut(self.magnets.translate((0,0,self.height)))                
+            )
+
         return scene

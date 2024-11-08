@@ -185,6 +185,10 @@ show_object(ex)
 * door_height: float
 * door_padding: float
 * door_count: int
+* render_magnets: bool
+* magnet_diameter: float
+* magnet_height: float
+* magnet_count: int
 
 ### blueprints
 * bp_window:TowerWindow = TowerWindow()
@@ -195,7 +199,7 @@ import cadquery as cq
 from cqfantasy.tower import TowerBase
 
 bp_tower_base = TowerBase()
-
+# properties
 bp_tower_base.diameter = 130
 bp_tower_base.base_diameter = 150
 bp_tower_base.height = 100
@@ -225,6 +229,11 @@ bp_tower_base.door_width = 27
 bp_tower_base.door_height = 50
 bp_tower_base.door_padding = 7
 bp_tower_base.door_count = 1
+
+bp_tower_base.render_magnets = True
+bp_tower_base.magnet_diameter = 3.4
+bp_tower_base.magnet_height = 2.2
+bp_tower_base.magnet_count = 4
 
 bp_tower_base.make()
 ex_tower = bp_tower_base.build()
@@ -323,6 +332,10 @@ show_object(ex_tower)
 * window_height: float
 * window_padding: float
 * window_count: int
+* render_magnets: bool
+* magnet_diameter: float
+* magnet_height: float
+* magnet_count: int
 
 ### blueprints
 * bp_window: TowerWindow
@@ -356,6 +369,11 @@ bp_tower_mid.window_height = 40
 bp_tower_mid.window_padding = 4
 bp_tower_mid.window_count = 4
 
+bp_tower_mid.render_magnets = True
+bp_tower_mid.magnet_diameter = 3.4
+bp_tower_mid.magnet_height = 2.2
+bp_tower_mid.magnet_count = 4
+
 # blueprints
 bp_tower_mid.bp_window = LatticeWindow()
 
@@ -375,22 +393,26 @@ show_object(ex_tower)
 ## TowerTop
 
 ### parameters
-diameter: float
-height: float
-wall_width: float
-floor_height: float
-top_diameter: float
-block_length: float
-block_width: float
-block_height: float
-block_ring_count: int
-even_ring_rotate: float
-render_blocks: bool
-render_floor_cut: bool
-battlement_width: float
-battlement_height: float
-battlement_padding: float
-battlement_count: int
+* diameter: float
+* height: float
+* wall_width: float
+* floor_height: float
+* top_diameter: float
+* block_length: float
+* block_width: float
+* block_height: float
+* block_ring_count: int
+* even_ring_rotate: float
+* render_blocks: bool
+* render_floor_cut: bool
+* battlement_width: float
+* battlement_height: float
+* battlement_padding: float
+* battlement_count: int
+* render_magnets: bool
+* magnet_diameter: float
+* magnet_height: float
+* magnet_count: int
 
 ``` python
 import cadquery as cq
@@ -419,6 +441,11 @@ bp_tower_top.battlement_width = 20
 bp_tower_top.battlement_height = 17
 bp_tower_top.battlement_padding = 2.5
 bp_tower_top.battlement_count = 5
+
+bp_tower_top.render_magnets = True
+bp_tower_top.magnet_diameter = 3.4
+bp_tower_top.magnet_height = 2.2
+bp_tower_top.magnet_count = 4
 
 bp_tower_top.make()
 ex_tower = bp_tower_top.build()

@@ -1,4 +1,8 @@
 ## Main Wip
+## 0.1.2
+* Added magnets utility
+* TowerBase, TowerMid, ToerTop create magnet cutouts.
+
 ## 0.1.1
 * TowerBase
   * Move where make stairs is called

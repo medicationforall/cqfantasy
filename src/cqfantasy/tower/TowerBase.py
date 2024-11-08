@@ -16,6 +16,7 @@ import cadquery as cq
 from cadqueryhelper import Base
 from cqterrain.stairs.round import ramp as make_ramp, greebled_stairs as make_greebled_stairs
 from . import TowerWindow, cut_cylinder
+from .magnets import make_magnet, make_magnets
 import math
 
 
@@ -53,14 +54,20 @@ class TowerBase(Base):
         self.door_height:float = 50
         self.door_padding:float = 7
         self.door_count:int = 1
+
+        self.render_magnets:bool = True
+        self.magnet_diameter:float = 3.4
+        self.magnet_height:float = 2.2
+        self.magnet_count:int = 4
         
         #blueprints
         self.bp_window:TowerWindow = TowerWindow()
         self.bp_door:TowerWindow = TowerWindow()
         
         # shapes
-        self.base = None
-        self.stairs = None
+        self.base:cq.Workplane|None = None
+        self.stairs:cq.Workplane|None = None
+        self.magnets:cq.Workplane|None = None
         
     def make_window(self):
         outline_diameter = (self.base_diameter - self.diameter) / 2
@@ -77,6 +84,13 @@ class TowerBase(Base):
         self.bp_door.width = self.door_width
         self.bp_door.height = self.door_height
         self.bp_door.make()
+
+    def make_magnets(self):
+        magnet = make_magnet(self.magnet_diameter, self.magnet_height)
+        self.magnets = (
+            make_magnets(magnet, self.magnet_count, self.diameter - self.wall_width*2)
+            .translate((0,0,-self.magnet_height/2))
+        )
         
     def make(self, parent=None):
         super().make(parent)
@@ -87,6 +101,9 @@ class TowerBase(Base):
 
         if self.render_stairs:
             self.make_stairs()
+
+        if self.render_magnets:
+            self.make_magnets()
         
     def make_base(self):
         base = cq.Solid.makeCone(
@@ -253,7 +270,6 @@ class TowerBase(Base):
         
         self.stairs = stairs.cut(ramp.rotate((0,0,1),(0,0,0),-8))
         
-        
     def build_cut_windows(self):
         window_cut = (
             self.bp_window.build_cut()
@@ -307,5 +323,8 @@ class TowerBase(Base):
 
         if cut_doors:
             scene = scene.cut(cut_doors)
+
+        if self.magnets:
+            scene = scene.cut(self.magnets.translate((0,0,self.height)))
 
         return scene

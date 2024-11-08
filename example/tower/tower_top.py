@@ -25,6 +25,11 @@ bp_tower_top.battlement_height = 17
 bp_tower_top.battlement_padding = 2.5
 bp_tower_top.battlement_count = 5
 
+bp_tower_top.render_magnets = True
+bp_tower_top.magnet_diameter = 3.4
+bp_tower_top.magnet_height = 2.2
+bp_tower_top.magnet_count = 4
+
 bp_tower_top.make()
 ex_tower = bp_tower_top.build()
 #show_object(ex_tower)

@@ -14,9 +14,10 @@
 
 import cadquery as cq
 from cadqueryhelper import Base
-from . import cut_cylinder
-import math
 from cqterrain.stairs.round import outline as make_outline
+from . import cut_cylinder
+from .magnets import make_magnet, make_magnets
+import math
 
 
 class TowerTop(Base):
@@ -45,14 +46,19 @@ class TowerTop(Base):
         self.battlement_height:float = 17
         self.battlement_padding:float = 2.5
         self.battlement_count:int = 5
+
+        self.render_magnets:bool = True
+        self.magnet_diameter:float = 3.4
+        self.magnet_height:float = 2.2
+        self.magnet_count:int = 4
         
         # Shapes
-        self.top = None
-        self.floor_cut = None
-        self.battlement = None
-        self.battlements = None
-        self.block_battlement = None
-        self.block_battlements = None
+        self.top:cq.Workplane|None = None
+        self.floor_cut:cq.Workplane|None = None
+        self.battlement:cq.Workplane|None = None
+        self.battlements:cq.Workplane|None = None
+        self.block_battlement:cq.Workplane|None = None
+        self.block_battlements:cq.Workplane|None = None
         
     def make_battlement(self):
         battlement = cq.Workplane("XY").box(self.top_diameter+self.battlement_padding+2,self.battlement_width, self.battlement_height)
@@ -75,13 +81,23 @@ class TowerTop(Base):
         #log(f'battlements {battlements}')
         self.battlements = battlements
         self.block_battlements = block_battlements
-        
+
+    def make_magnets(self):
+        magnet = make_magnet(self.magnet_diameter, self.magnet_height)
+        self.magnets = (
+            make_magnets(magnet, self.magnet_count, self.diameter - self.wall_width*2)
+            .translate((0,0,-self.magnet_height/2))
+        )
+   
     def make(self, parent=None):
         super().make(parent)
         
         self.make_battlement()
         self.make_battlements()
         self.make_top()
+
+        if self.render_magnets:
+            self.make_magnets()
         
     def make_block_ring(self, diameter, add_block):
         blocks = (
@@ -229,5 +245,11 @@ class TowerTop(Base):
 
         if self.floor_cut:
             scene = scene.cut(self.floor_cut)
+
+        if self.magnets:
+            scene = (
+                scene
+                .cut(self.magnets.translate((0,0,self.magnet_height)))
+            )
 
         return scene

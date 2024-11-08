@@ -31,6 +31,11 @@ bp_tower.window_height = 40
 bp_tower.window_padding = 4
 bp_tower.window_count = 4
 
+bp_tower.render_magnets = True
+bp_tower.magnet_diameter = 3.4
+bp_tower.magnet_height = 2.2
+bp_tower.magnet_count = 4
+
 bp_tower.make()
 ex_tower = bp_tower.build()
 #show_object(ex_tower)
