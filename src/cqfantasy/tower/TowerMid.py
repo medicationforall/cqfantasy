@@ -53,7 +53,7 @@ class TowerMid(Base):
         self.magnet_count:int = 4
 
         self.render_floor_tile:bool = True
-        self.tile_height = 2
+        self.tile_height:float = 2
         
         # blueprints
         self.bp_window:TowerWindow = LatticeWindow()

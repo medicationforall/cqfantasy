@@ -129,6 +129,103 @@ show_object(window)
 
 ---
 
+## Tile Generator
+Generates tiles for tower floors
+
+### parameters
+* diameter: float
+* *tile_length: float
+* tile_width: float
+* tile_height: float
+* tile_padding: float
+* overflow: float
+* make_tile_method: Callable[[float, float, float], cq.Workplane]
+
+### Plain Example
+``` python
+import cadquery as cq
+from cqfantasy.tower import TileGenerator
+
+def make_basic_tile(
+    length:float, 
+    width:float, 
+    height:float
+) -> cq.Workplane:
+    tile = cq.Workplane("XY").box(
+        length, 
+        width, 
+        height
+    )
+    return tile
+
+bp_tiles = TileGenerator()
+
+bp_tiles.diameter = 100
+bp_tiles.tile_length = 10
+bp_tiles.tile_width = 10
+bp_tiles.tile_height = 3
+bp_tiles.tile_padding = 1
+bp_tiles.overflow = 12
+bp_tiles.make_tile_method = make_basic_tile
+
+bp_tiles.make()
+
+tiles = bp_tiles.build()
+
+show_object(tiles)
+```
+
+![](./image/tower/09.png)
+
+* [source](../src/cqfantasy/tower/TileGenerator.py)
+* [example](../example/tower/tile_generator.py)
+* [stl](../stl/tower_tile_generator.stl)
+
+### Detailed Examples
+``` python
+import cadquery as cq
+from cqfantasy.tower import TileGenerator
+from cqterrain.tile import dwarf_star
+
+def make_dwarf_star(
+    length:float, 
+    width:float, 
+    height:float
+) -> cq.Workplane:
+    tile = dwarf_star(
+        length, 
+        width, 
+        height
+        #set hardcoded overrides here
+    )
+    return tile
+
+bp_tiles = TileGenerator()
+
+bp_tiles.diameter = 50
+bp_tiles.tile_length = 15
+bp_tiles.tile_width = 15
+bp_tiles.tile_height = 2
+bp_tiles.tile_padding = .5
+bp_tiles.overflow = 12
+bp_tiles.make_tile_method = make_dwarf_star
+
+bp_tiles.make()
+
+tiles = bp_tiles.build()
+
+show_object(tiles)
+```
+
+![](./image/tower/10.png)
+
+* [source](../src/cqfantasy/tower/TileGenerator.py)
+* [example](../example/tower/tile_generator_dwarf_star.py)
+* [stl](../stl/tower_tile_generator_dwarf_star.stl)
+
+
+---
+
 ## Tower
 Orchestrator class
 
@@ -189,10 +286,13 @@ show_object(ex)
 * magnet_diameter: float
 * magnet_height: float
 * magnet_count: int
+* render_floor_tile: bool = True
+* tile_height: bool = 2
 
 ### blueprints
-* bp_window:TowerWindow = TowerWindow()
-* bp_door:TowerWindow = TowerWindow()
+* bp_window: TowerWindow
+* bp_door: TowerDoor
+* bp_tile_gen: TileGenerator|None 
 
 ``` python
 import cadquery as cq
@@ -234,6 +334,9 @@ bp_tower_base.render_magnets = True
 bp_tower_base.magnet_diameter = 3.4
 bp_tower_base.magnet_height = 2.2
 bp_tower_base.magnet_count = 4
+
+bp_tower_base.render_floor_tile = True
+bp_tower_base.tile_height = 2
 
 bp_tower_base.make()
 ex_tower = bp_tower_base.build()
@@ -336,9 +439,12 @@ show_object(ex_tower)
 * magnet_diameter: float
 * magnet_height: float
 * magnet_count: int
+* render_floor_tile: bool = True
+* tile_height: bool = 2
 
 ### blueprints
 * bp_window: TowerWindow
+* bp_tile_gen: TileGenerator|None 
 
 ``` python
 import cadquery as cq
@@ -373,6 +479,9 @@ bp_tower_mid.render_magnets = True
 bp_tower_mid.magnet_diameter = 3.4
 bp_tower_mid.magnet_height = 2.2
 bp_tower_mid.magnet_count = 4
+
+bp_tower_mid.render_floor_tile = True
+bp_tower_mid.tile_height = 2
 
 # blueprints
 bp_tower_mid.bp_window = LatticeWindow()
@@ -413,6 +522,11 @@ show_object(ex_tower)
 * magnet_diameter: float
 * magnet_height: float
 * magnet_count: int
+* render_floor_tile: bool = True
+* tile_height: bool = 2
+
+### blueprints
+* bp_tile_gen: TileGenerator|None 
 
 ``` python
 import cadquery as cq
@@ -446,6 +560,9 @@ bp_tower_top.render_magnets = True
 bp_tower_top.magnet_diameter = 3.4
 bp_tower_top.magnet_height = 2.2
 bp_tower_top.magnet_count = 4
+
+bp_tower_top.render_floor_tile = True
+bp_tower_top.tile_height = 2
 
 bp_tower_top.make()
 ex_tower = bp_tower_top.build()

@@ -52,9 +52,8 @@ class TowerTop(Base):
         self.magnet_height:float = 2.2
         self.magnet_count:int = 4
 
-        
         self.render_floor_tile:bool = True
-        self.tile_height = 2
+        self.tile_height:float = 2
 
         # blueprints
         self.bp_tile_gen:TileGenerator|None = TileGenerator()

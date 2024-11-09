@@ -38,6 +38,9 @@ bp_tower_base.magnet_diameter = 3.4
 bp_tower_base.magnet_height = 2.2
 bp_tower_base.magnet_count = 4
 
+bp_tower_base.render_floor_tile = True
+bp_tower_base.tile_height = 2
+
 bp_tower_base.make()
 ex_tower = bp_tower_base.build()
 # show_object(ex_tower)

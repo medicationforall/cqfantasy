@@ -15,7 +15,7 @@
 import cadquery as cq
 from cadqueryhelper import Base
 from cqterrain.stairs.round import ramp as make_ramp, greebled_stairs as make_greebled_stairs
-from . import TowerWindow, cut_cylinder, TileGenerator
+from . import TowerWindow, TowerDoor, cut_cylinder, TileGenerator
 from .magnets import make_magnet, make_magnets
 import math
 
@@ -61,11 +61,11 @@ class TowerBase(Base):
         self.magnet_count:int = 4
 
         self.render_floor_tile:bool = True
-        self.tile_height = 2
+        self.tile_height:float = 2
 
         #blueprints
         self.bp_window:TowerWindow = TowerWindow()
-        self.bp_door:TowerWindow = TowerWindow()
+        self.bp_door:TowerDoor = TowerDoor()
         self.bp_tile_gen:TileGenerator|None = TileGenerator()
 
         # shapes
@@ -317,12 +317,29 @@ class TowerBase(Base):
                 .union(door_cut.rotate((0,0,1),(0,0,0),door_degrees*i))
             )
         return door_cuts
+    
+    def build_doors(self):
+        door = (
+            self.bp_door.build()
+            .translate((0,0,self.bp_door.height/2+self.floor_height))
+        ).rotate((0,0,1),(0,0,0),-180)
+        
+        doors = cq.Workplane("XY")
+        door_degrees = 360 / self.door_count
+        for i in range(self.door_count):
+            #log(f' add door {i=}')
+            doors = (
+                doors
+                .union(door.rotate((0,0,1),(0,0,0),door_degrees*i))
+            )
+        return doors
         
     def build(self):
         super().build()
         
         cut_windows = self.build_cut_windows()
-        cut_doors = self.build_cut_door()  
+        cut_doors = self.build_cut_door()
+        doors = self.build_doors()  
         
         scene = cq.Workplane("XY")
 
@@ -337,6 +354,9 @@ class TowerBase(Base):
 
         if cut_doors:
             scene = scene.cut(cut_doors)
+        
+        if doors:
+            scene = scene.add(doors)
 
         if self.magnets:
             scene = scene.cut(self.magnets.translate((0,0,self.height)))
