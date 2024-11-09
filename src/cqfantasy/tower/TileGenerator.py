@@ -24,7 +24,7 @@ class TileGenerator(Base):
         self.tile_width:float = 10
         self.tile_height:float = 3
         self.tile_padding:float = 1
-        self.overflow = 12
+        self.overflow:float = 12
 
         self.make_tile_method:Callable[[float, float, float], cq.Workplane] = make_basic_tile
 

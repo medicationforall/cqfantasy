@@ -122,7 +122,11 @@ class TowerBase(Base):
         )
         
         base = cq.Workplane("XY").add(base)
-        cut_cylinder_height = self.calculate_inner_height() + self.tile_height
+        if self.render_floor_tile:
+            cut_cylinder_height = self.calculate_inner_height() + self.tile_height
+        else:
+            cut_cylinder_height = self.calculate_inner_height()
+            
         base = cut_cylinder(base, self.diameter - self.wall_width*4, cut_cylinder_height)
         self.base = base
         
@@ -337,7 +341,7 @@ class TowerBase(Base):
         if self.magnets:
             scene = scene.cut(self.magnets.translate((0,0,self.height)))
 
-        if self.bp_tile_gen:
+        if self.render_floor_tile and self.bp_tile_gen:
             tiles = self.bp_tile_gen.build()
             offset_height = self.floor_height
             scene = scene.union(tiles.translate((0,0,offset_height-self.tile_height/2)))

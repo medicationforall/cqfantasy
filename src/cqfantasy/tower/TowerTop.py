@@ -146,7 +146,11 @@ class TowerTop(Base):
     def make_top(self):
         top = cq.Workplane("XY").cylinder(self.height,self.top_diameter/2)
 
-        cut_cylinder_height = self.calculate_inner_height() + self.tile_height
+        if self.render_floor_tile:
+            cut_cylinder_height = self.calculate_inner_height() + self.tile_height
+        else:
+            cut_cylinder_height = self.calculate_inner_height()
+            
         top = cut_cylinder(top, self.diameter, cut_cylinder_height)
 
         if self.battlements:
@@ -266,7 +270,7 @@ class TowerTop(Base):
                 .cut(self.magnets.translate((0,0,self.magnet_height)))
             )
 
-        if self.bp_tile_gen:
+        if self.render_floor_tile and self.bp_tile_gen:
             tiles = self.bp_tile_gen.build()
             offset_height = self.floor_height
             scene = scene.union(tiles.translate((0,0,offset_height-self.tile_height/2)))

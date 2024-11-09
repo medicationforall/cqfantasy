@@ -38,7 +38,11 @@ class TowerMidGreebled(UnevenBlocks, TowerMid):
         if self.render_mid:
             mid = cq.Workplane("XY").cylinder(self.height, self.diameter/2)
 
-            cut_cylinder_height = self.calculate_inner_height() + self.tile_height
+            if self.render_floor_tile:
+                cut_cylinder_height = self.calculate_inner_height() + self.tile_height
+            else:
+                cut_cylinder_height = self.calculate_inner_height()
+                
             mid = cut_cylinder(mid, self.diameter - (self.wall_width*4), cut_cylinder_height)
             self.mid = mid.translate((0,0,self.height/2))
         else:

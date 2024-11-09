@@ -144,7 +144,12 @@ class TowerBaseGreebled(UnevenBlocks,TowerBase):
             )
             
             base = cq.Workplane("XY").add(base)
-            cut_cylinder_height = self.calculate_inner_height() + self.tile_height
+
+            if self.render_floor_tile:
+                cut_cylinder_height = self.calculate_inner_height() + self.tile_height
+            else:
+                cut_cylinder_height = self.calculate_inner_height()
+                
             base = cut_cylinder(base, self.diameter - self.wall_width*4, cut_cylinder_height)
             self.base = base
         else:

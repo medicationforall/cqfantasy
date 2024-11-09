@@ -101,7 +101,11 @@ class TowerMid(Base):
     def make_mid(self):
         mid = cq.Workplane("XY").cylinder(self.height, self.diameter/2)
 
-        cut_cylinder_height = self.calculate_inner_height() + self.tile_height
+        if self.render_floor_tile:
+            cut_cylinder_height = self.calculate_inner_height() + self.tile_height
+        else:
+            cut_cylinder_height = self.calculate_inner_height()
+            
         mid = cut_cylinder(mid, self.diameter - (self.wall_width*4), cut_cylinder_height)
         self.mid = mid.translate((0,0,self.height/2))
         
@@ -313,7 +317,7 @@ class TowerMid(Base):
                 .cut(self.magnets.translate((0,0,self.height)))                
             )
 
-        if self.bp_tile_gen:
+        if self.render_floor_tile and self.bp_tile_gen:
             tiles = self.bp_tile_gen.build()
             offset_height = self.floor_height
             scene = scene.union(tiles.translate((0,0,offset_height-self.tile_height/2)))
