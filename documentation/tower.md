@@ -271,6 +271,7 @@ show_object(ex)
 * even_ring_rotate: float
 * render_blocks: bool
 * render_stairs: bool
+* stair_count: int
 * render_window_outline: bool
 * window_length: float
 * window_width: float
@@ -315,7 +316,10 @@ bp_tower_base.block_ring_count = 30
 bp_tower_base.even_ring_rotate = 6
 
 bp_tower_base.render_blocks = True
+
 bp_tower_base.render_stairs = True
+bp_tower_base.stair_count = 12
+
 bp_tower_base.render_window_outline = False
 
 bp_tower_base.window_length = 12
@@ -471,6 +475,7 @@ show_object()
 * even_ring_rotate: float
 * render_blocks: bool
 * render_stairs: bool
+* stair_count: int
 * render_window_outline: bool
 * window_length: float
 * window_width: float
@@ -508,7 +513,10 @@ bp_tower_mid.block_ring_count = 30
 bp_tower_mid.even_ring_rotate = 6
 
 bp_tower_mid.render_blocks = True
+
 bp_tower_mid.render_stairs = True
+bp_tower_mid.stair_count = 12
+
 bp_tower_mid.render_window_outline = False
 
 bp_tower_mid.window_length = 20

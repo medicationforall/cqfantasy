@@ -38,7 +38,10 @@ class TowerMid(Base):
         self.even_ring_rotate:float = 6
         
         self.render_blocks:bool = True
+
         self.render_stairs:bool = True
+        self.stair_count:int = 12
+
         self.render_window_outline:bool = False
         
         self.window_length:float = 20
@@ -221,7 +224,7 @@ class TowerMid(Base):
         height = self.calculate_inner_height()
         
         ramp = make_ramp(
-            stair_count = 12,
+            stair_count = self.stair_count,
             height = height,
             inner_diameter = inner_diameter,
             diameter = diameter,
@@ -230,7 +233,7 @@ class TowerMid(Base):
         ).translate((0,0,height/2+self.floor_height))
         
         stairs = make_greebled_stairs(
-            stair_count = 12,
+            stair_count = self.stair_count,
             height = height,
             inner_diameter = inner_diameter,
             diameter = diameter, 

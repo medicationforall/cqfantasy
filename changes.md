@@ -1,4 +1,10 @@
 ## Main Wip
+## 0.1.4
+* TowerBase added stair_count parameter
+  * Default to FrameWindow
+  * Added window code 
+* TowerMid added stair_count parameter
+
 ## 0.1.3
 * Upped cqterrain version 1.2.3
 * Added tile_generator example

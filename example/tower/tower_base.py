@@ -18,7 +18,10 @@ bp_tower_base.block_ring_count = 30
 bp_tower_base.even_ring_rotate = 6
 
 bp_tower_base.render_blocks = True
+
 bp_tower_base.render_stairs = True
+bp_tower_base.stair_count = 12
+
 bp_tower_base.render_window_outline = False
 
 bp_tower_base.window_length = 12

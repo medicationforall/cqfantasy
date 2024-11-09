@@ -15,7 +15,7 @@
 import cadquery as cq
 from cadqueryhelper import Base
 from cqterrain.stairs.round import ramp as make_ramp, greebled_stairs as make_greebled_stairs
-from . import TowerWindow, TowerDoor, cut_cylinder, TileGenerator
+from . import TowerWindow, FrameWindow, TowerDoor, cut_cylinder, TileGenerator
 from .magnets import make_magnet, make_magnets
 import math
 
@@ -40,7 +40,10 @@ class TowerBase(Base):
         self.even_ring_rotate:float = 6
         
         self.render_blocks:bool = True
+
         self.render_stairs:bool = True
+        self.stair_count:int = 12
+
         self.render_window_outline:bool = False
         
         self.window_length:float = 12
@@ -64,7 +67,7 @@ class TowerBase(Base):
         self.tile_height:float = 2
 
         #blueprints
-        self.bp_window:TowerWindow = TowerWindow()
+        self.bp_window:TowerWindow = FrameWindow()
         self.bp_door:TowerDoor = TowerDoor()
         self.bp_tile_gen:TileGenerator|None = TileGenerator()
 
@@ -266,7 +269,7 @@ class TowerBase(Base):
         height = self.calculate_inner_height()
         
         ramp = make_ramp(
-            stair_count = 12,
+            stair_count = self.stair_count,
             height = height,
             inner_diameter = inner_diameter,
             diameter = diameter,
@@ -275,7 +278,7 @@ class TowerBase(Base):
         ).translate((0,0,height/2+self.floor_height))
         
         stairs = make_greebled_stairs(
-            stair_count = 12,
+            stair_count = self.stair_count,
             height = height,
             inner_diameter = inner_diameter,
             diameter = diameter, 
@@ -298,9 +301,25 @@ class TowerBase(Base):
                 window_cuts
                 .union(window_cut.rotate((0,0,1),(0,0,0),window_degrees*i))
             )
-        #windows = cq.Workplane("XY")
-        #return window_cut
+
         return window_cuts
+    
+    def build_windows(self):
+        window = (
+            self.bp_window.build()
+            .translate((0,0,self.height/2))
+        ).rotate((0,0,1),(0,0,0),-90)
+        
+        windows = cq.Workplane("XY")
+        window_degrees = 360 / self.window_count
+        for i in range(self.window_count):
+            #log(f' add window {i=}')
+            windows = (
+                windows
+                .union(window.rotate((0,0,1),(0,0,0),window_degrees*i))
+            )
+
+        return windows
     
     def build_cut_door(self):
         door_cut = (
@@ -333,11 +352,13 @@ class TowerBase(Base):
                 .union(door.rotate((0,0,1),(0,0,0),door_degrees*i))
             )
         return doors
-        
+      
     def build(self):
         super().build()
         
         cut_windows = self.build_cut_windows()
+        windows = self.build_windows()
+
         cut_doors = self.build_cut_door()
         doors = self.build_doors()  
         
@@ -352,11 +373,14 @@ class TowerBase(Base):
         if cut_windows:
             scene = scene.cut(cut_windows)
 
+        if cut_windows:
+            scene = scene.union(windows)
+
         if cut_doors:
             scene = scene.cut(cut_doors)
         
         if doors:
-            scene = scene.add(doors)
+            scene = scene.union(doors)
 
         if self.magnets:
             scene = scene.cut(self.magnets.translate((0,0,self.height)))
