@@ -6,9 +6,9 @@ class TowerDoor(Base):
     def __init__(self):
         super().__init__()
         # properties
-        self.length:float = 25
-        self.width:float = 2
-        self.height:float = 30
+        self.length:float = 30
+        self.width:float = 27
+        self.height:float = 50
 
         self.frame_width:float = 4
         

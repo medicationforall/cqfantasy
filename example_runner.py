@@ -16,6 +16,9 @@ print('Window Examples')
 import example.tower.frame_window
 import example.tower.lattice_window
 
+print('Door Examples')
+import example.tower.tower_door
+
 print('Tile Examples')
 import example.tower.tile_generator
 import example.tower.tile_generator_dwarf_star

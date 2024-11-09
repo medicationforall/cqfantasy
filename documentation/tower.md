@@ -415,6 +415,48 @@ show_object(ex_tower)
 
 ---
 
+## Tower Door
+### parameters
+length: float
+width: float
+height: float
+frame_width: float
+diameter: float
+
+### blueprints
+bp_door = TiledDoor()
+
+``` python
+import cadquery as cq
+from cqfantasy.tower import TowerDoor
+from cqterrain.door import TiledDoor
+
+bp_door = TowerDoor()
+# properties
+bp_door.length = 25
+bp_door.width = 2
+bp_door.height = 30
+bp_door.frame_width = 4
+bp_door.diameter = 130
+
+# blueprints
+bp_door.bp_door = TiledDoor()
+
+bp_door.make()
+
+door_ex = bp_door.build()
+
+show_object()
+```
+
+![](./image/tower/11.png)
+
+* [source](../src/cqfantasy/tower/TowerDoor.py)
+* [example](../example/tower/tower_door.py)
+* [stl](../stl/tower_door.stll)
+
+---
+
 ## TowerMid
 
 ### parameters

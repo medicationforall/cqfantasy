@@ -1,2 +1,2 @@
 # Documentation
-* [Tower][./tower.md]
+* [Tower](./tower.md)

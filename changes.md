@@ -6,6 +6,7 @@
 * Added TileGenerator documentation
 * Updated documentation
 * Added TowerDoor
+  * Added tower_door example, documentation, and stl
 
 ## 0.1.2
 * Added magnets utility
