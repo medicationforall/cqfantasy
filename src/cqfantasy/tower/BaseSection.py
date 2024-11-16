@@ -124,10 +124,17 @@ class BaseSection(Base):
     def make_door(self):
         if self.bp_door:
             log('make_door')
-            door_diameter = self.calculate_largest_diameter()
-            self.bp_door.diameter = door_diameter
-            door_width = (self.calculate_largest_diameter() - self.calculate_largest_diameter()) + self.wall_width*3 + self.door_padding
-            self.bp_door.width = door_width *2
+            outside_block_length = 0
+            inside_block_length =  0
+
+            if self.render_blocks and self.bp_block_gen_outside:
+                outside_block_length = self.bp_block_gen_outside.block_length*1.5
+
+            if self.render_blocks and self.bp_block_gen_inside:
+                inside_block_length = self.bp_block_gen_inside.block_length*1.5
+
+            self.bp_door.outside_diameter = self.calculate_largest_diameter() + outside_block_length
+            self.bp_door.inside_diameter = self.calculate_smallest_diameter() - self.wall_width*4 - inside_block_length
             self.bp_door.make()
 
     def make_magnets(self):
@@ -141,7 +148,7 @@ class BaseSection(Base):
 
     def make_stairs(self):
         log('make_stairs')
-        diameter = self.diameter - self.wall_width * 4
+        diameter = self.calculate_smallest_diameter() - self.wall_width * 4
         inner_diameter = diameter - self.stair_width * 2
         height = self.calculate_inner_height()
         
@@ -254,7 +261,6 @@ class BaseSection(Base):
     def build_doors(self):
         if self.bp_door:
             log('build_doors')
-            self.bp_door.debug = True
             door = (
                 self.bp_door.build()
                 .translate((0,0,self.bp_door.height/2+self.floor_height))

@@ -27,7 +27,7 @@ class TowerWindow(Base):
         
         self.outside_diameter:float = 130
         self.inside_diameter:float = 100
-        self.render_outline:bool = False
+        #self.render_outline:bool = False
         
         # shapes
         self.outline:cq.Workplane|None = None
@@ -60,7 +60,11 @@ class TowerWindow(Base):
         scene = (
             cq.Workplane("XY")
             .union(self.outline)
-            .intersect(cut.translate((0,self.outside_diameter/2-cut_width/2,0)))
+            .intersect(cut.translate((
+                0,
+                self.outside_diameter/2-cut_width/2,
+                0)
+            ))
         )
         
         self.cut = scene
@@ -100,6 +104,6 @@ class TowerWindow(Base):
     def build_cut(self):
         scene = cq.Workplane("XY").union(self.cut)
         
-        if self.render_outline and self.outline:
-            scene = scene.add(self.outline)   
+        #if self.render_outline and self.outline:
+        #    scene = scene.add(self.outline)   
         return scene

@@ -3,6 +3,8 @@
 * Added BaseSection to store common code between TowerBase, TowerMid, and TowerTop
 * Refactored TowerBase, TowerMid, and TowerTop to use BaseSection
 * Fixed window placement
+* Fixed Stair Placement
+* Fixed door placement
 
 ## 0.1.6
 * Added RoundBlockGenerator
