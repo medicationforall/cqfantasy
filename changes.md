@@ -1,7 +1,12 @@
 ## Main Wip
+## 1.0.0
+* Added BaseSection to store common code between TowerBase, TowerMid, and TowerTop
+* Refactored TowerBase, TowerMid, and TowerTop to use BaseSection
+* Fixed window placement
+
 ## 0.1.6
 * Added RoundBlockGenerator
-* Integrated RoundBlockGenerator into TowerBaseTwo, TowerMidTwo, and TowerTopTwo
+* Integrated RoundBlockGenerator into TowerBase, TowerMid, and TowerTop
 
 ## 0.1.5
 * Modified magnet size for printing
