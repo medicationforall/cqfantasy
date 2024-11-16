@@ -1,4 +1,11 @@
 ## Main Wip
+## 0.1.6
+* Added RoundBlockGenerator
+* Integrated RoundBlockGenerator into TowerBaseTwo, TowerMidTwo, and TowerTopTwo
+
+## 0.1.5
+* Modified magnet size for printing
+
 ## 0.1.4
 * TowerBase added stair_count parameter
   * Default to FrameWindow

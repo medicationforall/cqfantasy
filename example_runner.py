@@ -23,6 +23,10 @@ print('Tile Examples')
 import example.tower.tile_generator
 import example.tower.tile_generator_dwarf_star
 
+print('Block Examples')
+import example.tower.round_block_generator
+
+
 print('Tower Examples')
 print('start tower_example')
 t1 = time.perf_counter(), time.process_time()

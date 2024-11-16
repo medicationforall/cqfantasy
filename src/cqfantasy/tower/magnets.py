@@ -1,6 +1,6 @@
 import cadquery as cq
 
-def make_magnet(diameter:float=3.4, height:float=2.2)->cq.Workplane:
+def make_magnet(diameter:float=3.2, height:float=2.4)->cq.Workplane:
     cut = cq.Workplane("XY").cylinder(height,diameter/2)
     return cut
 
