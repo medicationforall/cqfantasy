@@ -9,6 +9,7 @@ from .FrameWindow import FrameWindow
 from .LatticeWindow import LatticeWindow
 from .TileGenerator import TileGenerator
 from .RoundBlockGenerator import RoundBlockGenerator
+from .RoundBlockUnevenGenerator import RoundBlockUnevenGenerator
 from .BaseSection import BaseSection
 #from .old.TowerBase import TowerBase
 #from .old.UnevenBlocks import UnevenBlocks

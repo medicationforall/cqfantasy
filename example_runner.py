@@ -1,14 +1,5 @@
 import time
 
-print('start tower_greebled_example')
-t1 = time.perf_counter(), time.process_time()
-import example.tower.tower_greebled_example
-t2 = time.perf_counter(), time.process_time()
-print(f" Real time: {t2[0] - t1[0]:.2f} seconds")
-print(f" CPU time: {t2[1] - t1[1]:.2f} seconds")
-print('end tower_greebled_example')
-
-
 print('Unility Examples')
 import example.tower.cut_cylinder
 
@@ -25,8 +16,9 @@ import example.tower.tile_generator_dwarf_star
 
 print('Block Examples')
 import example.tower.round_block_generator
+import example.tower.round_block_uneven_generator
 
-
+#------------------------------
 print('Tower Examples')
 print('start tower_example')
 t1 = time.perf_counter(), time.process_time()
@@ -59,6 +51,15 @@ t2 = time.perf_counter(), time.process_time()
 print(f" Real time: {t2[0] - t1[0]:.2f} seconds")
 print(f" CPU time: {t2[1] - t1[1]:.2f} seconds")
 print('end tower_top')
+
+#------------------------------
+print('start tower_greebled_example')
+t1 = time.perf_counter(), time.process_time()
+import example.tower.tower_greebled_example
+t2 = time.perf_counter(), time.process_time()
+print(f" Real time: {t2[0] - t1[0]:.2f} seconds")
+print(f" CPU time: {t2[1] - t1[1]:.2f} seconds")
+print('end tower_greebled_example')
 
 
 print('Tower Greebled Examples')

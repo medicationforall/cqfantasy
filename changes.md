@@ -5,6 +5,9 @@
 * Fixed window placement
 * Fixed Stair Placement
 * Fixed door placement
+* Upped ctqterrain to 1.2.4
+* Added RoundBlockUnevenGenerator
+* Fixed Examples
 
 ## 0.1.6
 * Added RoundBlockGenerator

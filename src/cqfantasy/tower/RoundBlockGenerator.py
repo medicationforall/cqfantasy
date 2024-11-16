@@ -22,10 +22,19 @@ class RoundBlockGenerator(Base):
         
         #shapes
         self.cone:cq.Workplane|None = None
+        self.block:cq.Workplane|None = None
         self.blocks:cq.Workplane|None = None
+
+    def calculate_largest_diameter(self):
+        diameter = self.top_diameter
+        if self.base_diameter is not None and self.base_diameter > self.top_diameter:
+            diameter = self.base_diameter
+        return diameter
                
+
     def calculate_block_height(self):
             return self.height / self.row_count
+    
             
     def calculate_block_margin_height(self):
         if isinstance(self.margin, tuple):
@@ -63,16 +72,36 @@ class RoundBlockGenerator(Base):
             block_margin_width,
             block_margin_height
         )
+
+    def get_block(self) -> cq.Workplane:
+        if self.block:
+            return self.block
+        else:
+            raise Exception("Could not resolve block")
+        
+    def resolve_add_block(self, radius):
+        block_margin_width = self.calculate_block_margin_width(radius)
+        block_margin_height = self.calculate_block_margin_height()
+
+        i_block = cq.Workplane("XY").box(self.block_length, block_margin_width, block_margin_height)
+        c_block = self.get_block().intersect(i_block)
+        
+        def add_block(loc:cq.Location) -> cq.Shape:
+            return c_block.val().located(loc) #type:ignore
+        
+        return add_block
         
     def make_block_ring(self, radius):
         block_margin_width = self.calculate_block_margin_width(radius)
         block_margin_height = self.calculate_block_margin_height()
-        
+
         i_block = cq.Workplane("XY").box(self.block_length, block_margin_width, block_margin_height)
-        c_block = self.block.intersect(i_block)
+        c_block = self.get_block().intersect(i_block)
         
         def add_block(loc:cq.Location) -> cq.Shape:
             return c_block.val().located(loc) #type:ignore
+        
+        add_block = self.resolve_add_block(radius)
         
         blocks = (
             cq.Workplane("XY")

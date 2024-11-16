@@ -1,13 +1,23 @@
 import cadquery as cq
-from cqfantasy.tower import TowerMidGreebled
+from cqfantasy.tower import TowerMid, RoundBlockUnevenGenerator, LatticeWindow
 
-bp_tower = TowerMidGreebled()
-bp_tower.uneven_block_depth = 1
-bp_tower.seed = 'test4'
-bp_tower.render_mid = True
+bp_tower = TowerMid()
 bp_tower.render_blocks = True
-bp_tower.render_outside_blocks = True
-bp_tower.render_inside_blocks = True
+bp_tower.bp_block_gen_outside = RoundBlockUnevenGenerator()
+bp_tower.bp_block_gen_outside.uneven_block_depth = 1
+bp_tower.bp_block_gen_outside.seed = 'test4'
+bp_tower.bp_block_gen_outside.block_length = 2.5
+bp_tower.bp_block_gen_outside.block_ring_count = 30
+bp_tower.bp_block_gen_outside.row_count = 9
+bp_tower.bp_block_gen_outside.facing = "outside"
+
+bp_tower.bp_block_gen_inside = RoundBlockUnevenGenerator()
+bp_tower.bp_block_gen_inside.uneven_block_depth = 1
+bp_tower.bp_block_gen_inside.seed = 'test4'
+bp_tower.bp_block_gen_inside.block_length = 2.5
+bp_tower.bp_block_gen_inside.block_ring_count = 30
+bp_tower.bp_block_gen_inside.row_count = 9
+bp_tower.bp_block_gen_inside.facing = "inside"
 
 bp_tower.diameter = 130
 bp_tower.height = 100
@@ -15,21 +25,14 @@ bp_tower.height = 100
 bp_tower.wall_width = 4
 bp_tower.floor_height = 4
 
-bp_tower.block_length = 5
-bp_tower.block_width = 14
-bp_tower.block_height = 10
-
-bp_tower.block_ring_count = 30
-bp_tower.even_ring_rotate = 6
-
-bp_tower.render_stairs = True
-bp_tower.render_window_outline = False
-
-bp_tower.window_length = 20
-bp_tower.window_width = 12
-bp_tower.window_height = 40
+bp_tower.bp_window = LatticeWindow()
+bp_tower.bp_window.length = 12
+bp_tower.bp_window.width = 18
+bp_tower.bp_window.height = 40
 bp_tower.window_padding = 4
 bp_tower.window_count = 4
+
+bp_tower.render_stairs = True
 
 bp_tower.render_magnets = True
 bp_tower.magnet_diameter = 3.4

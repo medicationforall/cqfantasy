@@ -8,7 +8,7 @@ bp_door.length = 30
 bp_door.width = 27
 bp_door.height = 50
 bp_door.frame_width = 4
-bp_door.diameter = 130
+#bp_door.diameter = 130
 
 # blueprints
 bp_door.bp_door = TiledDoor()

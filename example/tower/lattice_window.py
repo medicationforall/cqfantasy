@@ -14,8 +14,8 @@ bp_window.width = 2
 bp_window.height = 30
 bp_window.inner_height_margin = 15
 
-bp_window.diameter = 130
-bp_window.render_outline = False
+#bp_window.diameter = 130
+#bp_window.render_outline = False
 bp_window.make()
 
 window = bp_window.build()

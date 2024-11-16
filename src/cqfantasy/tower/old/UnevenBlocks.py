@@ -2,7 +2,7 @@ import cadquery as cq
 import random
 import math
 from cqterrain.material import uneven_centered_blocks
-from . import cut_cylinder, TowerMid
+from .. import cut_cylinder, TowerMid
 
 class UnevenBlocks():
     def init_uneven_blocks(self):
