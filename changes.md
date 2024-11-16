@@ -1,4 +1,8 @@
 ## Main Wip
+
+## 1.0.1
+* Remove old code
+
 ## 1.0.0
 * Added BaseSection to store common code between TowerBase, TowerMid, and TowerTop
 * Refactored TowerBase, TowerMid, and TowerTop to use BaseSection
