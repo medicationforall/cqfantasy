@@ -1,8 +1,4 @@
 
-try:
-    log #type:ignore
-except NameError:
-    log = print
 
 from .cut_cylinder import cut_cylinder
 
@@ -14,11 +10,14 @@ from .LatticeWindow import LatticeWindow
 from .TileGenerator import TileGenerator
 from .RoundBlockGenerator import RoundBlockGenerator
 from .BaseSection import BaseSection
+#from .old.TowerBase import TowerBase
+#from .old.UnevenBlocks import UnevenBlocks
+#from .old.TowerBaseGreebled import TowerBaseGreebled
+#from .old.TowerMid import TowerMid
+#from .old.TowerMidGreebled import TowerMidGreebled
+#from .old.TowerTop import TowerTop
+#from .old.TowerTopGreebled import TowerTopGreebled
 from .TowerBase import TowerBase
-from .UnevenBlocks import UnevenBlocks
-from .TowerBaseGreebled import TowerBaseGreebled
 from .TowerMid import TowerMid
-from .TowerMidGreebled import TowerMidGreebled
 from .TowerTop import TowerTop
-from .TowerTopGreebled import TowerTopGreebled
 from .Tower import Tower

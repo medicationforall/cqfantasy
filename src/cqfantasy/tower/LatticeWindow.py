@@ -71,11 +71,15 @@ class LatticeWindow(TowerWindow):
         
     def build(self):
         super().build()
+
+        difference = self.calculate_difference()
+        y_offset = self.outside_diameter/2 - difference/4
+
         scene = (
             cq.Workplane("XY")
             #.add(self.window)
             .union(self.frame)
             .union(self.lattice)
-        ).translate((0,(self.diameter/2)-self.width/2,0))
+        ).translate((0,y_offset,0))
         
         return scene

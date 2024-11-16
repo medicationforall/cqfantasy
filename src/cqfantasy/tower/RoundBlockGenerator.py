@@ -7,7 +7,7 @@ class RoundBlockGenerator(Base):
         super().__init__()
         # parameters
         self.top_diameter:float = 100
-        self.base_diameter:float = 150
+        self.base_diameter:float|None = 150
         self.height:float = 100
         
         self.block_length:float = 5
@@ -51,9 +51,9 @@ class RoundBlockGenerator(Base):
         
     def make_block(self):
         # gather largest diameter
-        diameter = self.base_diameter
-        if self.top_diameter > diameter:
-            diameter = self.top_diameter
+        diameter = self.top_diameter
+        if self.base_diameter is not None and self.top_diameter < diameter:
+            diameter = self.base_diameter
         
         block_margin_width = self.calculate_block_margin_width(diameter/2)
         block_margin_height = self.calculate_block_margin_height()
@@ -95,11 +95,18 @@ class RoundBlockGenerator(Base):
         height = self.height
         block_height = self.calculate_block_height()
         rows = math.floor(height/block_height) 
-        row_rate = (self.base_diameter - self.top_diameter) / rows
+
+        if self.base_diameter:
+            row_rate = (self.base_diameter - self.top_diameter) / rows
+        else:
+            row_rate = 0
 
         for i in range(rows):
-            radius = self.base_diameter/2-(i*row_rate)/2-row_rate/4
-            
+            if self.base_diameter:
+                radius = self.base_diameter/2-(i*row_rate)/2-row_rate/4
+            else:
+                radius = self.top_diameter/2-(i*row_rate)/2-row_rate/4
+
             ring = self.make_block_ring(radius)
             
             rotate_degrees = 0

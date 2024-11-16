@@ -25,26 +25,30 @@ class TowerWindow(Base):
         self.height:float = 30
         self.inner_height_margin:float = 15
         
-        self.diameter:float = 130
+        self.outside_diameter:float = 130
+        self.inside_diameter:float = 100
         self.render_outline:bool = False
         
         # shapes
         self.outline:cq.Workplane|None = None
         self.window:cq.Workplane|None = None
         self.cut:cq.Workplane|None = None
+
+    def calculate_difference(self):
+        return self.outside_diameter - self.inside_diameter
         
     def make_outline(self):
         outline = (
             cq.Workplane("XY")
-            .cylinder(self.height, self.diameter/2)
-            .cylinder(self.height, self.diameter/2-self.width, combine="cut")
+            .cylinder(self.height, self.outside_diameter/2)
+            .cylinder(self.height, self.inside_diameter/2, combine="cut")
         )
         
         self.outline = outline
         
     def make_cut(self):
         inner_height = self.height - self.inner_height_margin
-        cut_width = self.diameter /2
+        cut_width = self.calculate_difference()/1.5
         
         cut = shape.arch_pointed(
           length = self.length,
@@ -56,10 +60,10 @@ class TowerWindow(Base):
         scene = (
             cq.Workplane("XY")
             .union(self.outline)
-            .intersect(cut.translate((0,(self.diameter/2-self.width/2)-self.width/4,0)))
+            .intersect(cut.translate((0,self.outside_diameter/2-cut_width/2,0)))
         )
         
-        self.cut = scene#.translate((0,-((self.diameter/2-self.wall_width/2)-self.width/4),0))
+        self.cut = scene
         
     def make_window(self):
         inner_height = self.height - self.inner_height_margin
@@ -84,12 +88,14 @@ class TowerWindow(Base):
         scene = (
             cq.Workplane("XY")
         )
+        
+        difference = self.calculate_difference()
+        y_offset = self.outside_diameter/2 - difference/4
 
         if self.window:
-            scene = scene.union(self.window.translate((0,(self.diameter/2-self.width/2)-self.width/4,0)))
+            scene = scene.union(self.window.translate((0,y_offset,0)))
         
         return scene
-        
         
     def build_cut(self):
         scene = cq.Workplane("XY").union(self.cut)

@@ -56,7 +56,10 @@ class FrameWindow(TowerWindow):
             cq.Workplane("XY")
         )
 
+        difference = self.calculate_difference()
+        y_offset = self.outside_diameter/2 - difference/4
+
         if self.frame:
-            scene = scene.union(self.frame).translate((0,(self.diameter/2)-self.width/2,0))
+            scene = scene.union(self.frame).translate((0,y_offset,0))
         
         return scene

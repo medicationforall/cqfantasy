@@ -13,6 +13,7 @@ class TowerDoor(Base):
         self.frame_width:float = 4
         
         self.diameter:float = 130
+        self.debug = True
         
         # shapes
         self.outline:cq.Workplane|None = None
@@ -75,8 +76,12 @@ class TowerDoor(Base):
         )
 
         door = self.bp_door.build()
-
+        
         if door:
-            scene = scene.union(door.translate((0,(self.diameter/2-self.width/2)-self.width/4,0)))
+            scene = scene.union(door.translate((0,(self.diameter/2-self.width/2),0)))
+
+        if self.debug:
+            circle = cq.Workplane("XY").circle(self.diameter/2)
+            scene.add(circle)
         
         return scene
