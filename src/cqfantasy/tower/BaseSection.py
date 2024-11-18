@@ -81,7 +81,6 @@ class BaseSection(Base):
                 .translate((0,0,self.height / 2))
             )
         
-        body = cq.Workplane("XY").add(body)
         if self.render_floor_tile:
             cut_cylinder_height = self.calculate_inner_height() + self.tile_height
         else:

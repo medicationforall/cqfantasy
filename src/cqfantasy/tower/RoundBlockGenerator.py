@@ -115,9 +115,11 @@ class RoundBlockGenerator(Base):
             )
             .eachpoint(callback = add_block)
         )
-        
-        ring = cq.Workplane("XY").union(blocks)
-        return ring
+        if blocks.solids().size() > 0:
+            ring = cq.Workplane("XY").union(blocks)
+            return ring
+        else:
+            return cq.Workplane("XY")
         
     def make_blocks(self):
         blocks = cq.Workplane("XY")
@@ -143,18 +145,19 @@ class RoundBlockGenerator(Base):
             if i % 2 == self.modulus_even:
                 rotate_degrees = (360/self.block_ring_count)/2
             
-            blocks = (
-                blocks
-                .union(
-                    ring
-                    .translate((
-                        0,
-                        0,
-                        block_height/2+block_height*i)
+            if ring.solids().size() > 0:
+                blocks = (
+                    blocks
+                    .union(
+                        ring
+                        .translate((
+                            0,
+                            0,
+                            block_height/2+block_height*i)
+                        )
+                        .rotate((0,0,1),(0,0,0),rotate_degrees)
                     )
-                    .rotate((0,0,1),(0,0,0),rotate_degrees)
                 )
-            )
             
         self.blocks = blocks
     

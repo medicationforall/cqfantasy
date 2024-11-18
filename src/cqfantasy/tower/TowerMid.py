@@ -40,13 +40,13 @@ class TowerMid(BaseSection):
             self.bp_block_gen_outside.block_length = 2.5
             self.bp_block_gen_outside.row_count = 9
             self.bp_block_gen_outside.margin = (.5,.5)
-            self.bp_block_gen_outside.modulus_even = 0
+            self.bp_block_gen_outside.modulus_even = 1
 
         if self.bp_block_gen_inside:
             self.bp_block_gen_inside.block_length = 2.5
             self.bp_block_gen_inside.row_count = 9
             self.bp_block_gen_inside.margin = (.5,.5)
-            self.bp_block_gen_inside.modulus_even = 0
+            self.bp_block_gen_inside.modulus_even = 1
 
         if self.bp_window:
             self.bp_window.length = 20

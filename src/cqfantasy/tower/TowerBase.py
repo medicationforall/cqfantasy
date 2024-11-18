@@ -40,6 +40,8 @@ class TowerBase(BaseSection):
         self.door_padding:float = 6
         self.door_count:int = 1
 
+        self.stair_rotate = 0
+
         # Init values
         if self.bp_block_gen_outside:
             self.bp_block_gen_outside.block_length = 2.5

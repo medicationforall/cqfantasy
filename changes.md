@@ -2,6 +2,9 @@
 
 ## 1.0.1
 * Remove old code
+* Added RoundBlockAltGenerator
+* Added RoundBlockUnevenStuccoGenerator
+* Added Examples
 
 ## 1.0.0
 * Added BaseSection to store common code between TowerBase, TowerMid, and TowerTop

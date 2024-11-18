@@ -10,14 +10,9 @@ from .LatticeWindow import LatticeWindow
 from .TileGenerator import TileGenerator
 from .RoundBlockGenerator import RoundBlockGenerator
 from .RoundBlockUnevenGenerator import RoundBlockUnevenGenerator
+from .RoundBlockUnevenStuccoGenerator import RoundBlockUnevenStuccoGenerator
+from .RoundBlockAltGenerator import RoundBlockAltGenerator
 from .BaseSection import BaseSection
-#from .old.TowerBase import TowerBase
-#from .old.UnevenBlocks import UnevenBlocks
-#from .old.TowerBaseGreebled import TowerBaseGreebled
-#from .old.TowerMid import TowerMid
-#from .old.TowerMidGreebled import TowerMidGreebled
-#from .old.TowerTop import TowerTop
-#from .old.TowerTopGreebled import TowerTopGreebled
 from .TowerBase import TowerBase
 from .TowerMid import TowerMid
 from .TowerTop import TowerTop
