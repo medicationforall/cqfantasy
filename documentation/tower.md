@@ -207,7 +207,7 @@ bp_tiles.tile_length = 15
 bp_tiles.tile_width = 15
 bp_tiles.tile_height = 2
 bp_tiles.tile_padding = .5
-bp_tiles.overflow = 12
+bp_tiles.overflow = 17
 bp_tiles.make_tile_method = make_dwarf_star
 
 bp_tiles.make()
@@ -352,70 +352,6 @@ show_object(ex_tower)
 * [source](../src/cqfantasy/tower/TowerBase.py)
 * [example](../example/tower/tower_base.py)
 * [stl](../stl/tower_base.stl)
-
----
-
-## TowerBaseGreebled
-Inherits from [TowerBase](#towerbase)
-
-### parameters
-* uneven_block_depth: float
-* render_base: bool
-* render_outside_blocks: bool
-* render_inside_blocks: bool
-
-``` python
-import cadquery as cq
-from cqfantasy.tower import TowerBaseGreebled
-
-bp_tower_base = TowerBaseGreebled()
-bp_tower_base.uneven_block_depth = 1
-bp_tower_base.seed = 'test4'
-bp_tower_base.render_base = True
-bp_tower_base.render_blocks = True
-bp_tower_base.render_outside_blocks = True
-bp_tower_base.render_inside_blocks = True
-
-bp_tower_base.diameter = 130
-bp_tower_base.base_diameter = 150
-bp_tower_base.height = 100
-
-bp_tower_base.wall_width = 4
-bp_tower_base.floor_height = 4
-
-bp_tower_base.block_length = 5
-bp_tower_base.block_width = 14
-bp_tower_base.block_height = 10
-
-bp_tower_base.block_ring_count = 30
-bp_tower_base.even_ring_rotate = 6
-
-bp_tower_base.render_stairs = True
-bp_tower_base.render_window_outline = False
-
-bp_tower_base.window_length = 12
-bp_tower_base.window_width = 18
-bp_tower_base.window_height = 40
-bp_tower_base.window_padding = 6
-bp_tower_base.window_count = 2
-
-bp_tower_base.door_length = 30
-bp_tower_base.door_width = 27
-bp_tower_base.door_height = 50
-bp_tower_base.door_padding = 7
-bp_tower_base.door_count = 1
-bp_tower_base.make()
-
-ex_tower = bp_tower_base.build()
-
-show_object(ex_tower)
-```
-
-![](./image/tower/08.png)
-
-* [source](../src/cqfantasy/tower/TowerBaseGreebled.py)
-* [example](../example/tower/tower_base_greebled.py)
-* [stl](../stl/tower_base_greebled.stl)
 
 ---
 

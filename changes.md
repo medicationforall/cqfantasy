@@ -1,5 +1,12 @@
 ## Main Wip
 
+## 1.1.0
+* Added wall package
+  * Added tileGenerator
+* Fixed tower.TileGenerator big the x and y count the grid were getting messed up do to order of operations (rookie mistake)
+  * the whole problem with hidden because of the intersect with a cylinder which hid the excess tiles
+* Upped ctqterrain to 2.4.0
+
 ## 1.0.1
 * Remove old code
 * Added RoundBlockAltGenerator

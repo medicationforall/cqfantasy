@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cqfantasy"
-version = "1.0.1"
+version = "1.1.0"
 authors = [
   { name="James Adams", email="inklink28@gmail.com" }
 ]
@@ -19,7 +19,7 @@ classifiers = [
 ]
 
 dependencies = [
-'cqterrain @ git+https://github.com/medicationforall/cqterrain@1.2.4'
+'cqterrain @ git+https://github.com/medicationforall/cqterrain@2.4.0'
 ]
 
 

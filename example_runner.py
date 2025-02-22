@@ -1,5 +1,12 @@
 import time
 
+#------------------------------
+## Wall Examples
+print('Wall Tile Examples')
+import example.wall.tile_generator
+
+#------------------------------
+
 print('Utility Examples')
 import example.tower.cut_cylinder
 
@@ -10,7 +17,7 @@ import example.tower.lattice_window
 print('Door Examples')
 import example.tower.tower_door
 
-print('Tile Examples')
+print('Tower Tile Examples')
 import example.tower.tile_generator
 import example.tower.tile_generator_dwarf_star
 
@@ -19,6 +26,9 @@ import example.tower.round_block_generator
 import example.tower.round_block_uneven_generator
 import example.tower.round_block_alt_generator
 import example.tower.round_block_stucco_generator
+#------------------------------
+## Tower Examples
+
 
 #------------------------------
 run_base = False
@@ -58,7 +68,7 @@ if run_base:
     print('end tower_top')
 
 #------------------------------
-run_greebled = True
+run_greebled = False
 
 if run_greebled:
     print('start tower_greebled_example')
@@ -119,3 +129,5 @@ if run_stucco:
     print(f" Real time: {t2[0] - t1[0]:.2f} seconds")
     print(f" CPU time: {t2[1] - t1[1]:.2f} seconds")
     print('end tower_stucco_example')
+
+#-----------------------------------

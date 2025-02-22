@@ -19,16 +19,16 @@ class TileGenerator(Base):
     def __init__(self):
         super().__init__()
         # properties
-        self.diameter:float = 100
+        
+        self.length:float = 150
+        self.width:float = 75
         self.tile_length:float = 10
         self.tile_width:float = 10
         self.tile_height:float = 3
         self.tile_padding:float = 1
-        self.overflow:float = 12
+        self.overflow:float = 0
 
         self.make_tile_method:Callable[[float, float, float], cq.Workplane] = make_basic_tile
-
-        self.render_intersect = True
 
         # shapes 
         self.tiles:cq.Workplane|None = None
@@ -42,9 +42,9 @@ class TileGenerator(Base):
         tile_length = self.tile_length + self.tile_padding * 2
         tile_width = self.tile_width + self.tile_padding * 2
         
-        x_count = math.floor((self.diameter+self.overflow) / tile_length)
-        y_count = math.floor((self.diameter+self.overflow) / tile_width)
-
+        x_count = math.floor((self.length + self.overflow) / tile_length)
+        y_count = math.floor((self.width + self.overflow) / tile_width)
+        
         if x_count == 0:
             raise Exception(f'x_count is zero')
             
@@ -65,12 +65,7 @@ class TileGenerator(Base):
             .eachpoint(callback = add_tile)
         )
 
-        intersect_cylinder = cq.Workplane("XY").cylinder(self.tile_height,self.diameter/2)
-
-        if self.render_intersect:
-            self.tiles = result.intersect(intersect_cylinder)
-        else:
-            self.tiles = result
+        self.tiles = result#.intersect(intersect_cylinder)
 
     def make(self, parent=None):
         super().make(parent)

@@ -4,6 +4,9 @@ Python library for making 3d printable Fantasy terrain using cadquery.
 ![](./documentation/image/cover.png)<br /><br />
 
 ``` python
+import cadquery as cq
+from cqfantasy.tower import Tower, LatticeWindow
+
 bp_tower = Tower()
 bp_tower.base_bp.render_blocks = True
 bp_tower.mid_bp.render_blocks = True
@@ -22,6 +25,7 @@ show_object(ex)
 ## Project Documention
 * [Documentation](documentation/documentation.md)
 	* [Tower](documentation/tower.md)
+    * [Wall](documentation/wall.md)
 
 ## Changes
 * [Changelog](./changes.md)
