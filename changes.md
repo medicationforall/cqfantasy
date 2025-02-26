@@ -1,5 +1,14 @@
 ## Main Wip
 
+## 1.2.0
+* Added house package
+  * Added Body
+  * Added Roof
+  * Added House
+  * Added house examples
+  * Added house documentation
+* Upped ctqterrain to 3.1.0
+
 ## 1.1.0
 * Added wall package
   * Added tileGenerator

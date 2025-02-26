@@ -1,6 +1,15 @@
 import time
 
 #------------------------------
+## House Examples
+print('House Examples')
+import example.house.body
+import example.house.roof
+import example.house.house
+import example.house.house_plate
+import example.house.house_cut_away
+
+#------------------------------
 ## Wall Examples
 print('Wall Tile Examples')
 import example.wall.tile_generator
