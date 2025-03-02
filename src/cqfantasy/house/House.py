@@ -1,3 +1,17 @@
+# Copyright 2025 James Adams
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import cadquery as cq
 from cadqueryhelper import Base
 from typing import Tuple
@@ -16,6 +30,8 @@ class House(Base):
         self.roof_height:float = 50
         self.roof_overhang:Tuple[float,float] = (10,5)
         self.roof_gap_spacer:float = 0
+
+        self.door_cut_width_padding:float = 0
         
         #shapes
         self.door_cut:cq.Workplane|None = None
@@ -50,7 +66,7 @@ class House(Base):
     def make_door_cut(self):
         self.door_cut = (
             cq.Workplane("XY")
-            .box(self.bp_door.length,self.bp_body.wall_width,self.bp_door.height)
+            .box(self.bp_door.length,self.bp_body.wall_width+self.door_cut_width_padding,self.bp_door.height)
         )
 
     def make(self, parent=None):

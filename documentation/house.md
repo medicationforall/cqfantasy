@@ -42,6 +42,7 @@ Orchestrator class for combining components of a house.
 * roof_height: float
 * roof_overhang: Tuple[float,float]
 * roof_gap_spacer: float
+* door_cut_width_padding: floatdoor_cut_width_padding
 
 ### blueprints
 * bp_body = Body()

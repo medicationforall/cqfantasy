@@ -1,5 +1,11 @@
 ## Main Wip
 
+## 1.3.0
+* Added missing license blocks
+* Added house StuccoBrickBody
+* Added house TudorSplitBody
+* Upped ctqterrain to 3.2.1
+
 ## 1.2.0
 * Added house package
   * Added Body

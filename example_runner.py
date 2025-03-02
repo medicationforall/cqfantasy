@@ -8,6 +8,8 @@ import example.house.roof
 import example.house.house
 import example.house.house_plate
 import example.house.house_cut_away
+import example.house.stucco_brick_body
+import example.house.tudor_split_body
 
 #------------------------------
 ## Wall Examples
