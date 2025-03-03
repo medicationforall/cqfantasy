@@ -3,6 +3,7 @@
 ## 1.3.0
 * Added missing license blocks
 * Added house StuccoBrickBody
+* Added house TudorBody
 * Added house TudorSplitBody
 * Upped ctqterrain to 3.2.1
 
