@@ -16,6 +16,37 @@ def angle(
     angle_deg = math.degrees(angle_radians)
     return angle_deg
 
+def crossing(length:float, width:float, height:float, r_angle:float) -> cq.Workplane:
+    beam = (
+        cq.Workplane("XY")
+        .box(length,width,height)
+        .rotate((0,1,0),(0,0,0),r_angle)
+    )
+    
+    beam_2 = (
+        cq.Workplane("XY")
+        .box(length,width,height)
+        .rotate((0,1,0),(0,0,0),-r_angle)
+    )
+    
+    return beam.union(beam_2)
+
+def left_detail(length, width, height, r_angle)->cq.Workplane:
+    beam_2 = (
+        cq.Workplane("XY")
+        .box(length, width, height)
+        .rotate((0,1,0),(0,0,0), -r_angle)
+    )
+    return beam_2
+
+def right_detail(length, width, height, r_angle)->cq.Workplane:
+    beam_2 = (
+        cq.Workplane("XY")
+        .box(length, width, height)
+        .rotate((0,1,0),(0,0,0), r_angle)
+    )
+    return beam_2
+
 class TudorBody(Body):
     def  __init__(self):
         super().__init__()
@@ -93,107 +124,53 @@ class TudorBody(Body):
 
         self.panels_x = outline_x.cut(panels_x)
         self.panels_y = outline_y.cut(panels_y)
+
+    def make_detail(self, style, length, width, height, r_angle):
+        detail = cq.Workplane("XY")
+        if style and style=="cross":                    
+            detail = crossing(length, width, height, r_angle)
+        elif style and style == "left":
+            detail = left_detail(length, width, height, r_angle)
+        elif style and style == "right":
+            detail = right_detail(length, width, height, r_angle)
+
+        return detail
+
+    def make_styled_wall(self, length, height, styles):
+        styled_panes = cq.Workplane("XY")
+        
+        if styles:
+            if isinstance(styles, list):
+                panel_length = self.panel_length
+                
+                hyp = math.hypot(panel_length, height)
+                r_angle = angle(height,panel_length)
+                        
+                for index,style in enumerate(styles):
+                    detail = self.make_detail(style,self.panel_space,self.panel_width,hyp,r_angle)
+                    styled_panes = styled_panes.add(detail.translate((length/2-panel_length/2-panel_length*index,0,0)))
+            else:
+                count = math.floor(length / self.panel_length)
+                panel_length = self.panel_length
+                hyp = math.hypot(panel_length, height)
+                r_angle = angle(height,panel_length)
+
+                detail = self.make_detail(styles,self.panel_space,self.panel_width,hyp,r_angle)
+
+                for index in range(count):
+                    styled_panes = styled_panes.add(detail.translate((length/2-panel_length/2-panel_length*index,0,0)))
+
+            return styled_panes
         
     def make_x_styles(self):
         #log('make_x_styles')
-        if self.x_styles:
-            height = self.calculate_panel_height()
-            panel_length = self.panel_length
-            
-            hyp = math.hypot(panel_length, height)
-            r_angle = angle(height,panel_length)
-                    
-            x_styles = cq.Workplane("XY")
-            for index,style in enumerate(self.x_styles):
-                if style and style=="cross":
-                    beam = (
-                        cq.Workplane("XY")
-                        .box(self.panel_space,self.panel_width,hyp)
-                        .rotate((0,1,0),(0,0,0),r_angle)
-                    )
-                    
-                    beam_2 = (
-                        cq.Workplane("XY")
-                        .box(self.panel_space,self.panel_width,hyp)
-                        .rotate((0,1,0),(0,0,0),-r_angle)
-                    )
-                    
-                    cross = beam.union(beam_2).translate((self.length/2-panel_length/2-panel_length*index,0,0))
-                    
-                    x_styles = x_styles.add(cross)
-                elif style and style == "left":
-
-                    beam_2 = (
-                        cq.Workplane("XY")
-                        .box(self.panel_space,self.panel_width,hyp)
-                        .rotate((0,1,0),(0,0,0),-r_angle)
-                    )
-                    
-                    left = beam_2.translate((self.length/2-panel_length/2-panel_length*index,0,0))
-                    x_styles = x_styles.add(left)
-                elif style and style == "right":
-
-                    beam = (
-                        cq.Workplane("XY")
-                        .box(self.panel_space,self.panel_width,hyp)
-                        .rotate((0,1,0),(0,0,0),r_angle)
-                    )
-                    
-                    right = beam.translate((self.length/2-panel_length/2-panel_length*index,0,0))
-                    x_styles = x_styles.add(right)
-                    
-            self.tudor_x_details = x_styles
+        height = self.calculate_panel_height()            
+        self.tudor_x_details = self.make_styled_wall(self.length,height, self.x_styles)
             
     def make_y_styles(self):
         #log('make_y_styles')
-        if self.y_styles:
-            y_styles = cq.Workplane("XY")
-            
-            height = self.calculate_panel_height()
-            panel_length = self.panel_length
-            
-            hyp = math.hypot(panel_length, height)
-            r_angle = angle(height,panel_length)
-            
-            for index,style in enumerate(self.y_styles):
-                if style and style=="cross":
-                    beam = (
-                        cq.Workplane("XY")
-                        .box(self.panel_space,self.panel_width,hyp)
-                        .rotate((0,1,0),(0,0,0),r_angle)
-                    )
-                    
-                    beam_2 = (
-                        cq.Workplane("XY")
-                        .box(self.panel_space,self.panel_width,hyp)
-                        .rotate((0,1,0),(0,0,0),-r_angle)
-                    )
-                    
-                    cross = beam.union(beam_2).translate((self.width/2-panel_length/2-panel_length*index,0,0))
-                    
-                    y_styles = y_styles.add(cross)
-                    
-                elif style and style == "left":
-
-                    beam_2 = (
-                        cq.Workplane("XY")
-                        .box(self.panel_space,self.panel_width,hyp)
-                        .rotate((0,1,0),(0,0,0),-r_angle)
-                    )
-                    
-                    left = beam_2.translate((self.width/2-panel_length/2-panel_length*index,0,0))
-                    y_styles = y_styles.add(left)
-                elif style and style == "right":
-                    beam = (
-                        cq.Workplane("XY")
-                        .box(self.panel_space,self.panel_width,hyp)
-                        .rotate((0,1,0),(0,0,0),r_angle)
-                    )
-                    
-                    right = beam.translate((self.width/2-panel_length/2-panel_length*index,0,0))
-                    y_styles = y_styles.add(right)
-                    
-            self.tudor_y_details = y_styles
+        height = self.calculate_panel_height()            
+        self.tudor_y_details = self.make_styled_wall(self.width,height, self.y_styles)
 
     def make(self, parent=None):
         self.make_split()
