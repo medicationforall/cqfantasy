@@ -11,6 +11,8 @@ import example.house.house_cut_away
 import example.house.stucco_brick_body
 import example.house.tudor_split_body
 import example.house.tudor_body
+import example.house.tudor_wall
+import example.house.body_types
 
 #------------------------------
 ## Wall Examples

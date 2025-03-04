@@ -15,6 +15,7 @@ import cadquery as cq
 import math
 from cqterrain.material import stacked_wave_form_map, stucco_brick_blocks
 from . import Body
+from . import tudor_wall
 
 class TudorSplitBody(Body):
     def __init__(self):
@@ -43,6 +44,13 @@ class TudorSplitBody(Body):
         self.block_width = 5
         self.block_height = 5
         self.block_spacing = 2
+
+        self.panel_length = 25
+        self.panel_width = 2.5
+        self.panel_space = 2
+
+        self.x_styles = ["cross",None,None,"cross"]
+        self.y_styles = ["cross",None,None,"cross"]
         
         # blueprints
         self.stones_generator = None
@@ -55,6 +63,9 @@ class TudorSplitBody(Body):
         self.stones_x_minus = None
         self.stones_y_plus = None
         self.stones_y_minus = None
+
+        self.tudor_wall_x = None
+        self.tudor_wall_y = None
         
     def make_split(self):
         split_x = cq.cq.Workplane("XY").box(self.length,self.split_width,self.split_height)
@@ -132,12 +143,37 @@ class TudorSplitBody(Body):
             self.block_width,
             self.block_spacing
         )
+
+    def calculate_panel_height(self):
+        return self.height - self.split_height - self.split_divide_height
+
+
+    def make_tudor_walls(self):
+        height = self.calculate_panel_height() 
+        self.tudor_wall_y = tudor_wall(
+            self.width,
+            height, 
+            self.y_styles, 
+            self.panel_length, 
+            self.panel_space, 
+            self.panel_width
+        )
+
+        self.tudor_wall_x = tudor_wall(
+            self.length,
+            height, 
+            self.x_styles, 
+            self.panel_length, 
+            self.panel_space, 
+            self.panel_width
+        )
         
         
     def make(self):
         super().make()
         self.make_split()
         self.make_corner()
+        self.make_tudor_walls()
         
         if self.render_stones:
             self.make_stones()
@@ -200,6 +236,30 @@ class TudorSplitBody(Body):
                     .rotate((1,0,0),(0,0,0),-90)
                     .rotate((0,0,1),(0,0,0), 90)
                     .translate((-self.length/2,self.block_width/2,-self.height/2+self.split_divide_height/2))
+                )
+            )
+
+        if self.tudor_wall_x:
+            height = self.calculate_panel_height() 
+            translate_y = self.width/2+self.panel_width/2
+            scene = (
+                scene
+                .add(self.tudor_wall_x.translate((0,translate_y,height/2)))
+                .add(self.tudor_wall_x.rotate((0,0,1),(0,0,0),180).translate((0,-translate_y,height/2)))
+            )
+            
+        if self.tudor_wall_y:
+            height = self.calculate_panel_height() 
+            translate_x = self.length/2+self.panel_width/2
+            scene = (
+                scene
+                .add(self.tudor_wall_y
+                     .rotate((0,0,1),(0,0,0),-90)
+                     .translate((-translate_x,0,height/2))
+                )
+                .add(self.tudor_wall_y
+                     .rotate((0,0,1),(0,0,0),90)
+                     .translate((translate_x,0,height/2))
                 )
             )
 

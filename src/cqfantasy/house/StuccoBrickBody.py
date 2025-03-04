@@ -23,31 +23,31 @@ class StuccoBrickBody(Body):
         
         #parameters 
         
-        self.render_stones = True
+        self.render_stones:bool = True
         
-        self.seed = 'test'
-        self.cell_types = [
+        self.seed:str = 'test'
+        self.cell_types:list[str] = [
             'block',
             'block', 
             'empty',
             'block'
         ]
-        self.y_count = 9
-        self.x_count = 15
+        self.y_count:int = 9
+        self.x_count:int = 15
 
-        self.block_length = 8
-        self.block_width = 5
-        self.block_height = 3
-        self.block_spacing = 2
+        self.block_length:float = 8
+        self.block_width:float = 5
+        self.block_height:float = 3
+        self.block_spacing:float = 2
         
         #shapes
-        self.split_x = None
-        self.split_y = None
-        self.corner = None
-        self.stones_x_plus = None
-        self.stones_x_minus = None
-        self.stones_y_plus = None
-        self.stones_y_minus = None
+        self.split_x:cq.Workplane|None = None
+        self.split_y:cq.Workplane|None = None
+        self.corner:cq.Workplane|None = None
+        self.stones_x_plus:cq.Workplane|None = None
+        self.stones_x_minus:cq.Workplane|None = None
+        self.stones_y_plus:cq.Workplane|None = None
+        self.stones_y_minus:cq.Workplane|None = None
 
     def make_stones(self):
         #log('making stones')

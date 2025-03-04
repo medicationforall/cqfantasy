@@ -25,9 +25,11 @@ class TowerWindow(Base):
         self.height:float = 30
         self.inner_height_margin:float = 15
         
+        self.render_cylinder = True
         self.outside_diameter:float = 130
         self.inside_diameter:float = 100
         #self.render_outline:bool = False
+        self.alt_cut_width = 10
         
         # shapes
         self.outline:cq.Workplane|None = None
@@ -83,8 +85,10 @@ class TowerWindow(Base):
         
     def make(self, parent=None):
         super().make(parent)
-        self.make_outline()
-        self.make_cut()
+
+        if self.render_cylinder:
+            self.make_outline()
+            self.make_cut()
         self.make_window()
         
     def build(self):
@@ -93,8 +97,11 @@ class TowerWindow(Base):
             cq.Workplane("XY")
         )
         
-        difference = self.calculate_difference()
-        y_offset = self.outside_diameter/2 - difference/4
+        if self.render_cylinder:
+            difference = self.calculate_difference()
+            y_offset = self.outside_diameter/2 - difference/4
+        else:
+            y_offset = 0
 
         if self.window:
             scene = scene.union(self.window.translate((0,y_offset,0)))
@@ -102,8 +109,17 @@ class TowerWindow(Base):
         return scene
         
     def build_cut(self):
-        scene = cq.Workplane("XY").union(self.cut)
-        
+        if self.render_cylinder and self.cut:
+            scene = cq.Workplane("XY").union(self.cut)
+        else:
+            #this is a hack
+            inner_height = self.height - self.inner_height_margin
+            scene = shape.arch_pointed(
+                length = self.length,
+                width = self.alt_cut_width,
+                height = self.height,
+                inner_height = inner_height
+            )
         #if self.render_outline and self.outline:
         #    scene = scene.add(self.outline)   
         return scene
