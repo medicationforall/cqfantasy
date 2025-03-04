@@ -5,6 +5,7 @@
 * Added house StuccoBrickBody
 * Added house TudorBody
 * Added house TudorSplitBody
+* Added house TileGenerator
 * Upped ctqterrain to 3.2.1
 
 ## 1.2.0
