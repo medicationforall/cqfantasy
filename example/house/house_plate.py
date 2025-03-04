@@ -9,13 +9,16 @@ bp_house.roof_height = 50
 bp_house.roof_overhang = (15,10)
 
 bp_body = bp_house.bp_body
-bp_body.wall_width = 10
+bp_body.wall_width = 4
 
 bp_door = bp_house.bp_door
 bp_door.height = 50
 bp_door.width = 2.5
 
 bp_roof = bp_house.bp_roof
+
+bp_house.window_x_style = ['None',None,None,'window']
+bp_house.window_y_style = [None,'window','window','window','window',None]
 
 bp_house.make()
 ex_house_plate = bp_house.build_plate()
