@@ -22,50 +22,50 @@ class TudorSplitBody(Body):
         super().__init__()
         
         #parameters 
-        self.split_width = 3
-        self.split_height = 3
+        self.split_width:float = 3
+        self.split_height:float = 3
         
-        self.corner_length = 3
-        self.corner_width = 3
+        self.corner_length:float = 3
+        self.corner_width:float = 3
         
-        self.split_divide_height = 25
-        self.render_stones = True
+        self.split_divide_height:float = 25
+        self.render_stones:bool = True
         
-        self.seed = 'test'
-        self.cell_types = [
+        self.seed:str = 'test'
+        self.cell_types:list[str] = [
             'block',
             'block', 
             'empty',
             'block'
         ]
-        self.y_count = 9
-        self.x_count = 15
-        self.block_length = 8
-        self.block_width = 5
-        self.block_height = 5
-        self.block_spacing = 2
+        self.y_count:int = 9
+        self.x_count:int = 15
+        self.block_length:float = 8
+        self.block_width:float = 5
+        self.block_height:float = 5
+        self.block_spacing:float = 2
 
-        self.panel_length = 25
-        self.panel_width = 2.5
-        self.panel_space = 2
+        self.panel_length:float = 25
+        self.panel_width:float = 2.5
+        self.panel_space:float = 2
 
-        self.x_styles = ["cross",None,None,"cross"]
-        self.y_styles = ["cross",None,None,"cross"]
+        self.x_styles:list[str|None]|str|None = ["cross",None,None,"cross"]
+        self.y_styles:list[str|None]|str|None = ["cross",None,None,"cross"]
         
         # blueprints
-        self.stones_generator = None
+        #self.stones_generator = None
         
         #shapes
-        self.split_x = None
-        self.split_y = None
-        self.corner = None
-        self.stones_x_plus = None
-        self.stones_x_minus = None
-        self.stones_y_plus = None
-        self.stones_y_minus = None
+        self.split_x:cq.Workplane|None = None
+        self.split_y:cq.Workplane|None = None
+        self.corner:cq.Workplane|None = None
+        self.stones_x_plus:cq.Workplane|None = None
+        self.stones_x_minus:cq.Workplane|None = None
+        self.stones_y_plus:cq.Workplane|None = None
+        self.stones_y_minus:cq.Workplane|None = None
 
-        self.tudor_wall_x = None
-        self.tudor_wall_y = None
+        self.tudor_wall_x:cq.Workplane|None = None
+        self.tudor_wall_y:cq.Workplane|None = None
         
     def make_split(self):
         split_x = cq.cq.Workplane("XY").box(self.length,self.split_width,self.split_height)
@@ -240,26 +240,29 @@ class TudorSplitBody(Body):
             )
 
         if self.tudor_wall_x:
-            height = self.calculate_panel_height() 
+            panel_height = self.calculate_panel_height() 
+            height = -self.height/2 + panel_height/2 + self.split_height + self.split_divide_height# - self.split_divide_height
             translate_y = self.width/2+self.panel_width/2
             scene = (
                 scene
-                .add(self.tudor_wall_x.translate((0,translate_y,height/2)))
-                .add(self.tudor_wall_x.rotate((0,0,1),(0,0,0),180).translate((0,-translate_y,height/2)))
+                .add(self.tudor_wall_x.translate((0,translate_y,height)))
+                .add(self.tudor_wall_x.rotate((0,0,1),(0,0,0),180).translate((0,-translate_y,height)))
             )
             
         if self.tudor_wall_y:
-            height = self.calculate_panel_height() 
+            panel_height = self.calculate_panel_height() 
+            height = -self.height/2 + panel_height/2 + self.split_height + self.split_divide_height# - self.split_divide_height
+
             translate_x = self.length/2+self.panel_width/2
             scene = (
                 scene
                 .add(self.tudor_wall_y
                      .rotate((0,0,1),(0,0,0),-90)
-                     .translate((-translate_x,0,height/2))
+                     .translate((-translate_x,0,height))
                 )
                 .add(self.tudor_wall_y
                      .rotate((0,0,1),(0,0,0),90)
-                     .translate((translate_x,0,height/2))
+                     .translate((translate_x,0,height))
                 )
             )
 
