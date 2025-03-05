@@ -229,15 +229,15 @@ show_object(ex_body_stucco)
 ## TileGenerator
 
 ### params
-* length:float
-* width:float
-* tile_length:float
-* tile_width:float
-* tile_height:float
-* tile_padding:float
-* overflow:float
-* make_tile_method:Callable[[float, float, float], cq.Workplane]
-* render_intersect:bool
+* length: float
+* width: float
+* tile_length: float
+* tile_width: float
+* tile_height: float
+* tile_padding: float
+* overflow: float
+* make_tile_method: Callable[[float, float, float], cq.Workplane]
+* render_intersect: bool
 
 ``` python
 import cadquery as cq
@@ -281,3 +281,133 @@ show_object(ex_tiles)
 
 ---
 
+## TudorBody
+
+### params
+* split_width: float
+* split_height: float
+* corner_length: float
+* corner_width: float
+* split_divide_height: float
+* panel_length: float
+* panel_width: float 
+* panel_space: float
+* x_styles: list[str|None]|str|None
+* y_styles: list[str|None]|str|None
+
+``` python
+import cadquery as cq
+from cqfantasy.house import TudorBody
+
+bp_body = TudorBody()
+bp_body.length = 150
+bp_body.width = 100
+
+bp_body.x_styles = [None,"right","left","right","left"]
+bp_body.y_styles = ["cross","left","right","cross"]
+
+bp_body.split_divide_height = 25
+bp_body.panel_length = 25
+bp_body.panel_width = 2.5
+bp_body.panel_space = 2
+
+bp_body.make()
+ex_body = bp_body.build()
+
+show_object(ex_body)
+```
+
+![](image/house/09.png)
+
+* [source](../src/cqfantasy/house/TudorBody.py)
+* [example](../example/house/tudor_body.py)
+* [stl](../stl/house_body_tudor.stl)
+
+---
+
+## TudorSplitBody
+Combination of TudorBody and StuccoBrickBody
+
+### params
+self.split_width: float
+self.split_height: float
+self.corner_length: float
+self.corner_width: float
+self.split_divide_height: float
+self.render_stones: bool
+self.seed: str
+self.cell_types: list[str]
+self.y_count: int
+self.x_count: int
+self.block_length: float
+self.block_width: float
+self.block_height: float
+self.block_spacing: float
+self.panel_length: float
+self.panel_width: float
+self.panel_space: float
+self.x_styles: list[str|None]|str|None
+self.y_styles: list[str|None]|str|None
+
+``` python
+import cadquery as cq
+from cqfantasy.house import TudorBody
+
+bp_body = TudorBody()
+bp_body.length = 150
+bp_body.width = 100
+
+bp_body.x_styles = [None,"right","left","right","left"]
+bp_body.y_styles = ["cross","left","right","cross"]
+
+bp_body.split_divide_height = 25
+bp_body.panel_length = 25
+bp_body.panel_width = 2.5
+bp_body.panel_space = 2
+
+bp_body.make()
+ex_body = bp_body.build()
+
+show_object(ex_body)
+```
+
+![](image/house/10.png)
+
+* [source](../src/cqfantasy/house/TudorSplitBody.py)
+* [example](../example/house/tudor_split_body.py)
+* [stl](../stl/house_body_tudor_split.stl)
+
+---
+
+## TudorWall
+
+### params
+* length: float 
+* height: float
+* styles: list[str|None]|str|None
+* panel_length: float
+* panel_space: float 
+* panel_width: float
+
+``` python
+import cadquery as cq
+from cqfantasy.house import tudor_wall
+
+ex_wall = tudor_wall(
+    length = 100, 
+    height = 75, 
+    styles = [None,"cross","left","right"], 
+    panel_length = 25, 
+    panel_space = 3, 
+    panel_width = 3
+)
+show_object(ex_wall)
+```
+
+![](image/house/11.png)
+
+* [source](../src/cqfantasy/house/TudorWall.py)
+* [example](../example/house/tudor_wall.py)
+* [stl](../stl/house_wall_tudor.stl)
+  
+---
