@@ -32,8 +32,6 @@ class StuccoBrickBody(Body):
             'empty',
             'block'
         ]
-        self.y_count:int = 9
-        self.x_count:int = 15
 
         self.block_length:float = 8
         self.block_width:float = 5

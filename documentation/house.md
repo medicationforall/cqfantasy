@@ -177,3 +177,52 @@ show_object(ex_roof)
 * [stl](../stl/house_roof.stl)
 
 ---
+
+## StuccoBrickBody
+
+### params
+* render_stones: bool
+* seed: str
+* cell_types: list[str]
+* y_count: int
+* x_count: int
+* block_length: float
+* block_width: float
+* block_height: float
+* block_spacing: float
+
+``` python
+import cadquery as cq
+from cqfantasy.house import StuccoBrickBody
+
+bp_body_stucco = StuccoBrickBody()
+
+bp_body_stucco.seed = 'test2'
+bp_body_stucco.length = 100
+bp_body_stucco.render_stones= True
+bp_body_stucco.cell_types = [
+    'block',
+    'block', 
+    'empty',
+    'block'
+]
+
+bp_body_stucco.block_length = 8
+bp_body_stucco.block_width = 5
+bp_body_stucco.block_height = 3
+bp_body_stucco.block_spacing = 2
+bp_body_stucco.make()
+
+ex_body_stucco = bp_body_stucco.build()
+
+show_object(ex_body_stucco)
+```
+
+![](image/house/07.png)
+
+* [source](../src/cqfantasy/house/StuccoBrickBody.py)
+* [example](../example/house/stucco_brick_body.py)
+* [stl](../stl/house_body_stucco_brick.stl)
+
+---
+
