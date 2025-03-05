@@ -19,7 +19,6 @@ class TileGenerator(Base):
     def __init__(self):
         super().__init__()
         # properties
-        #self.diameter:float = 100
         self.length:float = 100
         self.width:float = 100
         self.tile_length:float = 10
@@ -30,7 +29,7 @@ class TileGenerator(Base):
 
         self.make_tile_method:Callable[[float, float, float], cq.Workplane] = make_basic_tile
 
-        self.render_intersect = True
+        self.render_intersect:bool = True
 
         # shapes 
         self.tiles:cq.Workplane|None = None
