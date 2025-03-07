@@ -26,9 +26,13 @@ class Roof(Base):
         
         self.overhang:Tuple[float,float,float] = (4,4,4)
         
+        self.render_overhang_inset:bool = True
+        self.overhang_inset:Tuple[float,float,float] = (4,8,4)
+        
         #shapes
         self.roof:cq.Workplane|None = None
         self.roof_cut:cq.Workplane|None = None
+        self.overhang_inset_cut = None
         
     def make_roof(self):
         pts = [(0,0),(self.length,0),((self.length/2,self.height))]
@@ -56,11 +60,29 @@ class Roof(Base):
                 
         self.roof_cut = roof_cut
         
+    def make_overhang_inset(self):
+        length = self.length - self.overhang_inset[0]*2
+        width = self.overhang_inset[1]
+        height = self.height - self.overhang_inset[2]*2
+        
+        pts = [(0,0),(length,0),((length/2,height))]
+        overhang_inset_cut = (
+            cq.Workplane("XZ")
+            .polyline(pts)
+            .close()
+            .extrude(width)
+        ).translate((-length/2, width/2,-self.height/2))
+        
+        self.overhang_inset_cut = overhang_inset_cut
+        
         
     def make(self, parent=None):
         super().make(parent)
         self.make_roof()
         self.make_roof_cut()
+        
+        if self.render_overhang_inset:
+            self.make_overhang_inset()
         
     def build(self) -> cq.Workplane:
         super().build()
@@ -73,4 +95,11 @@ class Roof(Base):
 
         if self.roof_cut:
             scene = scene.cut(self.roof_cut)
+            
+        if self.render_overhang_inset and self.overhang_inset_cut:
+            scene = (
+                scene
+                .cut(self.overhang_inset_cut.translate((0,self.width/2-self.overhang_inset[1]/2,0)))
+                .cut(self.overhang_inset_cut.translate((0,-self.width/2+self.overhang_inset[1]/2,0)))
+            )
         return scene

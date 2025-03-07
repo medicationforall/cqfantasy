@@ -1,9 +1,9 @@
 import cadquery as cq
-from cqfantasy.house import House, TudorSplitBody
+from cqfantasy.house import House, TudorSplitBody, ShingleRoof
 
 bp_house = House()
 bp_house.length = 100
-bp_house.width = 175
+bp_house.width = 180
 bp_house.height = 75
 bp_house.roof_height = 50
 bp_house.roof_overhang = (15,10)
@@ -31,7 +31,10 @@ bp_house.door_cut_width_padding = 10
 
 bp_house.tile_height = 1.5
 
+bp_house.bp_roof = ShingleRoof()
 bp_roof = bp_house.bp_roof
+bp_roof.tile_length = 10
+bp_roof.overhang_inset = (12,10,4)
 
 bp_house.window_x_style = [None,None,None]
 bp_house.window_y_style = [None,'window',None,'window',None,'window',None]

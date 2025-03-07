@@ -7,6 +7,10 @@ bp_roof.width = 150
 bp_roof.height = 75
 
 bp_roof.overhang = (4,4,4)
+
+bp_roof.render_overhang_inset = True
+bp_roof.overhang_inset = (4,2,4)
+
 bp_roof.make()
 ex_roof = bp_roof.build()
 

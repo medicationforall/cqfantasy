@@ -152,6 +152,8 @@ ex_house_cut_away = bp_house.build_cut_away()
 * width: float
 * height: float
 * overhang: Tuple[float,float,float]
+* render_overhang_inset:bool
+* overhang_inset:Tuple[float,float,float]
 
 ``` python
 import cadquery as cq
@@ -163,6 +165,10 @@ bp_roof.width = 150
 bp_roof.height = 75
 
 bp_roof.overhang = (4,4,4)
+
+bp_roof.render_overhang_inset = True
+bp_roof.overhang_inset = (4,2,4)
+
 bp_roof.make()
 ex_roof = bp_roof.build()
 
@@ -176,6 +182,36 @@ show_object(ex_roof)
 * [example](../example/house/roof.py)
 * [stl](../stl/house_roof.stl)
 
+---
+## ShingleRoof
+
+### parameters
+* render_shingles:bool = True
+* tile_length:float = 10
+* tile_width:float = 10
+* tile_height:float = 0.8
+* tile_rotation:float = 4
+* tile_push:float = 2
+
+``` python
+import cadquery as cq
+from cqfantasy.house import ShingleRoof
+
+bp_roof = ShingleRoof()
+bp_roof.height = 25
+bp_roof.length = 50
+bp_roof.width = 50
+bp_roof.make()
+ex_roof = bp_roof.build()
+
+show_object(ex_roof.translate((0,0,0)))
+```
+
+![](image/house/12.png)
+
+* [source](../src/cqfantasy/house/ShingleRoof.py)
+* [example](../example/house/shingle_roof.py)
+* [stl](../stl/house_roof_shingle.stl)
 ---
 
 ## StuccoBrickBody
