@@ -1,5 +1,9 @@
 ## Main Wip
 
+## 1.5.0
+* Updated house documentation screenshots
+* Added house WallTudor
+
 ## 1.4.0
 * Added house ShingleRoof
 * Upped ctqterrain to 3.3.0

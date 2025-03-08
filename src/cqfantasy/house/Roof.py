@@ -28,6 +28,9 @@ class Roof(Base):
         
         self.render_overhang_inset:bool = True
         self.overhang_inset:Tuple[float,float,float] = (4,8,4)
+
+        # blueprints
+        self.bp_outside_wall = None
         
         #shapes
         self.roof:cq.Workplane|None = None
@@ -75,6 +78,12 @@ class Roof(Base):
         
         self.overhang_inset_cut = overhang_inset_cut
         
+    def make_outside_wall(self):
+        if self.bp_outside_wall:
+            self.bp_outside_wall.length = self.length
+            self.bp_outside_wall.height = self.height
+            self.bp_outside_wall.make()
+        
         
     def make(self, parent=None):
         super().make(parent)
@@ -83,6 +92,8 @@ class Roof(Base):
         
         if self.render_overhang_inset:
             self.make_overhang_inset()
+            
+        self.make_outside_wall()
         
     def build(self) -> cq.Workplane:
         super().build()
@@ -102,4 +113,24 @@ class Roof(Base):
                 .cut(self.overhang_inset_cut.translate((0,self.width/2-self.overhang_inset[1]/2,0)))
                 .cut(self.overhang_inset_cut.translate((0,-self.width/2+self.overhang_inset[1]/2,0)))
             )
+            
+        if self.bp_outside_wall:
+            outside_wall = self.bp_outside_wall.build()
+            
+            y_translate = self.width/2+self.bp_outside_wall.panel_width/2
+            
+            if self.render_overhang_inset:
+                outside_wall = outside_wall.intersect(self.overhang_inset_cut)
+                y_translate -= self.overhang_inset[1]
+                
+            else:
+                outside_wall = outside_wall.intersect(self.roof)
+                
+                
+            scene = (
+                scene
+                .add(outside_wall.translate((0,y_translate,0)))
+                .add(outside_wall.rotate((0,0,1),(0,0,0),180).translate((0,-y_translate,0)))
+            )
+            
         return scene

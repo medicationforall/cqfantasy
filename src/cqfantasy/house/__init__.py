@@ -3,7 +3,8 @@ from .Roof import Roof
 from .ShingleRoof import ShingleRoof
 from .TileGenerator import TileGenerator
 from .House import House
-from .TudorWall import tudor_wall
+from .tudor_wall import tudor_wall
+from .WallTudor import WallTudor
 from .StuccoBrickBody import StuccoBrickBody
 from .TudorBody import TudorBody
 from .TudorSplitBody import TudorSplitBody

@@ -39,9 +39,6 @@ class StuccoBrickBody(Body):
         self.block_spacing:float = 2
         
         #shapes
-        self.split_x:cq.Workplane|None = None
-        self.split_y:cq.Workplane|None = None
-        self.corner:cq.Workplane|None = None
         self.stones_x_plus:cq.Workplane|None = None
         self.stones_x_minus:cq.Workplane|None = None
         self.stones_y_plus:cq.Workplane|None = None
