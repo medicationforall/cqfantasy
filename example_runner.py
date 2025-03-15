@@ -16,7 +16,9 @@ import example.house.body_types
 import example.house.house_greebled
 import example.house.tile_generator
 import example.house.shingle_roof
-import example.house.WallTudor
+import example.house.wall_tudor_class
+import example.house.wall_tudor_paneling_class
+import example.house.wall_stucco_brick_class
 
 #------------------------------
 ## Wall Examples

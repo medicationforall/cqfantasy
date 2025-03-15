@@ -1,8 +1,6 @@
 import cadquery as cq
 from cqfantasy.house import WallTudor
 
-print('test wall tudor')
-
 bp_wall = WallTudor()
 
 bp_wall.length = 100

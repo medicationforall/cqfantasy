@@ -28,6 +28,18 @@ class Body(Base):
         #shapes
         self.body:cq.Workplane|None = None
         
+    def calculate_internal_length(self):
+        internal_length = self.length - self.wall_width*2
+        return internal_length
+    
+    def calculate_internal_width(self):
+        internal_width = self.width - self.wall_width*2
+        return internal_width
+        
+    def calculate_internal_height(self):
+        internal_height = self.height - self.floor_height
+        return internal_height
+        
     def make_body(self):
         body = (
             cq.Workplane("XY")

@@ -3,6 +3,9 @@
 ## 1.5.0
 * Updated house documentation screenshots
 * Added house WallTudor
+* Added house WallStuccoBrick
+* Added house WallTudorPaneling
+* Added Calculate methods to house body
 
 ## 1.4.0
 * Added house ShingleRoof
