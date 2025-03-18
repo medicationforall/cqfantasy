@@ -1,5 +1,5 @@
 import cadquery as cq
-from cqfantasy.house import tudor_wall
+from cqfantasy.house_wall import tudor_wall
 
 ex_wall = tudor_wall(
     length = 100, 

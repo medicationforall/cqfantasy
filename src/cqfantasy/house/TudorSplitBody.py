@@ -11,11 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import cadquery as cq
 import math
 from cqterrain.material import stacked_wave_form_map, stucco_brick_blocks
 from . import Body
-from . import tudor_wall
+from ..house_wall import tudor_wall
 
 class TudorSplitBody(Body):
     def __init__(self):

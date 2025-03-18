@@ -1,5 +1,6 @@
 import cadquery as cq
-from cqfantasy.house import Roof, WallTudor
+from cqfantasy.house import Roof
+from cqfantasy.house_wall import WallTudor
 
 bp_roof = Roof()
 bp_roof.length = 100

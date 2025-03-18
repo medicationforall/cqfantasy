@@ -1,5 +1,12 @@
 ## Main Wip
 
+## 2.0.0
+* Refactored code and moved various wall components to house_wall module.
+  * tudor_wall
+  * WallStuccoBrick
+  * WallTudor
+  * WallTudorPaneling 
+
 ## 1.5.0
 * Updated house documentation screenshots
 * Added house WallTudor

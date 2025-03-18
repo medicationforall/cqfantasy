@@ -1,5 +1,6 @@
 import cadquery as cq
-from cqfantasy.house import House, TudorSplitBody, ShingleRoof, WallTudor
+from cqfantasy.house import House, TudorSplitBody, ShingleRoof 
+from cqfantasy.house_wall import WallTudor
 
 bp_house = House()
 bp_house.length = 100

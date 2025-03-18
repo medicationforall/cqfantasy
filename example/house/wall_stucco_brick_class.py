@@ -1,5 +1,5 @@
 import cadquery as cq
-from cqfantasy.house import WallStuccoBrick
+from cqfantasy.house_wall import WallStuccoBrick
 
 bp_wall = WallStuccoBrick()
 

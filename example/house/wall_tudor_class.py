@@ -1,5 +1,5 @@
 import cadquery as cq
-from cqfantasy.house import WallTudor
+from cqfantasy.house_wall import WallTudor
 
 bp_wall = WallTudor()
 
