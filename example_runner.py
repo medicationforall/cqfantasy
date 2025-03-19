@@ -4,6 +4,7 @@ import time
 ## House Examples
 print('House Examples')
 import example.house.body
+import example.house.body_greebled
 import example.house.roof
 import example.house.house
 import example.house.house_plate
@@ -13,8 +14,10 @@ import example.house.tudor_split_body
 import example.house.tudor_body
 import example.house.body_types
 import example.house.house_greebled
+import example.house.house_greebled_two
 import example.house.tile_generator
 import example.house.shingle_roof
+
 
 
 #------------------------------

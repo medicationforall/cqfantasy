@@ -7,7 +7,7 @@ bp_house.length = 100
 bp_house.width = 175
 bp_house.height = 75
 bp_house.roof_height = 50
-bp_house.roof_overhang = (15,10)
+bp_house.roof_overhang = (15,10,4)
 bp_house.tile_height = 1.5
 bp_house.floor_height = 5
 

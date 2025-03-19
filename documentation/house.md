@@ -58,7 +58,7 @@ bp_house.length = 100
 bp_house.width = 150
 bp_house.height = 75
 bp_house.roof_height = 50
-bp_house.roof_overhang = (15,10)
+bp_house.roof_overhang = (15,10,4)
 
 bp_body = bp_house.bp_body
 bp_body.wall_width = 10
@@ -91,7 +91,7 @@ bp_house.length = 100
 bp_house.width = 150
 bp_house.height = 75
 bp_house.roof_height = 50
-bp_house.roof_overhang = (15,10)
+bp_house.roof_overhang = (15,10,4)
 
 bp_body = bp_house.bp_body
 bp_body.wall_width = 10
@@ -124,7 +124,7 @@ bp_house.length = 100
 bp_house.width = 150
 bp_house.height = 75
 bp_house.roof_height = 50
-bp_house.roof_overhang = (15,10)
+bp_house.roof_overhang = (15,10,4)
 
 bp_body = bp_house.bp_body
 bp_body.wall_width = 10

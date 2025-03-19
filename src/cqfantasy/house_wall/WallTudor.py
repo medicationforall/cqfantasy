@@ -28,10 +28,12 @@ class WallTudor(Base):
         self.panel_length:float = 25
         self.panel_space:float = 3
         self.panel_sections:int|None = None
-        
 
+        self.outline_intersect:bool = True
+        
         #shapes
-        self.tudor_wall = None
+        self.outline:cq.Workplane|None = None
+        self.tudor_wall:cq.Workplane|None = None
 
     def make_tudor_wall(self):
         panel_length = self.panel_length
@@ -47,10 +49,19 @@ class WallTudor(Base):
             panel_space = self.panel_space, 
             panel_width = self.width
         )
-
+        
+    def make_outline(self):
+        outline = cq.Workplane("XY").box(
+            self.length, 
+            self.width, 
+            self.height
+        )
+        
+        self.outline  = outline
 
     def make(self, parent=None):
         super().make(parent)
+        self.make_outline()
         self.make_tudor_wall()
 
     def build(self)->cq.Workplane:
@@ -61,4 +72,10 @@ class WallTudor(Base):
         if self.tudor_wall:
             scene = scene.union(self.tudor_wall)
 
+        if self.outline_intersect and self.outline:
+            scene = scene.intersect(self.outline)
+
         return scene
+    
+    def build_cut(self):
+        return self.outline

@@ -1,5 +1,6 @@
 import cadquery as cq
 from . import Body, TileGenerator
+from ..tower import make_magnet
 #from ..house_wall import WallTudor, WallStuccoBrick, WallTudorPaneling
 
 class BodyGreebled(Body):
@@ -7,12 +8,19 @@ class BodyGreebled(Body):
         super().__init__()
         
         self.render_floor_tiles = True
+        self.render_outside_walls = True
+        self.render_inside_walls = True
+        self.render_magnets = True
         self.floor_height = 10
         self.tile_height = 2.5
+
+        self.magnet_diameter:float = 3.4
+        self.magnet_height:float = 2.2
         
         #shapes
         self.outside_walls = None
         self.inside_walls = None
+        self.magnet = None
         
         #blueprints
         self.bp_outside_walls = []
@@ -72,16 +80,25 @@ class BodyGreebled(Body):
             self.bp_tile_generator.width = self.width - self.wall_width*2
             self.bp_tile_generator.tile_height = self.tile_height
             self.bp_tile_generator.make()
+
+    def make_magnet(self):
+        magnet = make_magnet(self.magnet_diameter, self.magnet_height)
+        self.magnet = magnet
         
     def make(self, parent=None):
         super().make(parent)
         #log('make')
-        self.make_outside_walls()
-        self.make_inside_walls()
+        if self.render_outside_walls:
+            self.make_outside_walls()
+
+        if self.render_inside_walls:
+            self.make_inside_walls()
         
         if self.render_floor_tiles:
             self.make_floor_tiles()
 
+        if self.render_magnets:
+            self.make_magnet()
 
     def build(self):
         body =  super().build()
@@ -91,7 +108,7 @@ class BodyGreebled(Body):
         if body:
             scene = scene.union(body)
             
-        if self.inside_walls:
+        if self.render_inside_walls and self.inside_walls:
             z_translate = self.floor_height
             if self.render_floor_tiles and self.bp_tile_generator:
                 z_translate += self.tile_height
@@ -109,7 +126,7 @@ class BodyGreebled(Body):
                     width_translate = self.length/2-self.wall_width-self.bp_inside_walls[index].width/2
                     scene = scene.add(wall.rotate((0,0,1),(0,0,0),-90).translate((width_translate,0,z_translate/2)))
 
-        if self.outside_walls:
+        if self.render_outside_walls and self.outside_walls:
             #log('found outside wall')
             #show_object(self.outside_walls[0])
             
@@ -130,5 +147,17 @@ class BodyGreebled(Body):
         if self.render_floor_tiles and self.bp_tile_generator:
             tiles = self.bp_tile_generator.build()                
             scene = scene.add(tiles.translate((0,0,-self.height/2+self.floor_height+self.tile_height/2)))#self.tile_height/2+self.floor_height-self.tile_height)))#self.floor_height)))
+
+        if self.render_magnets and self.magnet:
+            x_translate = self.calculate_internal_length()/2+self.magnet_diameter/2
+            y_translate = self.calculate_internal_width()/2+self.magnet_diameter/2
+            z_translate = self.height/2-self.magnet_height/2
+            scene = (
+                scene
+                .cut(self.magnet.translate((x_translate,y_translate,z_translate)))
+                .cut(self.magnet.translate((-x_translate,y_translate,z_translate)))
+                .cut(self.magnet.translate((x_translate,-y_translate,z_translate)))
+                .cut(self.magnet.translate((-x_translate,-y_translate,z_translate)))
+            )
  
         return scene

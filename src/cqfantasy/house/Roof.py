@@ -15,6 +15,7 @@
 import cadquery as cq
 from cadqueryhelper import Base
 from typing import Tuple
+from ..tower import make_magnet
 
 class Roof(Base):
     def __init__(self):
@@ -28,6 +29,10 @@ class Roof(Base):
         
         self.render_overhang_inset:bool = True
         self.overhang_inset:Tuple[float,float,float] = (4,8,4)
+
+        self.render_magnets = True
+        self.magnet_diameter:float = 3.4
+        self.magnet_height:float = 2.2
 
         # blueprints
         self.bp_outside_wall = None
@@ -83,7 +88,10 @@ class Roof(Base):
             self.bp_outside_wall.length = self.length
             self.bp_outside_wall.height = self.height
             self.bp_outside_wall.make()
-        
+
+    def make_magnet(self):
+        magnet = make_magnet(self.magnet_diameter, self.magnet_height)
+        self.magnet = magnet
         
     def make(self, parent=None):
         super().make(parent)
@@ -94,6 +102,9 @@ class Roof(Base):
             self.make_overhang_inset()
             
         self.make_outside_wall()
+
+        if self.render_magnets:
+            self.make_magnet()
         
     def build(self) -> cq.Workplane:
         super().build()
@@ -126,11 +137,24 @@ class Roof(Base):
             else:
                 outside_wall = outside_wall.intersect(self.roof)
                 
-                
             scene = (
                 scene
                 .add(outside_wall.translate((0,y_translate,0)))
                 .add(outside_wall.rotate((0,0,1),(0,0,0),180).translate((0,-y_translate,0)))
+            )
+
+        if self.render_magnets and self.magnet:
+            length = self.length - self.overhang[0]*2
+            width = self.width - self.overhang[1]*2
+            x_translate = length/2 + self.magnet_diameter/2
+            y_translate = width/2 + self.magnet_diameter/2
+            z_translate = -self.height/2+self.magnet_height/2
+            scene = (
+                scene
+                .cut(self.magnet.translate((x_translate,y_translate,z_translate)))
+                .cut(self.magnet.translate((-x_translate,y_translate,z_translate)))
+                .cut(self.magnet.translate((x_translate,-y_translate,z_translate)))
+                .cut(self.magnet.translate((-x_translate,-y_translate,z_translate)))
             )
             
         return scene

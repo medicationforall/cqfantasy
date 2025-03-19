@@ -40,8 +40,11 @@ class WallStuccoBrick(Base):
         
         self.block_height:float = 3
         self.block_spacing:float = 2
+
+        self.outline_intersect:bool = True
         
         #shapes
+        self.outline:cq.Workplane|None = None
         self.wall=None
         
     def make_wall(self):
@@ -64,9 +67,19 @@ class WallStuccoBrick(Base):
             self.width,
             self.block_spacing
         )
+
+    def make_outline(self):
+        outline = cq.Workplane("XY").box(
+            self.length + self.width*2, 
+            self.width, 
+            self.height
+        )
+        
+        self.outline  = outline
         
     def make(self, parent=None):
         super().make(parent)
+        self.make_outline()
         self.make_wall()
         
     def build(self)->cq.Workplane:
@@ -79,5 +92,11 @@ class WallStuccoBrick(Base):
 
         if self.center:
             scene = scene.translate((-self.width/2,0,0))
+
+        if self.outline_intersect and self.outline:
+            scene = scene.intersect(self.outline)
             
         return scene
+    
+    def build_cut(self):
+        return self.outline

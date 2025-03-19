@@ -31,13 +31,13 @@ class House(Base):
         
         self.render_roof = True
         self.roof_height:float = 50
-        self.roof_overhang:Tuple[float,float] = (10,5)
+        self.roof_overhang:Tuple[float,float,float] = (10,5,4)
         self.roof_gap_spacer:float = 0
 
         self.door_cut_width_padding:float = 0
         
         self.render_windows = True
-        self.window_space = 25
+        self.window_space:float|tuple[float,float] = 25
         self.window_length = 20
         self.window_width = 5
         self.window_offset = 0
@@ -77,7 +77,7 @@ class House(Base):
         self.bp_roof.overhang = (
             self.roof_overhang[0]+self.bp_body.wall_width,
             self.roof_overhang[1]+self.bp_body.wall_width, 
-            4
+            self.roof_overhang[2]
         )
         self.bp_roof.make()
         
@@ -104,34 +104,43 @@ class House(Base):
             def add_window(loc:cq.Location)->cq.Shape:
                 return window.val().located(loc) #type:ignore
             
-            x_window_count = math.floor(self.bp_body.length / self.window_space)
+            if isinstance(self.window_space, tuple):
+                x_window_space = self.window_space[0]
+            else:
+                x_window_space = self.window_space
+                
+            x_window_count = math.floor(self.bp_body.length / x_window_space)
             
             x_windows = cq.Workplane("XY")
             for index in range(x_window_count):
                 if index < len(self.window_x_style):
                     if self.window_x_style[index]:
-                        x_windows = x_windows.add(window.translate((self.window_space*index,0,0)))
+                        x_windows = x_windows.add(window.translate((x_window_space*index,0,0)))
                     else:
                         continue
                 else:
-                    x_windows = x_windows.add(window.translate((self.window_space*index,0,0)))
+                    x_windows = x_windows.add(window.translate((x_window_space*index,0,0)))
 
-            
-            x_windows = x_windows.translate((-self.bp_body.length/2+self.window_space/2,0,0))
+            x_windows = x_windows.translate((-self.bp_body.length/2+x_window_space/2,0,0))
 
-            y_window_count = math.floor(self.bp_body.width / self.window_space)
+            if isinstance(self.window_space, tuple):
+                y_window_space = self.window_space[1]
+            else:
+                y_window_space = self.window_space
+
+            y_window_count = math.floor(self.bp_body.width / y_window_space)
             
             y_windows = cq.Workplane("XY")
             for index in range(y_window_count):
                 if index < len(self.window_y_style):
                     if self.window_y_style[index]:
-                        y_windows = y_windows.add(window.translate((self.window_space*index,0,0)))
+                        y_windows = y_windows.add(window.translate((y_window_space*index,0,0)))
                     else:
                         continue
                 else:
-                    y_windows = y_windows.add(window.translate((self.window_space*index,0,0)))
+                    y_windows = y_windows.add(window.translate((y_window_space*index,0,0)))
 
-            y_windows = y_windows.translate((-self.bp_body.width/2+self.window_space/2,0,0))
+            y_windows = y_windows.translate((-self.bp_body.width/2+y_window_space/2,0,0))
 
             #log(f'{x_window_count=}')
             self.windows_x = x_windows
@@ -146,33 +155,44 @@ class House(Base):
             def add_window(loc:cq.Location)->cq.Shape:
                 return window_cut.val().located(loc) #type:ignore
             
-            x_window_count = math.floor(self.bp_body.length / self.window_space)
+            if isinstance(self.window_space, tuple):
+                x_window_space = self.window_space[0]
+            else:
+                x_window_space = self.window_space
+            
+            x_window_count = math.floor(self.bp_body.length / x_window_space)
             
             x_windows = cq.Workplane("XY")
             for index in range(x_window_count):
                 if index < len(self.window_x_style):
                     if self.window_x_style[index]:
-                        x_windows = x_windows.add(window_cut.translate((self.window_space*index,0,0)))
+                        x_windows = x_windows.add(window_cut.translate((x_window_space*index,0,0)))
                     else:
                         continue
                 else:
-                    x_windows = x_windows.add(window_cut.translate((self.window_space*index,0,0)))
+                    x_windows = x_windows.add(window_cut.translate((x_window_space*index,0,0)))
             
-            x_windows = x_windows.translate((-self.bp_body.length/2+self.window_space/2,0,0))
+            x_windows = x_windows.translate((-self.bp_body.length/2+x_window_space/2,0,0))
 
-            y_window_count = math.floor(self.bp_body.width / self.window_space)
+
+            if isinstance(self.window_space, tuple):
+                y_window_space = self.window_space[1]
+            else:
+                y_window_space = self.window_space
+
+            y_window_count = math.floor(self.bp_body.width / y_window_space)
             
             y_windows = cq.Workplane("XY")
             for index in range(y_window_count):
                 if index < len(self.window_y_style):
                     if self.window_y_style[index]:
-                        y_windows = y_windows.add(window_cut.translate((self.window_space*index,0,0)))
+                        y_windows = y_windows.add(window_cut.translate((y_window_space*index,0,0)))
                     else:
                         continue
                 else:
-                    y_windows = y_windows.add(window_cut.translate((self.window_space*index,0,0)))
+                    y_windows = y_windows.add(window_cut.translate((y_window_space*index,0,0)))
 
-            y_windows = y_windows.translate((-self.bp_body.width/2+self.window_space/2,0,0))
+            y_windows = y_windows.translate((-self.bp_body.width/2+y_window_space/2,0,0))
 
             self.windows_x_cut = x_windows
             self.windows_y_cut = y_windows

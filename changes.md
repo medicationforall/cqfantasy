@@ -8,6 +8,7 @@
   * WallTudorPaneling 
 * Added house BodyGreebled
 * Added house_wall SplitWall
+* Added house example house_greebled_two
 
 ## 1.5.0
 * Updated house documentation screenshots
