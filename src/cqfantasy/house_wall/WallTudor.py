@@ -22,23 +22,30 @@ class WallTudor(Base):
 
         #parameters
         self.length:float = 100
+        self.width:float = 3
         self.height:float = 75 
         self.styles:list[str|None]|str|None = [None,"cross","left","right"]
         self.panel_length:float = 25
-        self.panel_space:float = 3 
-        self.panel_width:float = 3
+        self.panel_space:float = 3
+        self.panel_sections:int|None = None
+        
 
         #shapes
         self.tudor_wall = None
 
     def make_tudor_wall(self):
+        panel_length = self.panel_length
+
+        if self.panel_sections:
+            panel_length = self.length / self.panel_sections
+
         self.tudor_wall = tudor_wall(
             length =  self.length, 
             height = self.height, 
             styles = self.styles, 
-            panel_length = self.panel_length, 
+            panel_length = panel_length, 
             panel_space = self.panel_space, 
-            panel_width = self.panel_width
+            panel_width = self.width
         )
 
 

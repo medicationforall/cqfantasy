@@ -4,11 +4,12 @@ from cqfantasy.house_wall import WallTudor
 bp_wall = WallTudor()
 
 bp_wall.length = 100
+bp_wall.width = 3
 bp_wall.height = 75 
 bp_wall.styles = [None,"cross","left","right"]
 bp_wall.panel_length = 25
 bp_wall.panel_space = 3 
-bp_wall.panel_width = 3
+
 
 bp_wall.make()
 

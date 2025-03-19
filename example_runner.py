@@ -11,14 +11,20 @@ import example.house.house_cut_away
 import example.house.stucco_brick_body
 import example.house.tudor_split_body
 import example.house.tudor_body
-import example.house.tudor_wall
 import example.house.body_types
 import example.house.house_greebled
 import example.house.tile_generator
 import example.house.shingle_roof
-import example.house.wall_tudor_class
-import example.house.wall_tudor_paneling_class
-import example.house.wall_stucco_brick_class
+
+
+#------------------------------
+## House wall Examples
+print('House Examples')
+import example.house_wall.tudor_wall
+import example.house_wall.wall_tudor_class
+import example.house_wall.wall_tudor_paneling_class
+import example.house_wall.wall_stucco_brick_class
+import example.house_wall.wall_split_class
 
 #------------------------------
 ## Wall Examples

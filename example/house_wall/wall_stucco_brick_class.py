@@ -14,7 +14,7 @@ bp_wall.cell_types = [
 ]
 
 bp_wall.block_length = 8
-bp_wall.block_width = 5
+bp_wall.width = 5
 bp_wall.block_height = 3
 bp_wall.block_spacing = 2
 

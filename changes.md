@@ -6,6 +6,8 @@
   * WallStuccoBrick
   * WallTudor
   * WallTudorPaneling 
+* Added house BodyGreebled
+* Added house_wall SplitWall
 
 ## 1.5.0
 * Updated house documentation screenshots

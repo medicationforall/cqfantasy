@@ -17,7 +17,7 @@ import math
 from cadqueryhelper import Base
 from typing import Tuple
 
-from . import Body, Roof, TileGenerator
+from . import Body, Roof#, TileGenerator
 from cqterrain.door import TiledDoor
 from cqfantasy.tower import TowerWindow, FrameWindow
 
@@ -47,11 +47,6 @@ class House(Base):
         self.window_x_style = ['window',None]
         self.window_y_style = []
         
-        self.render_floor_tiles = True
-        self.floor_height = 10
-        self.tile_height = 2.5
-        
-        
         #shapes
         self.door_cut:cq.Workplane|None = None
         self.windows_x = None
@@ -60,19 +55,17 @@ class House(Base):
         self.windows_x_cut = None
         self.windows_y_cut = None
 
-        
         #blueprints
         self.bp_body = Body()
         self.bp_roof = Roof()
         self.bp_door = TiledDoor()
         self.bp_window:TowerWindow|None = FrameWindow()
-        self.bp_tile_generator:TileGenerator|None = TileGenerator()
+        #self.bp_tile_generator:TileGenerator|None = TileGenerator()
         
     def make_body(self):
         self.bp_body.length = self.length
         self.bp_body.width = self.width
         self.bp_body.height = self.height
-        self.bp_body.floor_height = self.floor_height - self.tile_height
         self.bp_body.make()
         
     def make_roof(self):
@@ -183,13 +176,6 @@ class House(Base):
 
             self.windows_x_cut = x_windows
             self.windows_y_cut = y_windows
-        
-    def make_floor_tiles(self):
-        if self.bp_tile_generator:
-            self.bp_tile_generator.length = self.length - self.bp_body.wall_width*2
-            self.bp_tile_generator.width = self.width - self.bp_body.wall_width*2
-            self.bp_tile_generator.tile_height = self.tile_height
-            self.bp_tile_generator.make()
 
     def make(self, parent=None):
         super().make(parent)
@@ -204,9 +190,6 @@ class House(Base):
         if self.render_windows:
             self.make_windows()
             self.make_windows_cut()
-            
-        if self.render_floor_tiles:
-            self.make_floor_tiles()
         
     def build(self) -> cq.Workplane:
         #log("build")
@@ -222,11 +205,11 @@ class House(Base):
 
         if self.render_doors and self.door_cut:
             door_cut = self.door_cut
-            scene = scene.cut(door_cut.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.floor_height)))
+            scene = scene.cut(door_cut.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.bp_body.calculate_floor_height())))
 
         if self.render_doors:
             door = self.bp_door.build()
-            scene = scene.union(door.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.floor_height)))
+            scene = scene.union(door.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.bp_body.calculate_floor_height())))
 
         if self.render_roof:
             roof = self.bp_roof.build()
@@ -286,14 +269,7 @@ class House(Base):
                         .rotate((0,0,1),(0,0,0),90)
                         .translate((-self.length/2+self.bp_body.wall_width/2,0,0))
                     )
-                )
-                
-            if self.render_floor_tiles and self.bp_tile_generator:
-                tiles = self.bp_tile_generator.build()
-                
-                scene = scene.add(tiles.translate((0,0,self.tile_height/2+self.floor_height-self.tile_height)))#self.floor_height)))
-                
-                
+                )       
         return scene
     
     
@@ -310,10 +286,10 @@ class House(Base):
         if body:
             scene = scene.union(body.translate((0,0,self.bp_body.height/2)))
         if door_cut:
-            scene = scene.cut(door_cut.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.floor_height)))
+            scene = scene.cut(door_cut.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.bp_body.calculate_floor_height())))
 
         if door:
-            scene = scene.union(door.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.floor_height)))
+            scene = scene.union(door.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.bp_body.calculate_floor_height())))
 
         if self.render_roof:
             roof = self.bp_roof.build()
@@ -373,11 +349,6 @@ class House(Base):
                     )
                 )
             
-        if self.render_floor_tiles and self.bp_tile_generator:
-            tiles = self.bp_tile_generator.build()
-            
-            scene = scene.add(tiles.translate((0,0,self.tile_height/2+self.floor_height-self.tile_height)))#self.floor_height)))
-     
         return scene
     
     def build_cut_away(self):

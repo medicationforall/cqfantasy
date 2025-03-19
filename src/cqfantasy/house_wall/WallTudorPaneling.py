@@ -139,7 +139,7 @@ class WallTudorPaneling(Base):
         #log(f'{internal_length=} {internal_height=}')
         
         if self.render_outline and self.outline:
-            scene = scene.add(self.outline.translate((0,.5,0)))
+            scene = scene.add(self.outline.translate((0,0,0)))
             
         if self.h_frame:
             scene = (

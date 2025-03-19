@@ -2,11 +2,8 @@ from .Body import Body
 from .Roof import Roof
 from .ShingleRoof import ShingleRoof
 from .TileGenerator import TileGenerator
+from .BodyGreebled import BodyGreebled
 from .House import House
-from .tudor_wall import tudor_wall
-from .WallTudor import WallTudor
-from .WallStuccoBrick import WallStuccoBrick
-from .WallTudorPaneling import WallTudorPaneling
 from .StuccoBrickBody import StuccoBrickBody
 from .TudorBody import TudorBody
 from .TudorSplitBody import TudorSplitBody

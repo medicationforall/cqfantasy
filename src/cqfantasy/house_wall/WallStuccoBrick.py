@@ -23,6 +23,7 @@ class WallStuccoBrick(Base):
         
         #parameters
         self.length:float = 100
+        self.width:float = 5
         self.height:float = 50
         self.seed:str = 'test'
         self.cell_types:list[str] = [
@@ -31,9 +32,12 @@ class WallStuccoBrick(Base):
             'empty',
             'block'
         ]
+
+        self.center:bool = True
+        self.spread_width:bool = True
         
         self.block_length:float = 8
-        self.block_width:float = 5
+        
         self.block_height:float = 3
         self.block_spacing:float = 2
         
@@ -41,7 +45,7 @@ class WallStuccoBrick(Base):
         self.wall=None
         
     def make_wall(self):
-        x_count = math.floor(self.length / (self.block_length+self.block_spacing) )
+        x_count = math.floor((self.length) / (self.block_length+self.block_spacing) )
         y_count = math.floor(self.height / (self.block_height + self.block_spacing))
         
         brick_map = stacked_wave_form_map(
@@ -50,11 +54,14 @@ class WallStuccoBrick(Base):
             self.cell_types
         )
         
+        block_length = self.block_length
+        if self.spread_width:
+            block_length = self.block_length+self.width/x_count
         self.wall = stucco_brick_blocks(
             brick_map, 
-            self.block_length,
+            block_length,
             self.block_height,
-            self.block_width,
+            self.width,
             self.block_spacing
         )
         
@@ -69,5 +76,8 @@ class WallStuccoBrick(Base):
         
         if self.wall:
             scene = scene.add(self.wall.rotate((1,0,0),(0,0,0),-90))
+
+        if self.center:
+            scene = scene.translate((-self.width/2,0,0))
             
         return scene

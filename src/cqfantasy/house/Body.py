@@ -39,6 +39,9 @@ class Body(Base):
     def calculate_internal_height(self):
         internal_height = self.height - self.floor_height
         return internal_height
+    
+    def calculate_floor_height(self):
+        return self.floor_height
         
     def make_body(self):
         body = (
