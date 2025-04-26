@@ -21,6 +21,7 @@ bp_tower_base.render_blocks = True
 
 bp_tower_base.render_stairs = True
 bp_tower_base.stair_count = 12
+bp_tower_base.floor_cut_length_rotate = 50
 
 #bp_tower_base.render_window_outline = False
 

@@ -40,6 +40,7 @@ class BaseSection(Base):
         self.stair_count:int = 12
         self.stair_width = 30
         self.stair_rotate = -90
+        self.floor_cut_length_rotate = 50
         self.floor_cut_rotate = 7
 
         self.render_window:bool = False
@@ -212,7 +213,7 @@ class BaseSection(Base):
             height = self.floor_height,
             inner_diameter = inner_diameter,
             diameter = diameter,
-            rotate = 50
+            rotate = self.floor_cut_length_rotate
         ).rotate((0,0,1),(0,0,0),self.floor_cut_rotate)
         
         self.floor_cut = outline

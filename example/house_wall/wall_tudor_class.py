@@ -8,7 +8,11 @@ bp_wall.width = 3
 bp_wall.height = 75 
 bp_wall.styles = [None,"cross","left","right"]
 bp_wall.panel_length = 25
-bp_wall.panel_space = 3 
+bp_wall.panel_space = 3
+
+bp_wall.render_top_bar = False
+bp_wall.render_bottom_bar = False
+bp_wall.bar_height = 3
 
 
 bp_wall.make()

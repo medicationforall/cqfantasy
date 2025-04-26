@@ -60,7 +60,7 @@ import example.tower.round_block_stucco_generator
 
 
 #------------------------------
-run_base = False
+run_base = True
 
 if run_base:
     print('Tower Examples')

@@ -210,10 +210,8 @@ class House(Base):
         if self.render_windows:
             self.make_windows()
             self.make_windows_cut()
-        
-    def build(self) -> cq.Workplane:
-        #log("build")
-        super().build()
+
+    def build_body(self) -> cq.Workplane:
         body = self.bp_body.build()
         
         scene = (
@@ -231,10 +229,6 @@ class House(Base):
             door = self.bp_door.build()
             scene = scene.union(door.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.bp_body.calculate_floor_height())))
 
-        if self.render_roof:
-            roof = self.bp_roof.build()
-            scene = scene.add(roof.translate((0,0,self.bp_body.height+self.bp_roof.height/2+self.roof_gap_spacer)))
-            
         if self.render_windows:
             #self.windows_x = None
             #self.windows_y = None
@@ -289,85 +283,45 @@ class House(Base):
                         .rotate((0,0,1),(0,0,0),90)
                         .translate((-self.length/2+self.bp_body.wall_width/2,0,0))
                     )
-                )       
+                )
         return scene
     
-    
-    def build_plate(self):
-        #log("build_plate")
-        body = self.bp_body.build()
-        door = self.bp_door.build()
-        door_cut = self.door_cut
+    def build_roof(self):
+        roof = self.bp_roof.build()
+        return roof
+
+    def build(self) -> cq.Workplane:
+        #log("build")
+        
+        body = self.build_body()
         
         scene = (
             cq.Workplane("XY")
         )
 
         if body:
-            scene = scene.union(body.translate((0,0,self.bp_body.height/2)))
-        if door_cut:
-            scene = scene.cut(door_cut.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.bp_body.calculate_floor_height())))
-
-        if door:
-            scene = scene.union(door.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.bp_body.calculate_floor_height())))
+            scene = scene.union(body)
 
         if self.render_roof:
             roof = self.bp_roof.build()
+            scene = scene.add(roof.translate((0,0,self.bp_body.height+self.bp_roof.height/2+self.roof_gap_spacer)))
+                 
+        return scene
+    
+    
+    def build_plate(self):
+        body = self.build_body()
+        
+        scene = (
+            cq.Workplane("XY")
+        )
+
+        if body:
+            scene = scene.union(body)
+        
+        if self.render_roof:
+            roof = self.bp_roof.build()
             scene = scene.add(roof.translate((self.bp_body.length/2+self.bp_roof.length/2+10,0,self.bp_roof.height/2)))
-            
-                
-        if self.render_windows:
-            if self.windows_x_cut:
-                scene = (
-                    scene
-                    #plus
-                    .cut(self.windows_x_cut.translate((0,self.bp_body.width/2-self.bp_body.wall_width/2,self.bp_body.height/2+self.window_offset)))
-                    #minus
-                    .cut(self.windows_x_cut.rotate((0,0,1),(0,0,0),-180).translate((0,-self.bp_body.width/2+self.bp_body.wall_width/2,self.bp_body.height/2+self.window_offset)))
-                )
-                
-            if self.windows_y_cut:
-                scene = (
-                    scene
-                    #plus
-                    .cut(
-                        self.windows_y_cut.translate((0,0,self.bp_body.height/2+self.window_offset))
-                        .rotate((0,0,1),(0,0,0),-90)
-                        .translate((self.length/2-self.bp_body.wall_width/2,0,0))
-                    )
-                    #minus
-                    .cut(
-                        self.windows_y_cut.translate((0,0,self.bp_body.height/2+self.window_offset))
-                        .rotate((0,0,1),(0,0,0),90)
-                        .translate((-self.length/2+self.bp_body.wall_width/2,0,0))
-                    )
-                )
-            
-            if self.windows_x:
-                scene = (
-                    scene
-                    #plus
-                    .add(self.windows_x.translate((0,self.bp_body.width/2-self.bp_body.wall_width/2,self.bp_body.height/2+self.window_offset)))
-                    #minus
-                    .add(self.windows_x.rotate((0,0,1),(0,0,0),-180).translate((0,-self.bp_body.width/2+self.bp_body.wall_width/2,self.bp_body.height/2+self.window_offset)))
-                )
-                
-            if self.windows_y:
-                scene = (
-                    scene
-                    #plus
-                    .add(
-                        self.windows_y.translate((0,0,self.bp_body.height/2+self.window_offset))
-                        .rotate((0,0,1),(0,0,0),-90)
-                        .translate((self.length/2-self.bp_body.wall_width/2,0,0))
-                    )
-                    #minus
-                    .add(
-                        self.windows_y.translate((0,0,self.bp_body.height/2+self.window_offset))
-                        .rotate((0,0,1),(0,0,0),90)
-                        .translate((-self.length/2+self.bp_body.wall_width/2,0,0))
-                    )
-                )
             
         return scene
     

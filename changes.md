@@ -9,6 +9,10 @@
 * Added house BodyGreebled
 * Added house_wall SplitWall
 * Added house example house_greebled_two
+* Flipped house_wall tudor_wall orientation
+* bug fix - house BodyGreebled fixed internal wall orientation
+* house_wall walltudor added render_top_bar and render_bottom_bar parameters.
+* tower BaseSection added floor_cut_length_rotate parameter to define the size of the floor hole made for the stairs.
 
 ## 1.5.0
 * Updated house documentation screenshots

@@ -31,9 +31,17 @@ class WallTudor(Base):
 
         self.outline_intersect:bool = True
         
+        self.render_top_bar = False
+        self.render_bottom_bar = False
+        self.render_side_bar = True
+        self.bar_length = 3
+        self.bar_height = 3
+        
         #shapes
         self.outline:cq.Workplane|None = None
         self.tudor_wall:cq.Workplane|None = None
+        self.bar:cq.Workplane|None = None
+        self.side_bar:cq.Workplane|None = None
 
     def make_tudor_wall(self):
         panel_length = self.panel_length
@@ -58,22 +66,43 @@ class WallTudor(Base):
         )
         
         self.outline  = outline
+        
+    def make_bar(self):
+        self.bar = cq.Workplane("XY").box(self.length, self.width, self.bar_height)
+        
+    def make_side_bar(self):
+        self.side_bar = cq.Workplane("XY").box(self.bar_length, self.width, self.height)
 
     def make(self, parent=None):
         super().make(parent)
         self.make_outline()
         self.make_tudor_wall()
+        self.make_bar()
+        self.make_side_bar()
 
     def build(self)->cq.Workplane:
         super().build()
 
         scene = cq.Workplane("XY")
 
-        if self.tudor_wall:
+        if True and self.tudor_wall:
             scene = scene.union(self.tudor_wall)
 
         if self.outline_intersect and self.outline:
             scene = scene.intersect(self.outline)
+            
+        if self.render_top_bar and self.bar:
+            scene = scene.union(self.bar.translate((0,0,self.height/2-self.bar_height/2)))
+            
+        if self.render_bottom_bar and self.bar:
+            scene = scene.union(self.bar.translate((0,0,-(self.height/2-self.bar_height/2))))
+            
+        if self.render_side_bar and self.side_bar:
+            scene = (
+                scene
+                .union(self.side_bar.translate((-self.length/2-self.bar_length/2,0,0)))
+                .union(self.side_bar.translate((self.length/2+self.bar_length/2,0,0)))
+            )
 
         return scene
     

@@ -115,16 +115,16 @@ class BodyGreebled(Body):
             for index, wall in enumerate(self.inside_walls):
                 if index == 0:
                     length_translate = self.width/2-self.wall_width-self.bp_inside_walls[index].width/2
-                    scene = scene.add(wall.translate((0,-length_translate,z_translate/2)))
+                    scene = scene.add(wall.rotate((0,0,1),(0,0,0),180).translate((0,-length_translate,z_translate/2)))
                 elif index == 1:
                     width_translate = self.length/2-self.wall_width-self.bp_inside_walls[index].width/2
-                    scene = scene.add(wall.rotate((0,0,1),(0,0,0),90).translate((-width_translate,0,z_translate/2)))
+                    scene = scene.add(wall.rotate((0,0,1),(0,0,0),-90).translate((-width_translate,0,z_translate/2)))
                 elif index == 2:
                     length_translate = self.width/2-self.wall_width-self.bp_inside_walls[index].width/2
-                    scene = scene.add(wall.rotate((0,0,1),(0,0,0),180).translate((0,length_translate,z_translate/2)))
+                    scene = scene.add(wall.rotate((0,0,1),(0,0,0),0).translate((0,length_translate,z_translate/2)))
                 elif index == 3:
                     width_translate = self.length/2-self.wall_width-self.bp_inside_walls[index].width/2
-                    scene = scene.add(wall.rotate((0,0,1),(0,0,0),-90).translate((width_translate,0,z_translate/2)))
+                    scene = scene.add(wall.rotate((0,0,1),(0,0,0),90).translate((width_translate,0,z_translate/2)))
 
         if self.render_outside_walls and self.outside_walls:
             #log('found outside wall')

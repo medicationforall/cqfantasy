@@ -159,4 +159,4 @@ def tudor_wall(
     ):
     outline, panels = __panel_wall(length, height, panel_length, panel_width, panel_space)
     details = __tudor_styled_wall(length, height, styles, panel_length, panel_space, panel_width)
-    return outline.cut(panels).union(details)
+    return outline.cut(panels).union(details).rotate((0,0,1),(0,0,0), 180)
