@@ -28,6 +28,7 @@ class TowerDoor(Base):
         
         self.outside_diameter:float = 130
         self.inside_diameter:float = 100
+        self.y_offset = 0
         
         # shapes
         self.outline:cq.Workplane|None = None
@@ -100,6 +101,6 @@ class TowerDoor(Base):
         y_offset = self.outside_diameter/2 - difference/4
         
         if door:
-            scene = scene.union(door.translate((0,y_offset,0)))
+            scene = scene.union(door.translate((0,y_offset+self.y_offset,0)))
         
         return scene

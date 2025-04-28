@@ -1,6 +1,9 @@
 ## Main Wip
 
 ## 2.0.0
+* Updated cqterrain to version 3.4.1
+* Cleaned up instances where I was setting the callback parameter for workplane.eachpoint invocations.
+  * https://github.com/CadQuery/cadquery/issues/1395
 * Refactored code and moved various wall components to house_wall module.
   * tudor_wall
   * WallStuccoBrick
@@ -13,6 +16,7 @@
 * bug fix - house BodyGreebled fixed internal wall orientation
 * house_wall walltudor added render_top_bar and render_bottom_bar parameters.
 * tower BaseSection added floor_cut_length_rotate parameter to define the size of the floor hole made for the stairs.
+* tower TowerDoor added y_offset parameter to position the door along the yaxis.
 
 ## 1.5.0
 * Updated house documentation screenshots

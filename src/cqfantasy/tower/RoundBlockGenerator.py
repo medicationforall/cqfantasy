@@ -127,7 +127,7 @@ class RoundBlockGenerator(Base):
                 fill = True,
                 rotate = True
             )
-            .eachpoint(callback = add_block)
+            .eachpoint(add_block)
         )
         if blocks.solids().size() > 0:
             ring = cq.Workplane("XY").union(blocks)

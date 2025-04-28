@@ -114,7 +114,7 @@ def __panel_wall(
             xCount = x_count, 
             yCount= 1, 
             center = True)
-        .eachpoint(callback = add_panel)
+        .eachpoint(add_panel)
     )
     
     return outline, panels

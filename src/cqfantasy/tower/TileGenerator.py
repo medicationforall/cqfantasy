@@ -76,7 +76,7 @@ class TileGenerator(Base):
                 xCount = x_count, 
                 yCount= y_count, 
                 center = True)
-            .eachpoint(callback = add_tile)
+            .eachpoint(add_tile)
         )
 
         intersect_cylinder = cq.Workplane("XY").cylinder(self.tile_height,self.diameter/2)

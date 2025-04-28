@@ -115,7 +115,7 @@ class WallTudorPaneling(Base):
                 xCount = self.columns, 
                 yCount= self.rows, 
                 center = True)
-            .eachpoint(callback = add_tile)
+            .eachpoint(add_tile)
         ).rotate((1,0,0),(0,0,0),90)
         
         self.tiles = tiles
