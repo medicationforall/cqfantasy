@@ -1,5 +1,14 @@
 ## Main Wip
 
+## 2.1.0
+* Upped minimum python version to 3.10
+* Added arch package
+  * Added arch
+  * Added BasicArch
+  * Added StoneArch
+* Updated README.md
+* Added build return annotations for tower classes.
+
 ## 2.0.0
 * Updated cqterrain to version 3.4.1
 * Cleaned up instances where I was setting the callback parameter for workplane.eachpoint invocations.

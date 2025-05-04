@@ -77,7 +77,7 @@ class TowerMid(BaseSection):
             self.make_blocks()
 
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         log('build')
         super().build()
         

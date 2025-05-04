@@ -4,14 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cqfantasy"
-version = "2.0.0"
+version = "2.1.0"
 authors = [
   { name="James Adams", email="inklink28@gmail.com" }
 ]
 description = "Python Library for building Fantasy terrain"
 readme = "README.md"
 license = { file="LICENSE" }
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: Apache Software License",

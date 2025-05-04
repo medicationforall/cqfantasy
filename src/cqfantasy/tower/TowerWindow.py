@@ -91,7 +91,7 @@ class TowerWindow(Base):
             self.make_cut()
         self.make_window()
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
         scene = (
             cq.Workplane("XY")

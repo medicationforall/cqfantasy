@@ -89,7 +89,7 @@ class TowerDoor(Base):
         #    scene = scene.add(self.outline)   
         return scene
     
-    def build(self):
+    def build(self) -> cq.Workplane:
         super().build()
         scene = (
             cq.Workplane("XY")

@@ -134,7 +134,7 @@ class TowerTop(BaseSection):
         if self.render_floor_cut:
             self.make_floor_cut()
         
-    def build(self):
+    def build(self) -> cq.Workplane:
         log('build')
         super().build()
         

@@ -90,7 +90,7 @@ class TowerBase(BaseSection):
         if self.render_blocks:
             self.make_blocks()
       
-    def build(self):
+    def build(self) -> cq.Workplane:
         log('build')
         super().build()
         

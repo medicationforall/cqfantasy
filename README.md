@@ -24,6 +24,7 @@ show_object(ex)
 
 ## Project Documention
 * [Documentation](documentation/documentation.md)
+    * [Arch](documentation/arch.md)
     * [House](documentation/house.md)
 	* [Tower](documentation/tower.md)
     * [Wall](documentation/wall.md)
