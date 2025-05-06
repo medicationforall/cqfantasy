@@ -7,12 +7,15 @@ from . import arch
 class BasicArch(Base):
     def __init__(self):
         super().__init__()
+
+        # parameters
         self.length:float = 30
         self.width:float = 5
         self.height:float = 75
         self.outside_margin:float = 10
         self.inside_margin:float = 5
         
+        # shapes
         self.outline:cq.Workplane|None = None
         self.outside_outline:cq.Workplane|None = None
         self.inside_outline:cq.Workplane|None = None

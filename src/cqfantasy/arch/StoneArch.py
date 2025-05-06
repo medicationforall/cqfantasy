@@ -4,6 +4,8 @@ from . import BasicArch, arch
 class StoneArch(BasicArch):
     def __init__(self):
         super().__init__()
+        
+        # parameters
         self.stone_count:int = 8
         self.stone_arch_count:int = 4
         
@@ -14,6 +16,7 @@ class StoneArch(BasicArch):
         self.stone_arch_modulus:int = 2
         self.outside_stone_arch_position:int = 1
         
+        # shapes
         self.inside_stone:cq.Workplane|None = None
         self.outside_stone:cq.Workplane|None = None
         self.column_stones:cq.Workplane|None = None
