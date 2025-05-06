@@ -7,6 +7,13 @@ import example.arch.arch
 import example.arch.basic_arch
 import example.arch.stone_arch
 
+
+#------------------------------
+## Door Examples
+print('Door Examples')
+import example.door.v_door
+import example.door.arch_door
+
 #------------------------------
 ## House Examples
 print('House Examples')
@@ -24,8 +31,6 @@ import example.house.house_greebled
 import example.house.house_greebled_two
 import example.house.tile_generator
 import example.house.shingle_roof
-
-
 
 #------------------------------
 ## House wall Examples

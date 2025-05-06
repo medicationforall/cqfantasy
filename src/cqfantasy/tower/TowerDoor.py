@@ -63,6 +63,16 @@ class TowerDoor(Base):
           width = cut_width,
           height = self.height
         )
+
+        if self.bp_door and self.bp_door.build_outline:
+            print('found build outline method')
+            self.bp_door.length = self.length
+            self.bp_door.width = cut_width
+            self.bp_door.height = self.height
+            self.bp_door.make()
+            cut = self.bp_door.build_outline()
+        else:
+            print('no build outline method')
         
         scene = (
             cq.Workplane("XY")

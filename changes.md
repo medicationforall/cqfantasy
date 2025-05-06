@@ -6,8 +6,12 @@
   * Added arch
   * Added BasicArch
   * Added StoneArch
+* Added door package
+  * Added VDoor
+  * Added ArchDoor
 * Updated README.md
 * Added build return annotations for tower classes.
+* Modified tower TowerDoor to have better custom outline support.
 
 ## 2.0.0
 * Updated cqterrain to version 3.4.1
