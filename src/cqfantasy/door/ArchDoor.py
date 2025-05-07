@@ -7,10 +7,10 @@ class ArchDoor(Base):
     def __init__(self):
         super().__init__()
         
-        self.length = 50
-        self.width = 7
-        self.height = 75
-        self.door_inset = 2
+        self.length:float = 50
+        self.width:float = 7
+        self.height:float = 75
+        self.door_inset:float = 2
         
         #blueprints
         self.bp_arch = StoneArch()
