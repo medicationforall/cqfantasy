@@ -33,6 +33,68 @@ show_object(ex_body)
 
 ---
 
+## Body Greebled
+House Body with assignable walls.
+
+### parameters
+* render_floor_tiles: bool
+* render_outside_walls: bool
+* render_inside_walls: bool
+* render_magnets: bool
+* floor_height: float
+* tile_height: float
+* magnet_diameter: float
+* magnet_height: float
+
+### blueprints
+* bp_outside_walls = []
+* bp_inside_walls = []
+* bp_tile_generator:TileGenerator|None = TileGenerator()
+
+``` python
+import cadquery as cq
+from cqfantasy.house import BodyGreebled 
+from cqfantasy.house_wall import WallStuccoBrick, WallTudorPaneling, WallTudor
+
+bp_body = BodyGreebled()
+bp_body.length = 100
+outside_wall = WallStuccoBrick()
+#outside_wall.length_padding = 0
+outside_wall.block_length = 8
+outside_wall.width = 5
+outside_wall.block_height = 3
+outside_wall.block_spacing = 2
+outside_wall.center=True
+
+internal_wall = WallTudorPaneling()
+internal_wall.render_outline = False
+external_wall_tudor = WallTudor()
+external_wall_tudor.panel_sections = 6
+
+bp_body.bp_outside_walls = [external_wall_tudor]
+
+internal_wall_tudor = WallTudor()
+internal_wall_tudor.panel_sections = 4
+
+internal_wall_tudor2 = WallTudor()
+internal_wall_tudor2.panel_sections = 6
+bp_body.bp_inside_walls = [internal_wall_tudor,internal_wall_tudor2,internal_wall_tudor,internal_wall_tudor2]
+
+bp_body.make()
+
+ex_body = bp_body.build()
+
+show_object(ex_body)
+```
+
+![](image/house/15.png)
+
+* [source](../src/cqfantasy/house/BodyGreebled.py)
+* [example](../example/house/body_greebled.py)
+* [stl](../stl/house_body_greebled.stl)
+
+---
+
 ## House
 Orchestrator class for combining components of a house.
 ### parameters
@@ -183,15 +245,16 @@ show_object(ex_roof)
 * [stl](../stl/house_roof.stl)
 
 ---
-## ShingleRoof
+
+## Shingle Roof
 
 ### parameters
-* render_shingles:bool = True
-* tile_length:float = 10
-* tile_width:float = 10
-* tile_height:float = 0.8
-* tile_rotation:float = 4
-* tile_push:float = 2
+* render_shingles: bool
+* tile_length: float
+* tile_width: float
+* tile_height :float
+* tile_rotation: float
+* ile_push: float
 
 ``` python
 import cadquery as cq
@@ -207,11 +270,12 @@ ex_roof = bp_roof.build()
 show_object(ex_roof.translate((0,0,0)))
 ```
 
-![](image/house/12.png)
+![](image/house/16.png)
 
 * [source](../src/cqfantasy/house/ShingleRoof.py)
 * [example](../example/house/shingle_roof.py)
 * [stl](../stl/house_roof_shingle.stl)
+
 ---
 
 ## StuccoBrickBody
@@ -262,7 +326,65 @@ show_object(ex_body_stucco)
 
 ---
 
-## TudorBody
+## Tile Generator
+
+### parameters
+* length: float
+* width: float
+* tile_length: float
+* tile_width: float
+* tile_height: float
+* tile_padding: float
+* overflow: float
+* make_tile_method: Callable[[float, float, float], cq.Workplane]
+* render_intersect: bool
+
+``` python
+import cadquery as cq
+from cqfantasy.house import TileGenerator
+
+def make_basic_tile(
+    length:float, 
+    width:float, 
+    height:float
+) -> cq.Workplane:
+    tile = cq.Workplane("XY").box(
+        length, 
+        width, 
+        height
+    )
+    return tile
+
+bp_tile = TileGenerator()
+
+bp_tile.length= 100
+bp_tile.width = 100
+bp_tile.tile_length = 10
+bp_tile.tile_width = 10
+bp_tile.tile_height = 3
+bp_tile.tile_padding = 1
+bp_tile.overflow = 12
+bp_tile.make_tile_method = make_basic_tile
+bp_tile.render_intersect = True
+
+bp_tile.make()
+
+ex_tiles = bp_tile.build()
+
+show_object(ex_tiles)
+```
+
+![](image/house/17.png)
+
+* [source](../src/cqfantasy/house/TileGenerator.py)
+* [example](../example/house/tile_generator.py)
+* [stl](../stl/house_tile_generator.stl)
+
+
+---
+
+## TudorBody (Deprecated)
+Deprecated use [BodyGreebled](#body-greebled)
 
 ### params
 * split_width: float
@@ -306,8 +428,9 @@ show_object(ex_body)
 
 ---
 
-## TudorSplitBody
-Combination of TudorBody and StuccoBrickBody
+## TudorSplitBody (Deprecaded)
+Combination of TudorBody and StuccoBrickBody.
+Deprecated use [BodyGreebled](#body-greebled)
 
 ### params
 self.split_width: float

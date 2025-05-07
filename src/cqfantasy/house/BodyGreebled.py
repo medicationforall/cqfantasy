@@ -7,12 +7,12 @@ class BodyGreebled(Body):
     def __init__(self):
         super().__init__()
         
-        self.render_floor_tiles = True
-        self.render_outside_walls = True
-        self.render_inside_walls = True
-        self.render_magnets = True
-        self.floor_height = 10
-        self.tile_height = 2.5
+        self.render_floor_tiles:bool = True
+        self.render_outside_walls:bool = True
+        self.render_inside_walls:bool = True
+        self.render_magnets:bool = True
+        self.floor_height:float = 10
+        self.tile_height:float = 2.5
 
         self.magnet_diameter:float = 3.4
         self.magnet_height:float = 2.2
