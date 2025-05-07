@@ -7,9 +7,9 @@ class WallSplit(Base):
         super().__init__()
 
         #parameters
-        self.length = 100
-        self.width = 5
-        self.height = 75
+        self.length:float = 100
+        self.width:float = 5
+        self.height:float = 75
 
         self.split_height:float = 3
 

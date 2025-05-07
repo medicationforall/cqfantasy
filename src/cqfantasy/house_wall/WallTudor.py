@@ -31,11 +31,11 @@ class WallTudor(Base):
 
         self.outline_intersect:bool = True
         
-        self.render_top_bar = False
-        self.render_bottom_bar = False
-        self.render_side_bar = True
-        self.bar_length = 3
-        self.bar_height = 3
+        self.render_top_bar:bool = False
+        self.render_bottom_bar:bool = False
+        self.render_side_bar:bool = True
+        self.bar_length:float = 3
+        self.bar_height:float = 3
         
         #shapes
         self.outline:cq.Workplane|None = None

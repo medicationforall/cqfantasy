@@ -262,61 +262,6 @@ show_object(ex_body_stucco)
 
 ---
 
-## TileGenerator
-
-### params
-* length: float
-* width: float
-* tile_length: float
-* tile_width: float
-* tile_height: float
-* tile_padding: float
-* overflow: float
-* make_tile_method: Callable[[float, float, float], cq.Workplane]
-* render_intersect: bool
-
-``` python
-import cadquery as cq
-from cqfantasy.house import TileGenerator
-
-def make_basic_tile(
-    length:float, 
-    width:float, 
-    height:float
-) -> cq.Workplane:
-    tile = cq.Workplane("XY").box(
-        length, 
-        width, 
-        height
-    )
-    return tile
-
-bp_tile = TileGenerator()
-
-bp_tile.length= 100
-bp_tile.width = 100
-bp_tile.tile_length = 10
-bp_tile.tile_width = 10
-bp_tile.tile_height = 3
-bp_tile.tile_padding = 1
-bp_tile.overflow = 12
-bp_tile.make_tile_method = make_basic_tile
-
-bp_tile.make()
-
-ex_tiles = bp_tile.build()
-
-show_object(ex_tiles)
-```
-
-![](image/house/08.png)
-
-* [source](../src/cqfantasy/house/TileGenerator.py)
-* [example](../example/house/tile_generator.py)
-* [stl](../stl/house_tile_generator.stl)
-
----
-
 ## TudorBody
 
 ### params
@@ -413,37 +358,4 @@ show_object(ex_body)
 * [example](../example/house/tudor_split_body.py)
 * [stl](../stl/house_body_tudor_split.stl)
 
----
-
-## TudorWall
-
-### params
-* length: float 
-* height: float
-* styles: list[str|None]|str|None
-* panel_length: float
-* panel_space: float 
-* panel_width: float
-
-``` python
-import cadquery as cq
-from cqfantasy.house import tudor_wall
-
-ex_wall = tudor_wall(
-    length = 100, 
-    height = 75, 
-    styles = [None,"cross","left","right"], 
-    panel_length = 25, 
-    panel_space = 3, 
-    panel_width = 3
-)
-show_object(ex_wall)
-```
-
-![](image/house/11.png)
-
-* [source](../src/cqfantasy/house/TudorWall.py)
-* [example](../example/house/tudor_wall.py)
-* [stl](../stl/house_wall_tudor.stl)
-  
 ---
