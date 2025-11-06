@@ -1,5 +1,10 @@
 ## Main Wip
 
+## 2.1.1
+* Updated cqterrain to version 3.5.1
+* Minor cleanup on body_greebled.py example
+* fix build_outline check in TowerDoor.py
+
 ## 2.1.0
 * Upped minimum python version to 3.10
 * Added arch package

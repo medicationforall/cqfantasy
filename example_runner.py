@@ -72,7 +72,7 @@ import example.tower.round_block_stucco_generator
 
 
 #------------------------------
-run_base = False
+run_base = True
 
 if run_base:
     print('Tower Examples')
@@ -109,7 +109,7 @@ if run_base:
     print('end tower_top')
 
 #------------------------------
-run_greebled = False
+run_greebled = True
 
 if run_greebled:
     print('start tower_greebled_example')
@@ -148,7 +148,7 @@ if run_greebled:
 
 
 #-----------------------------------
-run_alt = False
+run_alt = True
 
 if run_alt:
     print('start tower_alt_greebled_example')
@@ -160,7 +160,7 @@ if run_alt:
     print('end tower_alt_greebled_example')
 
 #-----------------------------------
-run_stucco = False
+run_stucco = True
 
 if run_stucco:
     print('start tower_stucco_example')

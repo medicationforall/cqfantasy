@@ -64,7 +64,7 @@ class TowerDoor(Base):
           height = self.height
         )
 
-        if self.bp_door and self.bp_door.build_outline:
+        if self.bp_door and hasattr(self.bp_door, 'build_outline'):
             print('found build outline method')
             self.bp_door.length = self.length
             self.bp_door.width = cut_width

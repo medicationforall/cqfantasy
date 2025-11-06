@@ -5,7 +5,7 @@ from cqfantasy.house_wall import WallStuccoBrick, WallTudorPaneling, WallTudor
 bp_body = BodyGreebled()
 bp_body.length = 100
 outside_wall = WallStuccoBrick()
-outside_wall.length_padding = 0
+#outside_wall.length_padding = 0
 outside_wall.block_length = 8
 outside_wall.width = 5
 outside_wall.block_height = 3
