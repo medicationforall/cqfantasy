@@ -1,5 +1,14 @@
 ## Main Wip
 
+## 2.2.0
+* Updated cqterrain to version 3.5.2
+* Added fireplace package
+  * Added Hearth
+  * Added FireBox
+  * Added FireTop
+  * Added chimney
+  * Added Fireplace
+
 ## 2.1.1
 * Updated cqterrain to version 3.5.1
 * Minor cleanup on body_greebled.py example

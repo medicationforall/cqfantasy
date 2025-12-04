@@ -1,5 +1,7 @@
 # House Wall Documentation
 
+---
+
 ## Tudor Wall
 Helper method that creates tudor wall greebles base on passed in configuration.
 
@@ -31,6 +33,8 @@ show_object(ex_wall)
 * [source](../src/cqfantasy/house_wall/tudor_wall.py)
 * [example](../example/house_wall/tudor_wall.py)
 * [stl](../stl/house_wall_tudor.stl)
+
+---
 
 ## Wall Split
 Orchestrator class for joining two wall segments together.
@@ -68,6 +72,8 @@ show_object(outline.translate((0,.5,0)))
 * [source](../src/cqfantasy/house_wall/WallSplit.py)
 * [example](../example/house_wall/wall_split_class.py)
 * [stl](../stl/house_wall_split_class.stl)
+
+---
 
 ## Wall Stucco Brick
 Representative a wall with patches of exposed stucco brick. Uses a very simple wave form collapse algorithm to create the brick pattern.
@@ -118,6 +124,8 @@ show_object(ex_wall)
 * [example](../example/house_wall/wall_stucco_brick_class.py)
 * [stl](../stl/house_wall_stucco_brick_class.stl)
 
+---
+
 ## Wall Tudor
 Wrapper around the wall tudor helper method.
 
@@ -167,6 +175,8 @@ show_object(ex_wall)
 * [example](../example/house_wall/wall_tudor_class.py)
 * [stl](../stl/house_wall_tudor_class.stl)
 
+---
+
 ## Wall Tudor Paneling
 Representative of internal tudor wall style paneling.
 
@@ -213,3 +223,4 @@ show_object(ex_wall)
 * [example](../example/house_wall/wall_tudor_paneling_class.py)
 * [stl](../stl/house_wall_tudor_paneling_class.stl)
 
+---

@@ -1,5 +1,7 @@
 # Arch Documentation
 
+---
+
 ## Arch
 Utility method for creating an arch.
 Note with this implementation of the arch length cannot be greater than height.
@@ -27,6 +29,8 @@ show_object(ex_arch)
 * [source](../src/cqfantasy/arch/Arch.py)
 * [example](../example/arch/arch.py)
 * [stl](../stl/arch_arch.stl)
+
+---
 
 ## BasicArch
 Basic outline of an arch that inherits from cadqueryhelper [Base](https://github.com/medicationforall/cadqueryhelper/blob/main/src/cadqueryhelper/Base.py).
@@ -85,6 +89,8 @@ show_object(ex_arch)
 * [example](../example/arch/basic_arch.py)
 * [stl](../stl/arch_basic_arch.stl)
 
+---
+
 ## StoneArch
 Implementation of a stone arch that inherits from [BasicArch](#basicarch).
 
@@ -132,3 +138,5 @@ show_object(ex_arch)
 * [source](../src/cqfantasy/arch/StoneArch.py)
 * [example](../example/arch/stone_arch.py)
 * [stl](../stl/arch_stone_arch.stl)
+
+---

@@ -15,6 +15,15 @@ import example.door.v_door
 import example.door.arch_door
 
 #------------------------------
+## Fireplace Examples
+print('Fireplace Examples')
+import example.fireplace.hearth
+import example.fireplace.fire_box
+import example.fireplace.fire_top
+import example.fireplace.chimney
+import example.fireplace.fireplace
+
+#------------------------------
 ## House Examples
 print('House Examples')
 import example.house.body
@@ -72,7 +81,7 @@ import example.tower.round_block_stucco_generator
 
 
 #------------------------------
-run_base = True
+run_base = False
 
 if run_base:
     print('Tower Examples')
@@ -109,7 +118,7 @@ if run_base:
     print('end tower_top')
 
 #------------------------------
-run_greebled = True
+run_greebled = False
 
 if run_greebled:
     print('start tower_greebled_example')
@@ -148,7 +157,7 @@ if run_greebled:
 
 
 #-----------------------------------
-run_alt = True
+run_alt = False
 
 if run_alt:
     print('start tower_alt_greebled_example')
@@ -160,7 +169,7 @@ if run_alt:
     print('end tower_alt_greebled_example')
 
 #-----------------------------------
-run_stucco = True
+run_stucco = False
 
 if run_stucco:
     print('start tower_stucco_example')

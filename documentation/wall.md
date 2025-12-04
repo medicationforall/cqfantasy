@@ -1,5 +1,7 @@
 # Wall Documentation
 
+---
+
 ## TileGenerator
 Wall tile generator inherits from [Base](https://github.com/medicationforall/cadqueryhelper/blob/main/src/cadqueryhelper/Base.py) class.
 

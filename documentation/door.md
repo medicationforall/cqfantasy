@@ -1,5 +1,7 @@
 # Door Documentation
 
+---
+
 ## Arch Door
 Door and arch code inherits from [Base](https://github.com/medicationforall/cadqueryhelper/blob/main/src/cadqueryhelper/Base.py) class.
 
@@ -36,6 +38,7 @@ show_object(ex_door)
 * [example](../example/door/arch_door.py)
 * [stl](../stl/door_arch_door.stl)
 
+---
 
 ## V Door
 Styled door inherits from [Base](https://github.com/medicationforall/cadqueryhelper/blob/main/src/cadqueryhelper/Base.py) class.
