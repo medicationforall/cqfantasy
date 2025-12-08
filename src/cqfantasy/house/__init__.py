@@ -1,6 +1,7 @@
 from .Body import Body
 from .Roof import Roof
 from .ShingleRoof import ShingleRoof
+from .SnowyRoof import SnowyRoof
 from .TileGenerator import TileGenerator
 from .BodyGreebled import BodyGreebled
 from .House import House

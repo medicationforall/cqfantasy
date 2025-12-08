@@ -18,7 +18,10 @@ import example.door.arch_door
 ## Fireplace Examples
 print('Fireplace Examples')
 import example.fireplace.hearth
+import example.fireplace.hearth_tiled
+import example.fireplace.hearth_tiled_two
 import example.fireplace.fire_box
+import example.fireplace.fire_box_tiled
 import example.fireplace.fire_top
 import example.fireplace.chimney
 import example.fireplace.fireplace
@@ -40,15 +43,17 @@ import example.house.house_greebled
 import example.house.house_greebled_two
 import example.house.tile_generator
 import example.house.shingle_roof
+import example.house.snowy_roof
 
 #------------------------------
 ## House wall Examples
-print('House Examples')
+print('House Wall Examples')
 import example.house_wall.tudor_wall
 import example.house_wall.wall_tudor_class
 import example.house_wall.wall_tudor_paneling_class
 import example.house_wall.wall_stucco_brick_class
 import example.house_wall.wall_split_class
+import example.house_wall.log_wall
 
 #------------------------------
 ## Wall Examples
@@ -181,3 +186,7 @@ if run_stucco:
     print('end tower_stucco_example')
 
 #-----------------------------------
+
+
+print('Window Examples')
+import example.window.casement_window

@@ -1,13 +1,22 @@
 ## Main Wip
 
 ## 2.2.0
-* Updated cqterrain to version 3.5.2
+* Updated cqterrain to version 3.5.3 
 * Added fireplace package
   * Added Hearth
+  * Added HearthTiled
   * Added FireBox
+  * Added FireBoxTiled
   * Added FireTop
   * Added chimney
   * Added Fireplace
+* Added window package
+  * Added CasementWindow
+* wall package
+  * Added LogWall
+* houe package 
+  * House Modified window placement
+  * Added Snowy roof
 
 ## 2.1.1
 * Updated cqterrain to version 3.5.1

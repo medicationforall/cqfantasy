@@ -16,8 +16,8 @@ class WallSplit(Base):
         self.split_divide_height:float = 25
 
         # blueprints
-        self.bp_upper_wall = None
-        self.bp_lower_wall = None
+        self.bp_upper_wall:Base|None = None
+        self.bp_lower_wall:Base|None = None
 
         #shapes
         self.split:cq.Workplane|None = None

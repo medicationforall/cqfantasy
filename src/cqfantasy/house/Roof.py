@@ -127,8 +127,10 @@ class Roof(Base):
             
         if self.bp_outside_wall:
             outside_wall = self.bp_outside_wall.build()
+            y_translate = self.width/2+self.bp_outside_wall.width/2
             
-            y_translate = self.width/2+self.bp_outside_wall.panel_width/2
+            if hasattr(self.bp_outside_wall,'panel_width'):
+                y_translate = self.width/2+self.bp_outside_wall.panel_width/2
             
             if self.render_overhang_inset:
                 outside_wall = outside_wall.intersect(self.overhang_inset_cut)
@@ -139,8 +141,15 @@ class Roof(Base):
                 
             scene = (
                 scene
-                .add(outside_wall.translate((0,y_translate,0)))
-                .add(outside_wall.rotate((0,0,1),(0,0,0),180).translate((0,-y_translate,0)))
+                .union(
+                    outside_wall.rotate((0,0,1),(0,0,0),180)
+                    .translate((0,y_translate,0))
+                )
+                .union(
+                    outside_wall
+                    .rotate((0,0,1),(0,0,0),0)
+                    .translate((0,-y_translate,0))
+                )
             )
 
         if self.render_magnets and self.magnet:
