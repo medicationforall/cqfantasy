@@ -9,7 +9,9 @@
   * Added FireBoxTiled
   * Added FireTop
   * Added chimney
+  * Added chimney_tiled
   * Added Fireplace
+  * Added FireplaceTiled
 * Added window package
   * Added CasementWindow
 * wall package

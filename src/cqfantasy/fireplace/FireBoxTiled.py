@@ -17,6 +17,7 @@ class FireBoxTiled(Base):
         self.columns:int = 3
         self.layers:int = 5
         self.spacing:float = .7
+        self.spacing_z:float = 0
         self.tile_padding:float = 2
 
         #shapes
@@ -56,7 +57,7 @@ class FireBoxTiled(Base):
         box = cq.Workplane("XY").box(
             self.length-self.spacing,
             self.width-self.spacing,
-            self.height-self.spacing
+            self.height - self.spacing_z
         )
         
         interior_length = self.length - self.x_padding*2

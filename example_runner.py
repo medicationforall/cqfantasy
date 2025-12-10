@@ -24,7 +24,9 @@ import example.fireplace.fire_box
 import example.fireplace.fire_box_tiled
 import example.fireplace.fire_top
 import example.fireplace.chimney
+import example.fireplace.chimney_tiled
 import example.fireplace.fireplace
+import example.fireplace.fireplace_tiled
 
 #------------------------------
 ## House Examples

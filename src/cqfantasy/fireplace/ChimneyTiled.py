@@ -1,24 +1,25 @@
 import cadquery as cq
 from cadqueryhelper import Base
 
-class HearthTiledTwo(Base):
+class ChimneyTiled(Base):
     def __init__(self):
         super().__init__()
         #parameters
-        self.length:float = 35
-        self.width:float = 35
-        self.height:float = 10
-
-        self.rows:int = 4
-        self.columns:int = 4
-        self.layers:int = 2
+        self.length:float = 10
+        self.width:float = 6
+        self.height:float = 60
+        self.interior_padding:float = 2
+        
+        self.rows:int = 2
+        self.columns:int = 2
+        self.layers:int = 16
         self.spacing:float = .5
-        self.tile_padding:float = 2
-
+        self.tile_padding:float = 1.5
+        
         #shapes
         self.outline:cq.Workplane|None = None
-        self.internal_hearth:cq.Workplane|None = None
-        self.hearth:cq.Workplane|None = None
+        self.chimney:cq.Workplane|None = None
+        self.internal_chimney:cq.Workplane|None = None
         self.tiles:cq.Workplane|None = None
         
     def make_outline(self):
@@ -30,17 +31,37 @@ class HearthTiledTwo(Base):
         
         self.outline = outline
         
-    def make_internal_hearth(self):
-        hearth = cq.Workplane("XY").box(
+    def make_chimney(self):
+        chimney = cq.Workplane("XY").box(
+            self.length,
+            self.width,
+            self.height
+        )
+        
+        interior = cq.Workplane("XY").box(
+            self.length - self.interior_padding*2,
+            self.width - self.interior_padding*2,
+            self.height
+        ) 
+        
+        self.chimney = chimney.cut(interior)
+        
+    def make_internal_chimney(self):
+        chimney = cq.Workplane("XY").box(
             self.length-self.spacing,
             self.width-self.spacing,
             self.height-self.spacing/2
         )
         
-        self.internal_hearth = hearth.translate((0,0,-self.spacing/4))
+        interior = cq.Workplane("XY").box(
+            self.length - self.interior_padding*2,
+            self.width - self.interior_padding*2,
+            self.height
+        ) 
+        
+        self.internal_chimney = chimney.translate((0,0,-self.spacing/4)).cut(interior)
         
     def make_tiles(self):
-        
         x_spacing = (self.length+self.tile_padding)/self.columns
         y_spacing = (self.width+self.tile_padding)/self.rows
         z_spacing = (self.height+self.tile_padding)/self.layers
@@ -76,16 +97,16 @@ class HearthTiledTwo(Base):
         
         tile_layers = tile_layers.translate((0,0,height/2))#-(self.height+self.tile_padding)))
         
-        if self.outline:
+        if self.chimney:
             #log('found outline')
             #self.tiles = self.outline.intersect(tile_layers)#.intersect()
-            outline = self.outline.translate((0,0,self.height/2))
-            self.tiles = tile_layers.intersect(outline)
+            self.tiles = tile_layers.intersect(self.chimney.translate((0,0,self.height/2)))
         
     def make(self):
         super().make()
         self.make_outline()
-        self.make_internal_hearth()
+        self.make_chimney()
+        self.make_internal_chimney()
         self.make_tiles()
         
     def build_outline(self)->cq.Workplane:
@@ -103,9 +124,9 @@ class HearthTiledTwo(Base):
         
         part = cq.Workplane("XY")
         
-        if self.internal_hearth:
-            part = part.union(self.internal_hearth.translate((0,0,self.height/2)))
-            
+        if self.internal_chimney:
+            part = part.add(self.internal_chimney.translate((0,0,self.height/2)))
+        
         if self.tiles:
             part = part.union(self.tiles)
         
