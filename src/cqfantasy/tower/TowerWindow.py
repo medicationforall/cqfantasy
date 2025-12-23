@@ -25,11 +25,11 @@ class TowerWindow(Base):
         self.height:float = 30
         self.inner_height_margin:float = 15
         
-        self.render_cylinder = True
+        self.render_cylinder:bool = True
         self.outside_diameter:float = 130
         self.inside_diameter:float = 100
         #self.render_outline:bool = False
-        self.alt_cut_width = 10
+        self.alt_cut_width:float = 10
         
         # shapes
         self.outline:cq.Workplane|None = None

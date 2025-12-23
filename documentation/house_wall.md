@@ -1,6 +1,44 @@
 # House Wall Documentation
 
 ---
+## Log Wall
+
+## parameters
+* length: float
+* width: float
+* height: float
+* log_count: int
+* diameter_overlap: float
+* spread_width: bool
+
+``` python
+import cadquery as cq
+from cqfantasy.house_wall import LogWall
+
+bp_wall = LogWall()
+
+bp_wall.length = 30
+bp_wall.width = 5
+bp_wall.height = 60
+bp_wall.log_count = 9
+bp_wall.diameter_overlap = 5
+bp_wall.spread_width = True
+
+
+bp_wall.make()
+
+ex_wall = bp_wall.build()
+
+show_object(ex_wall)
+```
+
+![](image/house_wall/06.png)
+
+* [source](../src/cqfantasy/house_wall/LogWall.py)
+* [example](../example/house_wall/log_wall.py)
+* [stl](../stl/house_log_wall.stl)
+
+---
 
 ## Tudor Wall
 Helper method that creates tudor wall greebles base on passed in configuration.

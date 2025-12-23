@@ -6,3 +6,4 @@
 * [House Wall](./house_wall.md)
 * [Tower](./tower.md)
 * [Wall](./wall.md)
+* [Window](./window.md)

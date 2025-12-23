@@ -31,6 +31,7 @@ show_object(ex)
     * [House Wall](documentation/house_wall.md)
 	* [Tower](documentation/tower.md)
     * [Wall](documentation/wall.md)
+    * [Window](documentation/window.md)
 
 ## Changes
 * [Changelog](./changes.md)

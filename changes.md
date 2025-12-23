@@ -1,5 +1,15 @@
 ## Main Wip
 
+## 2.2.1
+* fireplace Documentation
+  * fix filepaths
+  * Added tiled documentation
+* house_wall documentation
+  * Added Log Wall Documentation
+* Added window documentation
+* casement_window_example rename the generated stl to window_casement_window.stl
+* Added some missing type annotations
+
 ## 2.2.0
 * Updated cqterrain to version 3.5.3 
 * Added fireplace package

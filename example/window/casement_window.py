@@ -12,9 +12,6 @@ bp_window.frame_width=2
 bp_window.grill_width=1.5
 bp_window.grill_height=1.5
 
-#bp_window.diameter = 130
-#bp_window.render_outline = False
-
 bp_window.frame_width = 2
 bp_window.frame_margin = 2
 bp_window.render_cylinder = True
@@ -24,4 +21,4 @@ window = bp_window.build()
 window_cut = bp_window.build_cut()
 
 #show_object(window)
-cq.exporters.export(window, 'stl/CasementWindow.stl')
+cq.exporters.export(window, 'stl/window_casement_window.stl')
