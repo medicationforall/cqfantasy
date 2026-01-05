@@ -15,6 +15,17 @@ import example.door.v_door
 import example.door.arch_door
 
 #------------------------------
+## Fence Examples
+print('Fence Examples')
+import example.fence.basic_base
+import example.fence.basic_pillar
+import example.fence.basic_bar_decoration
+import example.fence.basic_fence
+import example.fence.pillar_brick
+import example.fence.base_brick
+import example.fence.bar_greebled
+
+#------------------------------
 ## Fireplace Examples
 print('Fireplace Examples')
 import example.fireplace.hearth

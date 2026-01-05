@@ -1,5 +1,17 @@
 ## Main Wip
 
+## 2.2.2
+* Updated cqterrain to version 3.5.6
+* Added fence package
+  * Added BasicBase
+  * Added BasicPillar
+  * Added BasicBarDecoration
+  * Added BasicFence
+  * Added BaseBrick
+  * Added PillarBrick
+  * Added BarGreebled
+* Added license blocks
+
 ## 2.2.1
 * fireplace Documentation
   * fix filepaths
