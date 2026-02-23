@@ -1,5 +1,8 @@
 ## Main Wip
 
+## 2.2.3
+* Updated cqterrain to version 3.6.2
+
 ## 2.2.2
 * Updated cqterrain to version 3.5.6
 * Added fence package
