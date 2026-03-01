@@ -67,6 +67,7 @@ import example.house_wall.wall_tudor_paneling_class
 import example.house_wall.wall_stucco_brick_class
 import example.house_wall.wall_split_class
 import example.house_wall.log_wall
+import example.house_wall.rubble_wall
 
 #------------------------------
 ## Wall Examples

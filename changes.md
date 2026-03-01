@@ -1,5 +1,13 @@
 ## Main Wip
 
+## 2.2.4
+* Updated cqterrain to version 3.7.0
+  * cadquery 2.7.0
+* Added house_wall RubbleWall
+* Added type annotations to house BodyGreebled
+* Modified BodyGreebled to accept wall with a tuple for width
+* optimized BodyGreebled magnet cuts
+
 ## 2.2.3
 * Updated cqterrain to version 3.6.2
 

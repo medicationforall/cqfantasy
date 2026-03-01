@@ -3,4 +3,5 @@ from .WallTudor import WallTudor
 from .WallStuccoBrick import WallStuccoBrick
 from .WallTudorPaneling import WallTudorPaneling
 from .LogWall import LogWall
+from .RubbleWall import RubbleWall
 from .WallSplit import WallSplit

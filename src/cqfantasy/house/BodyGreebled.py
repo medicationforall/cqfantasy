@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import cadquery as cq
+from cadqueryhelper import Base
 from . import Body, TileGenerator
 from ..tower import make_magnet
 #from ..house_wall import WallTudor, WallStuccoBrick, WallTudorPaneling
@@ -37,8 +38,8 @@ class BodyGreebled(Body):
         self.magnet = None
         
         #blueprints
-        self.bp_outside_walls = []
-        self.bp_inside_walls = []
+        self.bp_outside_walls:list[Base] = []
+        self.bp_inside_walls:list[Base] = []
         self.bp_tile_generator:TileGenerator|None = TileGenerator()
         
     def calculate_internal_height(self):
@@ -126,52 +127,83 @@ class BodyGreebled(Body):
             z_translate = self.floor_height
             if self.render_floor_tiles and self.bp_tile_generator:
                 z_translate += self.tile_height
+
             for index, wall in enumerate(self.inside_walls):
+                print(f'build inside wall {index}')
+                wall_width = self.bp_inside_walls[index].width
+
+                if type(wall_width) is tuple:
+                    wall_width = wall_width[1]
+
                 if index == 0:
-                    length_translate = self.width/2-self.wall_width-self.bp_inside_walls[index].width/2
+                    length_translate = self.width/2-self.wall_width-wall_width//2
                     scene = scene.add(wall.rotate((0,0,1),(0,0,0),180).translate((0,-length_translate,z_translate/2)))
                 elif index == 1:
-                    width_translate = self.length/2-self.wall_width-self.bp_inside_walls[index].width/2
+                    width_translate = self.length/2-self.wall_width-wall_width/2
                     scene = scene.add(wall.rotate((0,0,1),(0,0,0),-90).translate((-width_translate,0,z_translate/2)))
                 elif index == 2:
-                    length_translate = self.width/2-self.wall_width-self.bp_inside_walls[index].width/2
+                    length_translate = self.width/2-self.wall_width-wall_width/2
                     scene = scene.add(wall.rotate((0,0,1),(0,0,0),0).translate((0,length_translate,z_translate/2)))
                 elif index == 3:
-                    width_translate = self.length/2-self.wall_width-self.bp_inside_walls[index].width/2
+                    width_translate = self.length/2-self.wall_width-wall_width/2
                     scene = scene.add(wall.rotate((0,0,1),(0,0,0),90).translate((width_translate,0,z_translate/2)))
+
 
         if self.render_outside_walls and self.outside_walls:
             #log('found outside wall')
             #show_object(self.outside_walls[0])
             
             for index, wall in enumerate(self.outside_walls):
-                if index == 0:
-                    translate_y = self.width/2+self.bp_outside_walls[index].width/2
-                    scene = scene.add(wall.translate((0,-translate_y,0)))
-                elif index == 1:
-                    translate_x = self.length/2+self.bp_outside_walls[index].width/2
-                    scene = scene.add(wall.rotate((0,0,1),(0,0,0),90).translate((-translate_x,0,0)))
-                elif index == 2:
-                    translate_y = self.width/2+self.bp_outside_walls[index].width/2
-                    scene = scene.add(wall.rotate((0,0,1),(0,0,0),180).translate((0,translate_y,0)))
-                elif index == 3:
-                    translate_x = self.length/2+self.bp_outside_walls[index].width/2
-                    scene = scene.add(wall.rotate((0,0,1),(0,0,0),-90).translate((translate_x,0,0)))
+                print(f'build outside wall {index}')
+
+                try:
+                    wall_width = self.bp_outside_walls[index].width
+
+                    if type(wall_width) is tuple:
+                        wall_width = wall_width[1]
+
+                    if index == 0:
+                        translate_y = self.width/2+wall_width/2
+                        scene = scene.union(wall.translate((0,-translate_y,0)))
+                    elif index == 1:
+                        translate_x = self.length/2+wall_width/2
+                        scene = scene.union(wall.rotate((0,0,1),(0,0,0),90).translate((-translate_x,0,0)))
+                    elif index == 2:
+                        translate_y = self.width/2+wall_width/2
+                        scene = scene.union(wall.rotate((0,0,1),(0,0,0),180).translate((0,translate_y,0)))
+                    elif index == 3:
+                        translate_x = self.length/2+wall_width/2
+                        scene = scene.union(wall.rotate((0,0,1),(0,0,0),-90).translate((translate_x,0,0)))
+                except Exception:
+                    print('something went wrong making outside walls')
                     
+        print('left the wall loops')
         if self.render_floor_tiles and self.bp_tile_generator:
+            print('build floor')
             tiles = self.bp_tile_generator.build()                
-            scene = scene.add(tiles.translate((0,0,-self.height/2+self.floor_height+self.tile_height/2)))#self.tile_height/2+self.floor_height-self.tile_height)))#self.floor_height)))
+            scene = scene.union(tiles.translate((0,0,-self.height/2+self.floor_height+self.tile_height/2)))#self.tile_height/2+self.floor_height-self.tile_height)))#self.floor_height)))
 
         if self.render_magnets and self.magnet:
+            print('build magnets')
             x_translate = self.calculate_internal_length()/2+self.magnet_diameter/2
             y_translate = self.calculate_internal_width()/2+self.magnet_diameter/2
             z_translate = self.height/2-self.magnet_height/2
+
+            print('pre magnet cuts')
+            magnets = (
+                cq.Workplane("XY")
+                .union(self.magnet.translate((x_translate,y_translate,z_translate)))
+                .union(self.magnet.translate((-x_translate,y_translate,z_translate)))
+                .union(self.magnet.translate((x_translate,-y_translate,z_translate)))
+                .union(self.magnet.translate((-x_translate,-y_translate,z_translate)))
+            )
+
             scene = (
                 scene
-                .cut(self.magnet.translate((x_translate,y_translate,z_translate)))
-                .cut(self.magnet.translate((-x_translate,y_translate,z_translate)))
-                .cut(self.magnet.translate((x_translate,-y_translate,z_translate)))
-                .cut(self.magnet.translate((-x_translate,-y_translate,z_translate)))
+                .cut(magnets)
             )
+
+            print('post magnet cuts')
  
+        print('end of BodyGreebled build')
         return scene

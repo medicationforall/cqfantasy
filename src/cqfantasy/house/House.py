@@ -112,11 +112,11 @@ class House(Base):
         for index in range(x_window_count):
             if index < len(window_style):
                 if window_style[index]:
-                    x_windows = x_windows.add(window.translate((x_window_space*index,0,0)))
+                    x_windows = x_windows.union(window.translate((x_window_space*index,0,0)))
                 else:
                     continue
             else:
-                x_windows = x_windows.add(window.translate((x_window_space*index,0,0)))
+                x_windows = x_windows.union(window.translate((x_window_space*index,0,0)))
         return x_windows
     
     def make_y_windows(self, window, window_style):
@@ -126,11 +126,11 @@ class House(Base):
         for index in range(y_window_count):
             if index < len(window_style):
                 if window_style[index]:
-                    y_windows = y_windows.add(window.translate((y_window_space*index,0,0)))
+                    y_windows = y_windows.union(window.translate((y_window_space*index,0,0)))
                 else:
                     continue
             else:
-                y_windows = y_windows.add(window.translate((y_window_space*index,0,0)))
+                y_windows = y_windows.union(window.translate((y_window_space*index,0,0)))
 
         return y_windows
         
@@ -235,7 +235,7 @@ class House(Base):
             self.make_windows_cut()
 
     def build_body(self) -> cq.Workplane:
-        #print('Build house body')
+        print('Build house body')
         body = self.bp_body.build()
         
         scene = (
@@ -243,16 +243,20 @@ class House(Base):
         )
 
         if body:
-            scene = scene.union(body.translate((0,0,self.bp_body.height/2)))
+            scene = scene.add(body.translate((0,0,self.bp_body.height/2)))
 
+        print('build house doors')
         if self.render_doors and self.door_cut:
+            print('build house doors cuts')
             door_cut = self.door_cut
             scene = scene.cut(door_cut.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.bp_body.calculate_floor_height())))
 
         if self.render_doors:
             door = self.bp_door.build()
+            print('build house doors add doors')
             scene = scene.union(door.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.bp_body.calculate_floor_height())))
 
+        print('build house windows')
         if self.render_windows:
             if self.windows_x_cut:
                 #print('found windows x_cut')
@@ -264,6 +268,8 @@ class House(Base):
                     windows_x_cut_minus = self.windows_x_cut[1]
 
                 y_translate = self.bp_body.width/2-self.bp_body.wall_width/2
+
+                print('try to cut x windows')
                 scene = (
                     scene
                     #plus
@@ -281,6 +287,8 @@ class House(Base):
                 else:
                     windows_y_cut = self.windows_y_cut[0]
                     windows_y_cut_minus = self.windows_y_cut[1]
+
+                print('try to cut y windows')
 
                 scene = (
                     scene
@@ -310,9 +318,9 @@ class House(Base):
                 scene = (
                     scene
                     #plus
-                    .add(windows_x.translate((0,-y_translate,self.bp_body.height/2+self.window_offset)))
+                    .union(windows_x.translate((0,-y_translate,self.bp_body.height/2+self.window_offset)))
                     #minus
-                    .add(windows_x_minus.rotate((0,0,1),(0,0,0),-180).translate((0,y_translate,self.bp_body.height/2+self.window_offset)))
+                    .union(windows_x_minus.rotate((0,0,1),(0,0,0),-180).translate((0,y_translate,self.bp_body.height/2+self.window_offset)))
                 )
                 
             if self.windows_y:
@@ -325,13 +333,13 @@ class House(Base):
                 scene = (
                     scene
                     #plus
-                    .add(
+                    .union(
                         windows_y.translate((0,0,self.bp_body.height/2+self.window_offset))
                         .rotate((0,0,1),(0,0,0),-90)
                         .translate((self.length/2-self.bp_body.wall_width/2,0,0))
                     )
                     #minus
-                    .add(
+                    .union(
                         windows_y_minus.translate((0,0,self.bp_body.height/2+self.window_offset))
                         .rotate((0,0,1),(0,0,0),90)
                         .translate((-self.length/2+self.bp_body.wall_width/2,0,0))

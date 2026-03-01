@@ -1,6 +1,16 @@
 # House Wall Documentation
 
 ---
+
+* [Log Wall](#log-wall)
+* [Rubble Wall](#rubble-wall)
+* [Tudor Wall](#tudor-wall)
+* [Wall Split](#wall-split)
+* [Wall Stucco Brick](#wall-stucco-brick)
+* [Wall Tudor](#wall-tudor)
+* [Wall Tudor Paneling](#wall-tudor-paneling)
+
+---
 ## Log Wall
 
 ## parameters
@@ -37,6 +47,39 @@ show_object(ex_wall)
 * [source](../src/cqfantasy/house_wall/LogWall.py)
 * [example](../example/house_wall/log_wall.py)
 * [stl](../stl/house_log_wall.stl)
+
+---
+
+## Rubble Wall
+
+### parameters
+* length:float
+* width:float
+* height:float
+* seed:str
+
+``` python
+import cadquery as cq
+from cqfantasy.house_wall import RubbleWall
+
+bp_wall = RubbleWall()
+bp_wall.length = 100
+bp_wall.width = 3
+bp_wall.height = 75
+bp_wall.x_padding = None
+bp_wall.seed = 'test2'
+
+bp_wall.make()
+ex_wall = bp_wall.build()
+
+show_object(ex_wall)
+```
+
+![](image/house_wall/07.png)
+
+* [source](../src/cqfantasy/house_wall/RubbleWall.py)
+* [example](../example/house_wall/rubble_wall.py)
+* [stl](../stl/house_rubble_wall.stl)
 
 ---
 
