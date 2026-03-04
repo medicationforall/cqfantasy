@@ -1,5 +1,20 @@
 ## Main Wip
 
+## 2.2.5
+* house package
+  * Added PyramidRoof
+  * Added PyramidRoofShingle
+  * Added snowyroof type annotations
+    * snow_z_translate parameter
+  * Roof added render_wall parameter
+* Created watchtower package
+  * Added TowerBase
+  * Added TowerBody
+  * Added TowerBodyGreebled
+  * Added TowerTop
+  * Added TowerTopGreebled
+  * Added WatchTower  
+
 ## 2.2.4
 * Updated cqterrain to version 3.7.0
   * cadquery 2.7.0

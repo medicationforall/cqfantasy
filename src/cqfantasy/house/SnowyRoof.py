@@ -29,11 +29,12 @@ class SnowyRoof(Roof):
         self.tile_height:float = 0.8
         self.tile_rotation:float = 4
         self.tile_push:float = 2
-        self.seed_one = 'test'
-        self.seed_two = 'test_four'
-        self.snow_height = 7
-        self.snow_peak_count = 5
-        self.snow_segments = 3
+        self.seed_one:str = 'test'
+        self.seed_two:str = 'test_four'
+        self.snow_height:float = 7
+        self.snow_peak_count:int = 5
+        self.snow_segments:int = 3
+        self.snow_z_translate:float = 0
         
         
         #shapes
@@ -145,7 +146,11 @@ class SnowyRoof(Roof):
             )
             
         if self.snow:
-            scene = scene.union(self.snow)
+            if self.snow_z_translate:
+                scene = scene.union(self.snow.translate((0,0,self.snow_z_translate)))
+            else:
+                scene = scene.union(self.snow)
+                
 
         flat = cq.Workplane("XY").box(self.length+10,self.width, self.height).translate((0,0,-self.height))
         

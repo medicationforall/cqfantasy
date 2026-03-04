@@ -44,19 +44,21 @@ import example.fireplace.fireplace_tiled
 print('House Examples')
 import example.house.body
 import example.house.body_greebled
-import example.house.roof
-import example.house.house
-import example.house.house_plate
-import example.house.house_cut_away
-import example.house.stucco_brick_body
-import example.house.tudor_split_body
-import example.house.tudor_body
 import example.house.body_types
+import example.house.house
+import example.house.house_cut_away
 import example.house.house_greebled
 import example.house.house_greebled_two
-import example.house.tile_generator
+import example.house.house_plate
+import example.house.pyramid_roof
+import example.house.pyramid_roof_shingle
+import example.house.roof
 import example.house.shingle_roof
 import example.house.snowy_roof
+import example.house.stucco_brick_body
+import example.house.tile_generator
+import example.house.tudor_split_body
+import example.house.tudor_body
 
 #------------------------------
 ## House wall Examples
@@ -95,12 +97,24 @@ import example.tower.round_block_generator
 import example.tower.round_block_uneven_generator
 import example.tower.round_block_alt_generator
 import example.tower.round_block_stucco_generator
+
+#------------------------------
+
+## Watchtower
+print('WatchTower Examples')
+import example.watchtower.tower_base
+import example.watchtower.tower_body
+import example.watchtower.tower_body_greebled
+import example.watchtower.tower_top
+import example.watchtower.tower_top_greebled
+import example.watchtower.watch_tower
+
 #------------------------------
 ## Tower Examples
 
 
 #------------------------------
-run_base = True
+run_base = False
 
 if run_base:
     print('Tower Examples')
@@ -137,7 +151,7 @@ if run_base:
     print('end tower_top')
 
 #------------------------------
-run_greebled = True
+run_greebled = False
 
 if run_greebled:
     print('start tower_greebled_example')
@@ -176,7 +190,7 @@ if run_greebled:
 
 
 #-----------------------------------
-run_alt = True
+run_alt = False
 
 if run_alt:
     print('start tower_alt_greebled_example')
@@ -188,7 +202,7 @@ if run_alt:
     print('end tower_alt_greebled_example')
 
 #-----------------------------------
-run_stucco = True
+run_stucco = False
 
 if run_stucco:
     print('start tower_stucco_example')

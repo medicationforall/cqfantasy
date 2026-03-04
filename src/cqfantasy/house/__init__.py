@@ -8,3 +8,5 @@ from .House import House
 from .StuccoBrickBody import StuccoBrickBody
 from .TudorBody import TudorBody
 from .TudorSplitBody import TudorSplitBody
+from .PyramidRoof import PyramidRoof
+from .PyramidRoofShingle import PyramidRoofShingle

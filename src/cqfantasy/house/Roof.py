@@ -30,9 +30,11 @@ class Roof(Base):
         self.render_overhang_inset:bool = True
         self.overhang_inset:Tuple[float,float,float] = (4,8,4)
 
-        self.render_magnets = True
+        self.render_magnets:bool = True
         self.magnet_diameter:float = 3.4
         self.magnet_height:float = 2.2
+
+        self.render_outside_wall:bool = True
 
         # blueprints
         self.bp_outside_wall = None
@@ -84,7 +86,7 @@ class Roof(Base):
         self.overhang_inset_cut = overhang_inset_cut
         
     def make_outside_wall(self):
-        if self.bp_outside_wall:
+        if self.render_outside_wall and self.bp_outside_wall:
             self.bp_outside_wall.length = self.length
             self.bp_outside_wall.height = self.height
             self.bp_outside_wall.make()
@@ -125,7 +127,7 @@ class Roof(Base):
                 .cut(self.overhang_inset_cut.translate((0,-self.width/2+self.overhang_inset[1]/2,0)))
             )
             
-        if self.bp_outside_wall:
+        if self.render_outside_wall and self.bp_outside_wall:
             outside_wall = self.bp_outside_wall.build()
             y_translate = self.width/2+self.bp_outside_wall.width/2
             
