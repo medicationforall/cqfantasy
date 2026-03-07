@@ -3,6 +3,8 @@ from cadqueryhelper import Base
 from cqterrain.floor import WoodFloor
 from ..house import House, BodyGreebled
 from ..house_wall import RubbleWall
+from ..corner import AshlarCorner
+from cqterrain import Ladder
 
 
 class TowerBodyGreebled(Base):
@@ -18,9 +20,14 @@ class TowerBodyGreebled(Base):
         self.render_outside_walls:bool = True
         self.render_inside_walls:bool = True
         self.render_floor_tiles:bool = True
+        self.render_outside_corners:bool = True
+        self.render_ladder:bool = True
+        
+        self.ladder_translate = 0
         
         # blue prints
         self.bp_tower:Base = self.init_body()
+        self.bp_ladder:Base = Ladder()
         
         #shapes
         self.outline:cq.Workplane|None = None
@@ -39,7 +46,7 @@ class TowerBodyGreebled(Base):
         
         #windows
         bp_house.window_space = (75/3,75/3)
-        bp_house.window_x_style = ([None,'win',None],['win',None,'win'])
+        bp_house.window_x_style = ([None,'win',None],None)
         bp_house.window_y_style = [None,'win',None]
         
         #bp_house.bp_window = CasementWindow()
@@ -78,7 +85,7 @@ class TowerBodyGreebled(Base):
             bp_rubble.width = 2
             bp_rubble.width = (2,3,.5)
             bp_rubble.x_padding = 0
-            bp_rubble.seed = f'tower_test_1'
+            bp_rubble.seed = f'tower_test_1_{i}'
             bp_outside_walls.append(bp_rubble)
         
         bp_body.render_outside_walls = False
@@ -92,11 +99,20 @@ class TowerBodyGreebled(Base):
             #bp_rubble.width = (1,3,1)
             bp_rubble.width = 2
                 
-            bp_rubble.seed = f'in_tower_1'
+            bp_rubble.seed = f'tower_test_1_{i}'
             bp_inside_walls.append(bp_rubble)
         
         bp_body.render_inside_walls = False
         bp_body.bp_inside_walls = bp_inside_walls
+        
+        #corners
+        bp_corner = AshlarCorner()
+        bp_corner.length = 15
+        bp_corner.width = 15
+        bp_corner.stone_height = 125/11
+        bp_corner.corner_cut_length = 4
+        bp_corner.corner_cut_width = 4
+        bp_body.bp_outside_corners = bp_corner
         
         bp_house.bp_body = bp_body
         
@@ -121,13 +137,20 @@ class TowerBodyGreebled(Base):
             self.bp_tower.render_windows = self.render_windows
             self.bp_tower.bp_body.render_outside_walls = self.render_outside_walls
             self.bp_tower.bp_body.render_inside_walls = self.render_inside_walls
-            self.bp_tower.render_floor_tiles = self.render_floor_tiles
+            self.bp_tower.bp_body.render_outside_corners = self.render_outside_corners
+            self.bp_tower.bp_body.render_floor_tiles = self.render_floor_tiles
             self.bp_tower.make()
+            
+    def make_ladder(self):
+        height = self.bp_tower.bp_body.calculate_internal_height()
+        self.bp_ladder.height = height
+        self.bp_ladder.make()
         
     def make(self):
         super().make()
         self.make_outline()
         self.make_body()
+        self.make_ladder()
         
     def build_outline(self)->cq.Workplane:
         super().build()
@@ -147,5 +170,12 @@ class TowerBodyGreebled(Base):
         if self.bp_tower:
             ex_body = self.bp_tower.build()
             part = part.add(ex_body)
+            
+        if self.render_ladder and self.bp_ladder:
+            ex_ladder = self.bp_ladder.build()
+            height = self.bp_tower.bp_body.calculate_internal_height() 
+            adder = self.height - height
+            translate_y = (self.width/2) - self.bp_tower.bp_body.wall_width - (self.bp_ladder.width/2) + self.ladder_translate 
+            part = part.add(ex_ladder.translate((0,translate_y,(height/2) + adder)))
         
         return part

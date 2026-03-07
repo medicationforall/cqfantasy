@@ -151,13 +151,20 @@ class House(Base):
                 #print('window_x_style is tuple hit')
                 x_window_space = self._calulate_x_window_space()
                 #print(self.window_x_style[0])
-                x_windows = self.make_x_windows(window, self.window_x_style[0])
-                x_windows = x_windows.translate((-self.bp_body.length/2+x_window_space/2,0,0))
-                self.windows_x.append(x_windows)
 
-                x_windows_two = self.make_x_windows(window, self.window_x_style[1])
-                x_windows_two = x_windows_two.translate((-self.bp_body.length/2+x_window_space/2,0,0))
-                self.windows_x.append(x_windows_two)
+                if self.window_x_style[0]:
+                    x_windows = self.make_x_windows(window, self.window_x_style[0])
+                    x_windows = x_windows.translate((-self.bp_body.length/2+x_window_space/2,0,0))
+                    self.windows_x.append(x_windows)
+                else:
+                     self.windows_x.append(None)
+
+                if self.window_x_style[1]:
+                    x_windows_two = self.make_x_windows(window, self.window_x_style[1])
+                    x_windows_two = x_windows_two.translate((-self.bp_body.length/2+x_window_space/2,0,0))
+                    self.windows_x.append(x_windows_two)
+                else:
+                    self.windows_x.append(None)
             else: 
                 x_window_space = self._calulate_x_window_space()
                 x_windows = self.make_x_windows(window, self.window_x_style)
@@ -167,14 +174,21 @@ class House(Base):
             # y_windows
             if isinstance(self.window_y_style, tuple):
                 #print('window_y_style is tuple hit')
-                y_window_space = self._calulate_y_window_space()
-                y_windows = self.make_y_windows(window, self.window_y_style[0])
-                y_windows = y_windows.translate((-self.bp_body.width/2+y_window_space/2,0,0))
-                self.windows_y.append(y_windows)
 
-                y_windows_two = self.make_y_windows(window, self.window_y_style[1])
-                y_windows_two = y_windows_two.translate((-self.bp_body.width/2+y_window_space/2,0,0))
-                self.windows_y.append(y_windows_two)
+                if self.window_y_style[0]:
+                    y_window_space = self._calulate_y_window_space()
+                    y_windows = self.make_y_windows(window, self.window_y_style[0])
+                    y_windows = y_windows.translate((-self.bp_body.width/2+y_window_space/2,0,0))
+                    self.windows_y.append(y_windows)
+                else:
+                    self.windows_y.append(None)
+
+                if self.window_y_style[1]:
+                    y_windows_two = self.make_y_windows(window, self.window_y_style[1])
+                    y_windows_two = y_windows_two.translate((-self.bp_body.width/2+y_window_space/2,0,0))
+                    self.windows_y.append(y_windows_two)
+                else:
+                    self.windows_y.append(None)
             else: 
                 y_window_space = self._calulate_y_window_space()
                 y_windows = self.make_y_windows(window, self.window_y_style)
@@ -189,14 +203,20 @@ class House(Base):
             # x_windows
             if isinstance(self.window_x_style, tuple):
                 #print('window_x_style is tuple hit')
-                x_window_space = self._calulate_x_window_space()
-                x_windows = self.make_x_windows(window_cut, self.window_x_style[0])
-                x_windows = x_windows.translate((-self.bp_body.length/2+x_window_space/2,0,0))
-                self.windows_x_cut.append(x_windows)
+                if self.window_x_style[0]:
+                    x_window_space = self._calulate_x_window_space()
+                    x_windows = self.make_x_windows(window_cut, self.window_x_style[0])
+                    x_windows = x_windows.translate((-self.bp_body.length/2+x_window_space/2,0,0))
+                    self.windows_x_cut.append(x_windows)
+                else:
+                    self.windows_x_cut.append(None)
 
-                x_windows_two = self.make_x_windows(window_cut, self.window_x_style[1])
-                x_windows_two = x_windows_two.translate((-self.bp_body.length/2+x_window_space/2,0,0))
-                self.windows_x_cut.append(x_windows_two)
+                if self.window_x_style[1]:
+                    x_windows_two = self.make_x_windows(window_cut, self.window_x_style[1])
+                    x_windows_two = x_windows_two.translate((-self.bp_body.length/2+x_window_space/2,0,0))
+                    self.windows_x_cut.append(x_windows_two)
+                else:
+                    self.windows_x_cut.append(None)
             else: 
                 x_window_space = self._calulate_x_window_space()
                 x_windows = self.make_x_windows(window_cut, self.window_x_style)
@@ -206,14 +226,20 @@ class House(Base):
             # y_windows
             if isinstance(self.window_y_style, tuple):
                 #('window_y_style is tuple hit')
-                y_window_space = self._calulate_y_window_space()
-                y_windows = self.make_y_windows(window_cut, self.window_y_style[0])
-                y_windows = y_windows.translate((-self.bp_body.width/2+y_window_space/2,0,0))
-                self.windows_y_cut.append(y_windows)
+                if self.window_y_style[0]:
+                    y_window_space = self._calulate_y_window_space()
+                    y_windows = self.make_y_windows(window_cut, self.window_y_style[0])
+                    y_windows = y_windows.translate((-self.bp_body.width/2+y_window_space/2,0,0))
+                    self.windows_y_cut.append(y_windows)
+                else:
+                    self.windows_y_cut.append(None)
 
-                y_windows_two = self.make_y_windows(window_cut, self.window_y_style[1])
-                y_windows_two = y_windows_two.translate((-self.bp_body.width/2+y_window_space/2,0,0))
-                self.windows_y_cut.append(y_windows_two)
+                if self.window_y_style[0]:
+                    y_windows_two = self.make_y_windows(window_cut, self.window_y_style[1])
+                    y_windows_two = y_windows_two.translate((-self.bp_body.width/2+y_window_space/2,0,0))
+                    self.windows_y_cut.append(y_windows_two)
+                else:
+                    self.windows_y_cut.append(None)
             else: 
                 y_window_space = self._calulate_y_window_space()
                 y_windows = self.make_y_windows(window_cut, self.window_y_style)
@@ -233,6 +259,98 @@ class House(Base):
         if self.render_windows:
             self.make_windows()
             self.make_windows_cut()
+
+
+    def build_cut_windows(self):
+        scene = cq.Workplane("XY")
+
+        if self.windows_x_cut:
+            #print('found windows x_cut')
+            if len(self.windows_x_cut) == 1:
+                windows_x_cut_plus = self.windows_x_cut[0]
+                windows_x_cut_minus = self.windows_x_cut[0]
+            else:
+                windows_x_cut_plus = self.windows_x_cut[0]
+                windows_x_cut_minus = self.windows_x_cut[1]
+
+            y_translate = self.bp_body.width/2-self.bp_body.wall_width/2
+
+            print('try to cut x windows')
+            if windows_x_cut_plus:
+                scene = scene.union(windows_x_cut_plus.translate((0,-y_translate,self.bp_body.height/2+self.window_offset)))
+
+            if windows_x_cut_minus:
+                scene = scene.union(windows_x_cut_minus.rotate((0,0,1),(0,0,0),-180).translate((0,y_translate,self.bp_body.height/2+self.window_offset)))
+
+        if self.windows_y_cut:
+            #print('found windows y_cut')
+            if len(self.windows_y_cut) == 1:
+                windows_y_cut_plus = self.windows_y_cut[0]
+                windows_y_cut_minus = self.windows_y_cut[0]
+            else:
+                windows_y_cut_plus = self.windows_y_cut[0]
+                windows_y_cut_minus = self.windows_y_cut[1]
+
+            print('try to cut y windows')
+            if windows_y_cut_plus:
+                scene = scene.union(
+                    windows_y_cut_plus.translate((0,0,self.bp_body.height/2+self.window_offset))
+                    .rotate((0,0,1),(0,0,0),-90)
+                    .translate((self.length/2-self.bp_body.wall_width/2,0,0))
+                )
+
+            if windows_y_cut_minus:
+                scene = scene.union(
+                    windows_y_cut_minus.translate((0,0,self.bp_body.height/2+self.window_offset))
+                    .rotate((0,0,1),(0,0,0),90)
+                    .translate((-self.length/2+self.bp_body.wall_width/2,0,0))
+                )
+
+        return scene
+
+    def build_windows(self):
+        scene = cq.Workplane("XY")
+
+        if self.windows_x:
+            if len(self.windows_x) == 1:
+                windows_x_plus = self.windows_x[0]
+                windows_x_minus = self.windows_x[0]
+            else:
+                windows_x_plus = self.windows_x[0]
+                windows_x_minus = self.windows_x[1]
+
+            y_translate = self.bp_body.width/2-self.bp_body.wall_width/2
+
+            if windows_x_plus:
+                scene = scene.union(windows_x_plus.translate((0,-y_translate,self.bp_body.height/2+self.window_offset)))
+            
+            if windows_x_minus:
+                scene = scene.union(windows_x_minus.rotate((0,0,1),(0,0,0),-180).translate((0,y_translate,self.bp_body.height/2+self.window_offset)))
+            
+        if self.windows_y:
+            if len(self.windows_y) == 1:
+                windows_y_plus = self.windows_y[0]
+                windows_y_minus = self.windows_y[0]
+            else:
+                windows_y_plus = self.windows_y[0]
+                windows_y_minus = self.windows_y[1]
+
+            if windows_y_plus:
+                scene = scene.union(
+                    windows_y_plus.translate((0,0,self.bp_body.height/2+self.window_offset))
+                    .rotate((0,0,1),(0,0,0),-90)
+                    .translate((self.length/2-self.bp_body.wall_width/2,0,0))
+                )
+
+            if windows_y_minus:
+                scene = scene.union(
+                    windows_y_minus.translate((0,0,self.bp_body.height/2+self.window_offset))
+                    .rotate((0,0,1),(0,0,0),90)
+                    .translate((-self.length/2+self.bp_body.wall_width/2,0,0)) 
+                )
+
+        return scene
+
 
     def build_body(self) -> cq.Workplane:
         print('Build house body')
@@ -258,93 +376,15 @@ class House(Base):
 
         print('build house windows')
         if self.render_windows:
-            if self.windows_x_cut:
-                #print('found windows x_cut')
-                if len(self.windows_x_cut) == 1:
-                    windows_x_cut_plus = self.windows_x_cut[0]
-                    windows_x_cut_minus = self.windows_x_cut[0]
-                else:
-                    windows_x_cut_plus = self.windows_x_cut[0]
-                    windows_x_cut_minus = self.windows_x_cut[1]
+            cut_windows = self.build_cut_windows()
+            windows = self.build_windows()
 
-                y_translate = self.bp_body.width/2-self.bp_body.wall_width/2
+            scene = (
+                scene
+                .cut(cut_windows)
+                .union(windows)
+            )
 
-                print('try to cut x windows')
-                scene = (
-                    scene
-                    #plus
-                    .cut(windows_x_cut_plus.translate((0,-y_translate,self.bp_body.height/2+self.window_offset)))
-                    #minus
-                    .cut(windows_x_cut_minus.rotate((0,0,1),(0,0,0),-180).translate((0,y_translate,self.bp_body.height/2+self.window_offset)))
-                )
-
-                
-            if self.windows_y_cut:
-                #print('found windows y_cut')
-                if len(self.windows_y_cut) == 1:
-                    windows_y_cut = self.windows_y_cut[0]
-                    windows_y_cut_minus = self.windows_y_cut[0]
-                else:
-                    windows_y_cut = self.windows_y_cut[0]
-                    windows_y_cut_minus = self.windows_y_cut[1]
-
-                print('try to cut y windows')
-
-                scene = (
-                    scene
-                    #plus
-                    .cut(
-                        windows_y_cut.translate((0,0,self.bp_body.height/2+self.window_offset))
-                        .rotate((0,0,1),(0,0,0),-90)
-                        .translate((self.length/2-self.bp_body.wall_width/2,0,0))
-                    )
-                    #minus
-                    .cut(
-                        windows_y_cut_minus.translate((0,0,self.bp_body.height/2+self.window_offset))
-                        .rotate((0,0,1),(0,0,0),90)
-                        .translate((-self.length/2+self.bp_body.wall_width/2,0,0))
-                    )
-                )
-            
-            if self.windows_x:
-                if len(self.windows_x) == 1:
-                    windows_x = self.windows_x[0]
-                    windows_x_minus = self.windows_x[0]
-                else:
-                    windows_x = self.windows_x[0]
-                    windows_x_minus = self.windows_x[1]
-
-                y_translate = self.bp_body.width/2-self.bp_body.wall_width/2
-                scene = (
-                    scene
-                    #plus
-                    .union(windows_x.translate((0,-y_translate,self.bp_body.height/2+self.window_offset)))
-                    #minus
-                    .union(windows_x_minus.rotate((0,0,1),(0,0,0),-180).translate((0,y_translate,self.bp_body.height/2+self.window_offset)))
-                )
-                
-            if self.windows_y:
-                if len(self.windows_y) == 1:
-                    windows_y = self.windows_y[0]
-                    windows_y_minus = self.windows_y[0]
-                else:
-                    windows_y = self.windows_y[0]
-                    windows_y_minus = self.windows_y[1]
-                scene = (
-                    scene
-                    #plus
-                    .union(
-                        windows_y.translate((0,0,self.bp_body.height/2+self.window_offset))
-                        .rotate((0,0,1),(0,0,0),-90)
-                        .translate((self.length/2-self.bp_body.wall_width/2,0,0))
-                    )
-                    #minus
-                    .union(
-                        windows_y_minus.translate((0,0,self.bp_body.height/2+self.window_offset))
-                        .rotate((0,0,1),(0,0,0),90)
-                        .translate((-self.length/2+self.bp_body.wall_width/2,0,0))
-                    )
-                )
         return scene
     
     def build_roof(self):

@@ -1,5 +1,15 @@
 ## Main Wip
 
+## 2.2.6
+* Added corner package
+  * Added AshlarCorner
+* BodyGreebed
+  * Added bp_outside_corners blueprint
+  * Refactored build
+* House refactored how windows are built.
+* TowerBody 
+  * added bp_ladder blueprint
+
 ## 2.2.5
 * house package
   * Added PyramidRoof

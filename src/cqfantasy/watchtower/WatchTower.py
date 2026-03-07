@@ -6,7 +6,6 @@ from ..house import PyramidRoofShingle
 class WatchTower(Base):
     def __init__(self):
         super().__init__()
-        #parameters
         
         #blueprints
         self.bp_base = TowerBase()
@@ -30,7 +29,6 @@ class WatchTower(Base):
 
         #shapes
         self.outline:cq.Workplane|None = None
-        
         
     def make(self):
         super().make()
@@ -71,7 +69,6 @@ class WatchTower(Base):
             z_translate = self.bp_base.height + self.bp_body.height + self.bp_top.height
             part = part.add(tower_roof.translate((0,0,z_translate)))
         
-
         return part
     
     def build_cut(self):
