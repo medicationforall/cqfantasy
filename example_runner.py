@@ -49,6 +49,7 @@ import example.fireplace.fireplace_tiled
 print('House Examples')
 import example.house.body
 import example.house.body_greebled
+import example.house.body_greebled_corner
 import example.house.body_types
 import example.house.house
 import example.house.house_cut_away
@@ -110,6 +111,7 @@ print('WatchTower Examples')
 import example.watchtower.tower_base
 import example.watchtower.tower_body
 import example.watchtower.tower_body_greebled
+import example.watchtower.tower_door
 import example.watchtower.tower_top
 import example.watchtower.tower_top_greebled
 import example.watchtower.watch_tower

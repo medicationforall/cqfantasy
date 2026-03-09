@@ -1,3 +1,4 @@
+from .TowerDoor import TowerDoor
 from .TowerBase import TowerBase
 from .TowerBody import TowerBody
 from .TowerBodyreebled import TowerBodyGreebled
