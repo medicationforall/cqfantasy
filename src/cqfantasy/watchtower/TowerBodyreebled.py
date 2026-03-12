@@ -5,6 +5,7 @@ from ..house import House, BodyGreebled
 from ..house_wall import RubbleWall
 from ..corner import AshlarCorner
 from cqterrain import Ladder
+from . import TowerDoor
 
 
 class TowerBodyGreebled(Base):
@@ -22,8 +23,14 @@ class TowerBodyGreebled(Base):
         self.render_floor_tiles:bool = True
         self.render_outside_corners:bool = True
         self.render_ladder:bool = True
+        self.render_door_cross_section = False
+        self.seed = "tower_test_1"
         
         self.ladder_translate = 0
+        self.door_height = 47
+        self.door_pivot_height = 45
+        self.window_offset = 8.25 + 15
+        self.door_rotate = 0 
         
         # blue prints
         self.bp_tower:Base = self.init_body()
@@ -42,16 +49,18 @@ class TowerBodyGreebled(Base):
         bp_house.render_windows = True
         
         # door
+        bp_house.bp_door = TowerDoor()
         bp_house.door_cut_width_padding = 7
         
         #windows
         bp_house.window_space = (75/3,75/3)
         bp_house.window_x_style = ([None,'win',None],None)
         bp_house.window_y_style = [None,'win',None]
+        bp_house.windows_z_translate = 0
         
         #bp_house.bp_window = CasementWindow()
         bp_house.window_length = 15
-        bp_house.window_offset = 8.25
+        bp_house.window_offset = 8.25 + 15
         bp_house.window_width = 2
         bp_house.bp_window.height = 35
         bp_house.bp_window.width = 9
@@ -85,7 +94,9 @@ class TowerBodyGreebled(Base):
             bp_rubble.width = 2
             bp_rubble.width = (2,3,.5)
             bp_rubble.x_padding = 0
-            bp_rubble.seed = f'tower_test_1_{i}'
+            seed = self.seed
+            bp_rubble.seed = f'{seed}_{i}'
+            log(bp_rubble.seed)
             bp_outside_walls.append(bp_rubble)
         
         bp_body.render_outside_walls = False
@@ -98,8 +109,8 @@ class TowerBodyGreebled(Base):
             bp_rubble = RubbleWall()
             #bp_rubble.width = (1,3,1)
             bp_rubble.width = 2
-                
-            bp_rubble.seed = f'tower_test_1_{i}'
+            seed = self.seed
+            bp_rubble.seed = f'{seed}_{i}'
             bp_inside_walls.append(bp_rubble)
         
         bp_body.render_inside_walls = False
@@ -146,9 +157,36 @@ class TowerBodyGreebled(Base):
         self.bp_ladder.height = height
         self.bp_ladder.make()
         
+        
+    def make_door(self):
+        self.bp_tower.bp_door.width = self.bp_tower.bp_body.wall_width
+        self.bp_tower.bp_door.height = self.door_height
+        self.bp_tower.bp_door.pivot_height = self.door_pivot_height
+        self.bp_tower.bp_door.render_cross_section = self.render_door_cross_section
+        self.bp_tower.bp_door.rotate = self.door_rotate 
+        
+    def make_windows(self):
+        self.bp_tower.window_offset = self.window_offset
+            
+    def make_stones(self):
+        #apply seed
+        inside_walls = self.bp_tower.bp_body.bp_inside_walls
+        
+        for i,wall in enumerate(inside_walls):
+            seed = f'{self.seed}_{i}'
+            wall.seed = seed
+            
+        outside_walls = self.bp_tower.bp_body.bp_outside_walls
+        for i,wall in enumerate(outside_walls):
+            seed = f'{self.seed}_{i}'
+            wall.seed = seed
+        
     def make(self):
         super().make()
         self.make_outline()
+        self.make_stones()
+        self.make_door()
+        self.make_windows()
         self.make_body()
         self.make_ladder()
         

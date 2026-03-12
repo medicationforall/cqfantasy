@@ -1,5 +1,21 @@
 ## Main Wip
 
+## 2.3.0
+* Updated cqterrain to version 3.8.0
+* Testing for packaging and deploying to pypi.
+* Added PACKAGE_README.md
+* Expanded parameters listed in tower_body_greebled.py example.
+* TowerBody 
+  * uses TowerDoor
+  * Added 
+    * render_door_cross_section
+    * seed
+    * door_height
+    * door_pivot_height
+    * window_offset
+    * door_rotate
+* Updated house documentation
+
 ## 2.2.6
 * Added corner package
   * Added AshlarCorner

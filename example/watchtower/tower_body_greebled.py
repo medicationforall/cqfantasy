@@ -11,6 +11,8 @@ bp_body.render_windows = True
 bp_body.render_outside_walls = True
 bp_body.render_inside_walls = True
 bp_body.render_floor_tiles = True
+bp_body.render_outside_corners = True
+bp_body.render_ladder = True
 bp_body.make()
 
 ex_body = bp_body.build()

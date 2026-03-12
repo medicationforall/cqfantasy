@@ -19,6 +19,7 @@ bp_roof = bp_house.bp_roof
 
 bp_house.window_x_style = ['None',None,None,'window']
 bp_house.window_y_style = [None,'window','window','window','window',None]
+bp_house.windows_z_translate = 0
 
 bp_house.make()
 ex_house = bp_house.build()

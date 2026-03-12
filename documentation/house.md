@@ -103,15 +103,26 @@ Orchestrator class for combining components of a house.
 * length: float
 * width: float
 * height: float
+* render_roof: bool
 * roof_height: float
-* roof_overhang: Tuple[float,float]
+* roof_overhang: Tuple[float,float,float]
 * roof_gap_spacer: float
-* door_cut_width_padding: floatdoor_cut_width_padding
+* door_cut_width_padding: float
+* render_windows:bool
+* window_space: float|tuple[float,float]
+* window_length: float
+* window_width: float
+* window_offset: float
+* render_doors: bool
+* window_x_style: list[None|str]|Tuple
+* window_y_style: list[None|str]|Tuple
+* windows_z_translate: float
 
 ### blueprints
 * bp_body = Body()
 * bp_roof = Roof()
 * bp_door = TiledDoor()
+* bp_window:TowerWindow|None = FrameWindow()
 
 ``` python
 import cadquery as cq

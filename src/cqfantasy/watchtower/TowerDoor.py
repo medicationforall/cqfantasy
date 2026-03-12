@@ -10,9 +10,11 @@ class TowerDoor(SimpleHinge):
         self.width:float = 5
         self.height:float = 60
         self.door_width:float = 4
-        self.frame_width = 2
+        self.frame_width:float = 2
         self.pivot_height = self.height - 2
-        self.rotate = 0
+        self.rotate:float = 0
+        self.render_cross_section:bool = False
+
         
         #blueprints
         self.bp_door = self.init_door()
@@ -33,5 +35,8 @@ class TowerDoor(SimpleHinge):
         return bp_hinged_door
         
     def build(self)->cq.Workplane:
-        part = super().build()
+        if self.render_cross_section:
+            part = super().build_cross_section()
+        else:
+            part = super().build()
         return part

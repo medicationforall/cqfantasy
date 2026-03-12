@@ -3,25 +3,26 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
+version = "2.3.0"
 name = "cqfantasy"
-version = "2.2.6"
+description = "Python Library for building Fantasy terrain"
+
 authors = [
   { name="James Adams", email="inklink28@gmail.com" }
 ]
-description = "Python Library for building Fantasy terrain"
-readme = "README.md"
-license = { file="LICENSE" }
-requires-python = ">=3.10"
+
+readme = "PACKAGE_README.md"
+license = "Apache-2.0"
+
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent"
 ]
 
+requires-python = ">=3.10"
 dependencies = [
-'cqterrain @ git+https://github.com/medicationforall/cqterrain@3.7.0'
+'cqterrain==3.8.0'
 ]
-
 
 [project.urls]
 "Homepage" = "https://github.com/medicationforall/cqfantasy"
