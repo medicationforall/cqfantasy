@@ -1,5 +1,8 @@
 ## Main Wip
 
+## 2.3.2
+* fix README.md wathtower documentation link,
+
 ## 2.3.1
 * Fixed an errant log statement I let slip into TowerBodyGreebled
 * Updated README.md
