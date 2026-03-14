@@ -12,6 +12,7 @@ class TowerDoor(SimpleHinge):
         self.door_width:float = 4
         self.frame_width:float = 2
         self.pivot_height = self.height - 2
+        self.margin_z = 0.2
         self.rotate:float = 0
         self.render_cross_section:bool = False
 
@@ -28,8 +29,7 @@ class TowerDoor(SimpleHinge):
         bp_tile_door.handle_mirrored = True
         
         bp_tile_door.handle_handle_length = 1.5
-        bp_tile_door.handle_x_margin = (
-            self.calculate_door_length() - 4)
+        bp_tile_door.handle_x_margin = (self.calculate_door_length() - 4)
         
         bp_hinged_door.bp_door = bp_tile_door
         return bp_hinged_door

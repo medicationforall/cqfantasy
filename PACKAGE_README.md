@@ -13,3 +13,8 @@ Python library for making 3d printable Fantasy terrain using cadquery.
 * [CadQuery 2.x](https://github.com/CadQuery/cadquery)
 * [cqterrain](https://github.com/medicationforall/cqterrain)
 
+## Projects Using This Library
+* [Castle Tower Set](https://miniforall.com/castletower)
+* [Log Cabin](https://miniforall.com/logcabin)
+* [Iron And Stone Fence Set](https://miniforall.com/ironfence)
+

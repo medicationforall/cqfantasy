@@ -1,5 +1,15 @@
 ## Main Wip
 
+## 2.3.1
+* Fixed an errant log statement I let slip into TowerBodyGreebled
+* Updated README.md
+  * Added pypi install directions
+  * Added "Projects
+* Updated PACKAGE_README.md
+* watchtower TowerDoor set margin_z parameter to default to 0.2mm
+* watchtower fix TowerBodyGreebled file name misspelling.
+* Added watchtower documentation.
+
 ## 2.3.0
 * Updated cqterrain to version 3.8.0
 * Testing for packaging and deploying to pypi.

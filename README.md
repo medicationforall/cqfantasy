@@ -31,18 +31,34 @@ show_object(ex)
     * [House Wall](documentation/house_wall.md)
 	* [Tower](documentation/tower.md)
     * [Wall](documentation/wall.md)
+    * [Watchtower](documentation/Watchtower.md)
     * [Window](documentation/window.md)
 
 ## Changes
 * [Changelog](./changes.md)
 
+
 ## Dependencies
 * [CadQuery 2.x](https://github.com/CadQuery/cadquery)
 * [cqterrain](https://github.com/medicationforall/cqterrain)
 
+
+## Projects Using This Library
+* [Castle Tower Set](https://miniforall.com/castletower)
+* [Log Cabin](https://miniforall.com/logcabin)
+* [Iron And Stone Fence Set](https://miniforall.com/ironfence)
+
 ---
 
 ### Installation
+
+Pip install from Pypi https://pypi.org/project/cqfantasy/
+
+    pip install cqfantasy
+
+
+**OR**
+
 To install cqfantasy directly from GitHub, run the following `pip` command:
 
 	pip install git+https://github.com/medicationforall/cqfantasy

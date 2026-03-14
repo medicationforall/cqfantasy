@@ -23,14 +23,14 @@ class TowerBodyGreebled(Base):
         self.render_floor_tiles:bool = True
         self.render_outside_corners:bool = True
         self.render_ladder:bool = True
-        self.render_door_cross_section = False
-        self.seed = "tower_test_1"
+        self.render_door_cross_section:bool = False
+        self.seed:str = "tower_test_1"
         
-        self.ladder_translate = 0
-        self.door_height = 47
-        self.door_pivot_height = 45
-        self.window_offset = 8.25 + 15
-        self.door_rotate = 0 
+        self.ladder_translate:float = 0
+        self.door_height:float = 47
+        self.door_pivot_height:float = 45
+        self.window_offset:float = 8.25 + 15
+        self.door_rotate:float = 0 
         
         # blue prints
         self.bp_tower:Base = self.init_body()
@@ -96,7 +96,7 @@ class TowerBodyGreebled(Base):
             bp_rubble.x_padding = 0
             seed = self.seed
             bp_rubble.seed = f'{seed}_{i}'
-            log(bp_rubble.seed)
+            #log(bp_rubble.seed)
             bp_outside_walls.append(bp_rubble)
         
         bp_body.render_outside_walls = False
@@ -159,7 +159,9 @@ class TowerBodyGreebled(Base):
         
         
     def make_door(self):
-        self.bp_tower.bp_door.width = self.bp_tower.bp_body.wall_width
+        self.bp_tower.bp_door.width = self.bp_tower.bp_body.wall_width+1
+        #self.bp_tower.bp_door.door_width = self.bp_tower.bp_body.wall_width - .5
+        #self.bp_tower.bp_door.pivot_diameter = 2.5
         self.bp_tower.bp_door.height = self.door_height
         self.bp_tower.bp_door.pivot_height = self.door_pivot_height
         self.bp_tower.bp_door.render_cross_section = self.render_door_cross_section
@@ -214,6 +216,6 @@ class TowerBodyGreebled(Base):
             height = self.bp_tower.bp_body.calculate_internal_height() 
             adder = self.height - height
             translate_y = (self.width/2) - self.bp_tower.bp_body.wall_width - (self.bp_ladder.width/2) + self.ladder_translate 
-            part = part.add(ex_ladder.translate((0,translate_y,(height/2) + adder)))
+            part = part.union(ex_ladder.translate((0,translate_y,(height/2) + adder)))
         
         return part
