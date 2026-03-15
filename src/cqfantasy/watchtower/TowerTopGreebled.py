@@ -18,6 +18,7 @@ class TowerTopGreebled(Base):
         self.render_inside_walls:bool = True
         self.render_outside_walls:bool = True
         self.render_windows:bool = True
+        self.render_roof:bool = True
         
         #blueprints
         self.bp_house = self.init_house()
@@ -105,6 +106,7 @@ class TowerTopGreebled(Base):
         self.bp_house.bp_body.render_inside_walls = self.render_inside_walls
         self.bp_house.bp_body.render_outside_walls = self.render_outside_walls
         self.bp_house.render_windows = self.render_windows
+        self.bp_house.render_roof = self.render_roof
         self.bp_house.make()
         
     def make(self):

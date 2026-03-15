@@ -201,6 +201,10 @@ class TowerBodyGreebled(Base):
             part = part.add(self.outline)
         
         return part
+
+    def calculate_ladder_translate_y(self):
+        translate_y = (self.width/2) - self.bp_tower.bp_body.wall_width - (self.bp_ladder.width/2) + self.ladder_translate
+        return translate_y
         
     def build(self)->cq.Workplane:
         super().build()
@@ -215,7 +219,7 @@ class TowerBodyGreebled(Base):
             ex_ladder = self.bp_ladder.build()
             height = self.bp_tower.bp_body.calculate_internal_height() 
             adder = self.height - height
-            translate_y = (self.width/2) - self.bp_tower.bp_body.wall_width - (self.bp_ladder.width/2) + self.ladder_translate 
+            translate_y = self.calculate_ladder_translate_y()
             part = part.union(ex_ladder.translate((0,translate_y,(height/2) + adder)))
         
         return part

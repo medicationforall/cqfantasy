@@ -1,7 +1,13 @@
 ## Main Wip
 
 ## 2.3.2
-* fix README.md wathtower documentation link,
+* fix README.md wathtower documentation link.
+* WatchTower methods added:
+  * calculate_top_floor_height
+  * make_ladder_cut
+  * make_top_magnets
+  * build_tower_top
+  * build_plate
 
 ## 2.3.1
 * Fixed an errant log statement I let slip into TowerBodyGreebled
