@@ -18,6 +18,8 @@ class TowerTopGreebled(Base):
         self.render_inside_walls:bool = True
         self.render_outside_walls:bool = True
         self.render_windows:bool = True
+        self.x_windows_count = 2
+        self.y_windows_count = 1
         self.render_roof:bool = True
         
         #blueprints
@@ -107,6 +109,8 @@ class TowerTopGreebled(Base):
         self.bp_house.bp_body.render_outside_walls = self.render_outside_walls
         self.bp_house.render_windows = self.render_windows
         self.bp_house.render_roof = self.render_roof
+
+        self.bp_house.window_space = (self.length/self.x_windows_count, self.width/self.y_windows_count)
         self.bp_house.make()
         
     def make(self):

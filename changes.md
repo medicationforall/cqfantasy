@@ -1,7 +1,18 @@
 ## Main Wip
 
+## 2.3.3
+* Added watchtower HillBase
+* TowerTopGreebled parameters
+  * x_windows_count
+  * y_windows_count
+* WatchTower
+  * Swapped TowerBase for HillBase
+  * Added magnets to the generate TowerBody and Base
+
 ## 2.3.2
 * fix README.md wathtower documentation link.
+* TowerBodyGreebled method added:
+  * calculate_ladder_translate_y
 * WatchTower methods added:
   * calculate_top_floor_height
   * make_ladder_cut

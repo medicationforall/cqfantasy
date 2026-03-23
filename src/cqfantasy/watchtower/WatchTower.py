@@ -1,6 +1,6 @@
 import cadquery as cq
 from cadqueryhelper import Base
-from . import TowerBase, TowerBodyGreebled, TowerTopGreebled
+from . import TowerBase, TowerBodyGreebled, TowerTopGreebled, HillBase
 from ..house import PyramidRoofShingle
 
 class WatchTower(Base):
@@ -8,7 +8,7 @@ class WatchTower(Base):
         super().__init__()
         
         #blueprints
-        self.bp_base = TowerBase()
+        self.bp_base = HillBase()
         
         bp_body = TowerBodyGreebled()
         bp_body.render_doors = True
@@ -25,6 +25,8 @@ class WatchTower(Base):
         bp_top.render_outside_walls = True
         bp_top.render_windows = True
         bp_top.render_roof = False
+        bp_top.x_windows_count = 2
+        bp_top.y_windows_count = 1
         self.bp_top = bp_top
         
         self.bp_roof = PyramidRoofShingle()
@@ -34,6 +36,8 @@ class WatchTower(Base):
         self.outline:cq.Workplane|None = None
         self.top_magnets:cq.Workplane|None = None
         self.ladder_cut:cq.Workplane|None  = None
+        self.body_botom_magnets:cq.Workplane|None  = None
+        self.base_magnets:cq.Workplane|None  = None
         
     def calculate_top_floor_height(self):
         if (
@@ -66,11 +70,36 @@ class WatchTower(Base):
             self.bp_body.bp_tower.bp_body and 
             hasattr(self.bp_body.bp_tower.bp_body,'build_magnets')
         ):
-            log('found build magnets')
+            #log('found build magnets')
             magnet_height = self.bp_body.bp_tower.bp_body.magnet_height
             magnets = self.bp_body.bp_tower.bp_body.build_magnets()
             self.top_magnets = magnets.translate((0,0,magnet_height))
-        
+            
+    def make_body_bottom_magnets(self):
+        if (
+            self.bp_body and
+            self.bp_body.bp_tower and 
+            self.bp_body.bp_tower.bp_body and 
+            hasattr(self.bp_body.bp_tower.bp_body,'build_magnets')
+        ):
+            #log('found build magnets')
+            magnet_height = self.bp_body.bp_tower.bp_body.magnet_height
+            magnets = self.bp_body.bp_tower.bp_body.build_magnets()
+            self.body_botom_magnets = magnets.translate((0,0,magnet_height))
+            
+    def make_base_magnets(self):
+        if (
+            self.bp_body and
+            self.bp_body.bp_tower and 
+            self.bp_body.bp_tower.bp_body and 
+            hasattr(self.bp_body.bp_tower.bp_body,'build_magnets')
+        ):
+            #log('found build magnets')
+            magnet_height = self.bp_body.bp_tower.bp_body.magnet_height
+            magnets = self.bp_body.bp_tower.bp_body.build_magnets()
+            self.base_magnets = magnets.translate((0,0,0))
+
+
     def make(self):
         super().make()
         if self.bp_base:
@@ -85,6 +114,10 @@ class WatchTower(Base):
         if self.bp_top and self.bp_body:
             self.make_top_magnets()
             self.make_ladder_cut()
+            
+        if self.bp_base and self.bp_body:
+            self.make_body_bottom_magnets()
+            self.make_base_magnets()
             
         if self.bp_roof:
             self.bp_roof.make()
@@ -104,6 +137,37 @@ class WatchTower(Base):
                 part = part.cut(self.ladder_cut)
 
         return part
+    
+    def build_tower_body(self):
+        part = cq.Workplane("XY")
+        tower_body = self.bp_body.build()
+        part = part.add(tower_body.translate((0,0,0)))
+        
+        if self.body_botom_magnets:
+            part = (
+                part
+                .cut(
+                    self.body_botom_magnets
+                    .translate((0,0,-self.bp_body.height/2))
+                )
+            )
+        
+        return part
+    
+    def build_tower_base(self):
+        part = cq.Workplane("XY")
+        tower_base = self.bp_base.build()
+        part = part.add(tower_base)
+        
+        if self.base_magnets:
+            part = part.cut(
+                self.base_magnets.translate((
+                    0,
+                    0,
+                    -self.bp_body.height/2+self.bp_base.height
+                )))
+            
+        return part
 
         
     def build(self)->cq.Workplane:
@@ -112,11 +176,11 @@ class WatchTower(Base):
         part = cq.Workplane("XY")
         
         if self.bp_base:
-            tower_base = self.bp_base.build()
+            tower_base = self.build_tower_base()
             part = part.add(tower_base)
             
         if self.bp_body:
-            tower_body = self.bp_body.build()
+            tower_body = self.build_tower_body()
             z_translate = self.bp_base.height
             part = part.add(tower_body.translate((0,0,z_translate)))
             
@@ -145,14 +209,14 @@ class WatchTower(Base):
         spacing = 10
         
         if self.bp_base:
-            tower_base = self.bp_base.build()
+            tower_base = self.build_tower_base()
             length = self.bp_base.length
             width = self.bp_base.width
             
             part = part.add(tower_base.translate((-length/2 - spacing,width/2 +spacing,0)))
             
         if self.bp_body:
-            tower_body = self.bp_body.build()
+            tower_body = self.build_tower_body()
             length = self.bp_body.length
             width = self.bp_body.width
             z_translate = 0

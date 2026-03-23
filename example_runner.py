@@ -108,6 +108,7 @@ import example.tower.round_block_stucco_generator
 
 ## Watchtower
 print('WatchTower Examples')
+import example.watchtower.hill_base
 import example.watchtower.tower_base
 import example.watchtower.tower_body
 import example.watchtower.tower_body_greebled
