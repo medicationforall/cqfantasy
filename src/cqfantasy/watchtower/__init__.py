@@ -4,5 +4,5 @@ from .TowerBody import TowerBody
 from .TowerBodyGreebled import TowerBodyGreebled
 from .TowerTop import TowerTop
 from .TowerTopGreebled import TowerTopGreebled
-from .WatchTower import WatchTower
 from .HillBase import HillBase 
+from .WatchTower import WatchTower

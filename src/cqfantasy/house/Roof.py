@@ -24,6 +24,7 @@ class Roof(Base):
         self.length:float = 100
         self.width:float = 150
         self.height:float = 75
+        self.awning_width:float = 0
         
         self.overhang:Tuple[float,float,float] = (4,4,4)
         
@@ -35,6 +36,7 @@ class Roof(Base):
         self.magnet_height:float = 2.2
 
         self.render_outside_wall:bool = True
+        self.render_roof_cut:bool = True
 
         # blueprints
         self.bp_outside_wall = None
@@ -45,30 +47,32 @@ class Roof(Base):
         self.overhang_inset_cut = None
         
     def make_roof(self):
+        width = self.width + self.awning_width
         pts = [(0,0),(self.length,0),((self.length/2,self.height))]
         roof = (
             cq.Workplane("XZ")
             .polyline(pts)
             .close()
-            .extrude(self.width)
+            .extrude(width)
         ).translate((-self.length/2, self.width/2,-self.height/2))
                 
         self.roof = roof
         
     def make_roof_cut(self):
-        length = self.length - self.overhang[0]*2
-        width = self.width - self.overhang[1]*2
-        height = self.height - self.overhang[2]*2
-        
-        pts = [(0,0),(length,0),((length/2,height))]
-        roof_cut = (
-            cq.Workplane("XZ")
-            .polyline(pts)
-            .close()
-            .extrude(width)
-        ).translate((-length/2, width/2,-self.height/2))
-                
-        self.roof_cut = roof_cut
+        if self.render_roof_cut:
+            length = self.length - self.overhang[0]*2
+            width = self.width - self.overhang[1]*2
+            height = self.height - self.overhang[2]*2
+            
+            pts = [(0,0),(length,0),((length/2,height))]
+            roof_cut = (
+                cq.Workplane("XZ")
+                .polyline(pts)
+                .close()
+                .extrude(width)
+            ).translate((-length/2, width/2,-self.height/2))
+                    
+            self.roof_cut = roof_cut
         
     def make_overhang_inset(self):
         length = self.length - self.overhang_inset[0]*2
@@ -84,6 +88,7 @@ class Roof(Base):
         ).translate((-length/2, width/2,-self.height/2))
         
         self.overhang_inset_cut = overhang_inset_cut
+        
         
     def make_outside_wall(self):
         if self.render_outside_wall and self.bp_outside_wall:
@@ -121,10 +126,12 @@ class Roof(Base):
             scene = scene.cut(self.roof_cut)
             
         if self.render_overhang_inset and self.overhang_inset_cut:
+            
+            y_translate = self.width/2-self.overhang_inset[1]/2
             scene = (
                 scene
-                .cut(self.overhang_inset_cut.translate((0,self.width/2-self.overhang_inset[1]/2,0)))
-                .cut(self.overhang_inset_cut.translate((0,-self.width/2+self.overhang_inset[1]/2,0)))
+                .cut(self.overhang_inset_cut.translate((0,y_translate,0)))
+                .cut(self.overhang_inset_cut.translate((0,-y_translate-self.awning_width,0)))
             )
             
         if self.render_outside_wall and self.bp_outside_wall:

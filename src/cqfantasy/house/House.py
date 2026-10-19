@@ -44,8 +44,8 @@ class House(Base):
         
         self.render_doors:bool = True
         
-        self.window_x_style:list[None|str]|Tuple = ['window',None]
-        self.window_y_style:list[None|str]|Tuple = []
+        self.window_x_style:list[None|str]|Tuple[list[None|str]] = ['window',None]
+        self.window_y_style:list[None|str]|Tuple[list[None|str]]= []
         
         #shapes
         self.door_cut:cq.Workplane|None = None
@@ -145,28 +145,35 @@ class House(Base):
             window = self.bp_window.build()
 
             #('make_windows')
+            x_window_space = self._calulate_x_window_space()
+            y_window_space = self._calulate_y_window_space()
 
             # x_windows
             if isinstance(self.window_x_style, tuple):
                 #print('window_x_style is tuple hit')
-                x_window_space = self._calulate_x_window_space()
+
                 #print(self.window_x_style[0])
 
+                #log("windows is a tuple")
                 if self.window_x_style[0]:
+                    #log("windows is a x1 is not null")
                     x_windows = self.make_x_windows(window, self.window_x_style[0])
                     x_windows = x_windows.translate((-self.bp_body.length/2+x_window_space/2,0,0))
                     self.windows_x.append(x_windows)
                 else:
+                     #log("windows is a x1 is null")
                      self.windows_x.append(None)
 
                 if self.window_x_style[1]:
+                    #log("windows is a x2 is not null")
                     x_windows_two = self.make_x_windows(window, self.window_x_style[1])
                     x_windows_two = x_windows_two.translate((-self.bp_body.length/2+x_window_space/2,0,0))
                     self.windows_x.append(x_windows_two)
                 else:
+                    #log("windows is a x2 null")
                     self.windows_x.append(None)
             else: 
-                x_window_space = self._calulate_x_window_space()
+                #log("windows is not a tuple")
                 x_windows = self.make_x_windows(window, self.window_x_style)
                 x_windows = x_windows.translate((-self.bp_body.length/2+x_window_space/2,0,0))
                 self.windows_x.append(x_windows)
@@ -175,8 +182,8 @@ class House(Base):
             if isinstance(self.window_y_style, tuple):
                 #print('window_y_style is tuple hit')
 
+
                 if self.window_y_style[0]:
-                    y_window_space = self._calulate_y_window_space()
                     y_windows = self.make_y_windows(window, self.window_y_style[0])
                     y_windows = y_windows.translate((-self.bp_body.width/2+y_window_space/2,0,0))
                     self.windows_y.append(y_windows)
@@ -190,7 +197,6 @@ class House(Base):
                 else:
                     self.windows_y.append(None)
             else: 
-                y_window_space = self._calulate_y_window_space()
                 y_windows = self.make_y_windows(window, self.window_y_style)
                 y_windows = y_windows.translate((-self.bp_body.width/2+y_window_space/2,0,0))
                 self.windows_y.append(y_windows)   
@@ -198,13 +204,14 @@ class House(Base):
     def make_windows_cut(self):
         if self.bp_window:
             window_cut = self.bp_window.build_cut()
+            x_window_space = self._calulate_x_window_space()
+            y_window_space = self._calulate_y_window_space()
             #('make_windows_cut')
        
             # x_windows
             if isinstance(self.window_x_style, tuple):
                 #print('window_x_style is tuple hit')
                 if self.window_x_style[0]:
-                    x_window_space = self._calulate_x_window_space()
                     x_windows = self.make_x_windows(window_cut, self.window_x_style[0])
                     x_windows = x_windows.translate((-self.bp_body.length/2+x_window_space/2,0,0))
                     self.windows_x_cut.append(x_windows)
@@ -218,7 +225,6 @@ class House(Base):
                 else:
                     self.windows_x_cut.append(None)
             else: 
-                x_window_space = self._calulate_x_window_space()
                 x_windows = self.make_x_windows(window_cut, self.window_x_style)
                 x_windows = x_windows.translate((-self.bp_body.length/2+x_window_space/2,0,0))
                 self.windows_x_cut.append(x_windows)
@@ -227,7 +233,6 @@ class House(Base):
             if isinstance(self.window_y_style, tuple):
                 #('window_y_style is tuple hit')
                 if self.window_y_style[0]:
-                    y_window_space = self._calulate_y_window_space()
                     y_windows = self.make_y_windows(window_cut, self.window_y_style[0])
                     y_windows = y_windows.translate((-self.bp_body.width/2+y_window_space/2,0,0))
                     self.windows_y_cut.append(y_windows)
@@ -241,7 +246,6 @@ class House(Base):
                 else:
                     self.windows_y_cut.append(None)
             else: 
-                y_window_space = self._calulate_y_window_space()
                 y_windows = self.make_y_windows(window_cut, self.window_y_style)
                 y_windows = y_windows.translate((-self.bp_body.width/2+y_window_space/2,0,0))
                 self.windows_y_cut.append(y_windows)
@@ -364,15 +368,23 @@ class House(Base):
             scene = scene.add(body.translate((0,0,self.bp_body.height/2)))
 
         print('build house doors')
+        if hasattr(self.bp_body, 'calculate_floor_height'):
+            floor_height = self.bp_body.calculate_floor_height()
+        else:
+            #log(dir(self.bp_body))
+            floor_height = 4
+        
         if self.render_doors and self.door_cut:
             print('build house doors cuts')
             door_cut = self.door_cut
-            scene = scene.cut(door_cut.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.bp_body.calculate_floor_height())))
+            
+
+            scene = scene.cut(door_cut.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+floor_height)))
 
         if self.render_doors:
             door = self.bp_door.build()
             print('build house doors add doors')
-            scene = scene.union(door.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+self.bp_body.calculate_floor_height())))
+            scene = scene.union(door.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+floor_height)))
 
         print('build house windows')
         if self.render_windows:

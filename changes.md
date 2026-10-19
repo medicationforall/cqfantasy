@@ -1,5 +1,10 @@
 ## Main Wip
 
+## 2.4.4
+* House fixed tuple definition bug when placing windows
+* Roof Added awning parameter
+* Fix order of in which components are imported in WatchTower __init__.py 
+
 ## 2.3.3
 * Added watchtower HillBase
 * TowerTopGreebled parameters

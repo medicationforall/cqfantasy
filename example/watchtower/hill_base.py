@@ -15,6 +15,6 @@ bp_base.make()
 
 ex_base = bp_base.build()
 
-show_object(ex_base)
+#show_object(ex_base)
 
-cq.exporters.export(ex_base, "stl/watch_tower_base.stl")
+cq.exporters.export(ex_base, "stl/watch_tower_hill_base.stl")

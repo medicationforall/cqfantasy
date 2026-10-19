@@ -46,12 +46,13 @@ class ShingleRoof(Roof):
     def make_shingles(self):
         if self.shingle and self.roof:
             length = self.length/2
-            width = self.width
+            width = self.width+self.awning_width
             height = self.height
             
             #hyp = math.hypot(x, height)
+            roof_copy = self.roof.translate((0,self.awning_width/2,0))
             
-            face_x = self.roof.faces(">X")
+            face_x = roof_copy.faces(">X")
             angle_x = angle(length, height)
 
             self.shingles = tiles_alt(
@@ -66,7 +67,7 @@ class ShingleRoof(Roof):
                 odd_col_push=[self.tile_push,0],
                 debug = False,
                 intersect = True
-            )
+            ).translate((0,-self.awning_width/2,0))
         
     def make(self, parent=None):
         super().make(parent)
@@ -87,7 +88,7 @@ class ShingleRoof(Roof):
             scene = (
                 scene
                 .union(self.shingles)
-                .union(self.shingles.rotate((0,0,1),(0,0,0),180))
+                .union(self.shingles.rotate((0,0,1),(0,0,0),180).translate((0,-self.awning_width,0)))
             )
             
         return scene
