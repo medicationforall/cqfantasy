@@ -398,6 +398,58 @@ class House(Base):
             )
 
         return scene
+
+
+    def build_body_assembly(self) -> cq.Workplane:
+        print('Build house body assembly')
+        assembly = cq.Assembly()
+
+        body = self.bp_body.build()
+        
+        scene = (
+            cq.Workplane("XY")
+        )
+
+        if body:
+            scene = scene.add(body.translate((0,0,self.bp_body.height/2)))
+            a_body = body.translate((0,0,self.bp_body.height/2))
+
+        print('build house doors')
+        if hasattr(self.bp_body, 'calculate_floor_height'):
+            floor_height = self.bp_body.calculate_floor_height()
+        else:
+            #log(dir(self.bp_body))
+            floor_height = 4
+        
+        if self.render_doors and self.door_cut:
+            print('build house doors cuts')
+            door_cut = self.door_cut
+            
+            #scene = scene.cut(door_cut.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+floor_height)))
+            a_body = a_body.cut(door_cut.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+floor_height)))
+
+        if self.render_doors:
+            door = self.bp_door.build()
+            print('build house doors add doors')
+            a_door = door.translate((0,-self.width/2+self.bp_body.wall_width/2,self.bp_door.height/2+floor_height))
+            assembly.add(a_door, color=cq.Color(1, 0, 0), name="door")
+
+        print('build house windows')
+        if self.render_windows:
+            cut_windows = self.build_cut_windows()
+            windows = self.build_windows()
+
+            scene = (
+                scene
+                .cut(cut_windows)
+                .union(windows)
+            )
+
+            a_body = a_body.cut(cut_windows)
+            assembly.add(windows, color=cq.Color(0, 0, 1), name="windows")
+
+        assembly.add(a_body, name="body")
+        return assembly
     
     def build_roof(self):
         roof = self.bp_roof.build()
@@ -454,3 +506,18 @@ class House(Base):
         )
         
         return scene
+
+
+    def build_assembly(self):
+        body = self.build_body()
+        assembly = cq.Assembly()
+
+        body = self.build_body_assembly()
+        assembly.add(body, name="houseBody")
+
+        if self.render_roof:
+            roof = self.bp_roof.build()
+            a_roof = roof.translate((0,0,self.bp_body.height+self.bp_roof.height/2+self.roof_gap_spacer))
+            assembly.add(a_roof, color=cq.Color(0,1,0), name="houseRoof")
+
+        return assembly

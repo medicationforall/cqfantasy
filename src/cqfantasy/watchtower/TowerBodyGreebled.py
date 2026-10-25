@@ -223,3 +223,25 @@ class TowerBodyGreebled(Base):
             part = part.union(ex_ladder.translate((0,translate_y,(height/2) + adder)))
         
         return part
+
+    def build_assembly(self)->cq.Workplane:
+        super().build()
+        assembly = cq.Assembly()
+        
+        #part = cq.Workplane("XY")
+        
+        if self.bp_tower:
+            ex_body = self.bp_tower.build_assembly()
+            #part = part.add(ex_body)
+            assembly.add(ex_body, name="TowerBodyGreebled")
+            
+        if self.render_ladder and self.bp_ladder:
+            ex_ladder = self.bp_ladder.build()
+            height = self.bp_tower.bp_body.calculate_internal_height() 
+            adder = self.height - height
+            translate_y = self.calculate_ladder_translate_y()
+            a_ladder = ex_ladder.translate((0,translate_y,(height/2) + adder))
+
+            assembly.add(a_ladder, color=cq.Color(0, 1, 1), name="ladder")
+        
+        return assembly
